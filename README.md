@@ -1,10 +1,11 @@
-# BUAA-2019-Good-Good-Study-Beta
-请不要直接push这个仓库
+# 云开发 quickstart
 
-## 开发流程
+这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：
 
-1. 每周二晚上，周五上午，周六晚上，周一晚上开会。
-2. 分为三个小组开发每次开会分配issues给小组。每个小组采用pull request的方式开发。
-3. 小组在刚开始开发的时候先使用fork得到自己的仓库，完成编程后进行request，之后由pm检查后merge
-4. 负责检查该组的同学需要在github中的request的评论中列出所有找到的功能性bug，pm会根据bug标记进入issues。
-5. 下一次开会时检查组的同学需要核实这些bug的issues并进行close。
+- 数据库：一个既可在小程序前端操作，也能在云函数中读写的 JSON 文档型数据库
+- 文件存储：在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理
+- 云函数：在云端运行的代码，微信私有协议天然鉴权，开发者只需编写业务逻辑代码
+
+## 参考文档
+
+- [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
