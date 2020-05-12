@@ -1,0 +1,72 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/notify/notify",
+    "pages/shop/shop",
+    "pages/edit_functions/edit_functions",
+    "pages/add_des/add_des",
+    "pages/main/main",
+    "pages/index/index",
+    "pages/search/search",
+    "pages/logs/logs",
+    "pages/team2/my/index",
+    "pages/team2/favorite_expression/index",
+    "pages/team2/add_exp/index",
+    "pages/photoCombine/photoCombine",
+    "pages/wordCombine/wordCombine",
+    "pages/paint/paint",
+    "pages/feedback/feedback",
+    "pages/mark_expression/mark_expression",
+    "pages/fliter/fliter",
+    "pages/aboutExp/aboutExp",
+    "pages/userpage/userpage",
+    "pages/UIpage/UIpage"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTitleText": "title",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#7A7E83",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/team2/favorite_expression/index",
+        "iconPath": "images/main_blank.png",
+        "selectedIconPath": "images/main_fill.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/edit_functions/edit_functions",
+        "iconPath": "images/image_blank.png",
+        "selectedIconPath": "images/image_fill.png",
+        "text": "编辑"
+      },
+      {
+        "pagePath": "pages/shop/shop",
+        "iconPath": "images/shop_blank.png",
+        "selectedIconPath": "images/shop_fill.png",
+        "text": "商店"
+      },
+      {
+        "pagePath": "pages/team2/my/index",
+        "iconPath": "images/user_blank.png",
+        "selectedIconPath": "images/user_fill.png",
+        "text": "本地"
+      }, 
+      {
+        "pagePath": "pages/UIpage/UIpage",
+        "iconPath": "images/user_blank.png",
+        "selectedIconPath": "images/user_fill.png",
+        "text": "UI"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "cloud": true
+}

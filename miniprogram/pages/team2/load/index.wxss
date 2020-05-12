@@ -1,0 +1,61 @@
+/* pages/contect/contect.wxss */
+.button{
+  font-size: 30rpx;
+  background: white;
+  border-radius: 4px;
+  margin: 15rpx;
+  display:flex; 
+  justify-content:center; 
+  align-items:center;
+}
+.add_label_logo{
+  height: 100rpx;
+  width: 100rpx;
+  margin: 15rpx;
+}
+.add_label{
+  background-color: white;
+  height: 100rpx;
+  width: 160rpx;
+  margin: 15rpx;
+  text-align: center;
+}
+.text{
+  color: rgb(161, 155, 155);
+}
+.empty{
+  display: none;
+}
+.button-selected{
+  border: 1px solid #06a380;
+}
+.label_button{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.page{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+}
+.submit{
+  right: 0; 
+  position: absolute;
+  min-width:7em;
+  height:2em;
+  color:#fff;
+  line-height: 1.7em;
+  border-radius: 1em;
+  background:rgb(190, 214, 245);
+  display:flex; 
+  justify-content:center; 
+  align-items:baseline;
+}
+.submit_text{
+  size: 100px;
+  color: #3d6312;
+  text-align: center;
+}
+
