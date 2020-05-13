@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/FormalUIPage/FormailUIPage",
     "pages/login/login",
     "pages/notify/notify",
     "pages/shop/shop",
@@ -20,6 +21,7 @@
     "pages/fliter/fliter",
     "pages/aboutExp/aboutExp",
     "pages/userpage/userpage"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -51,16 +53,22 @@
         "selectedIconPath": "images/shop_fill.png",
         "text": "商店"
       },
-      
       {
         "pagePath": "pages/team2/my/index",
         "iconPath": "images/user_blank.png",
         "selectedIconPath": "images/user_fill.png",
         "text": "本地"
+      },
+      
+      {
+        "pagePath": "pages/FormalUIPage/FormailUIPage",
+        "iconPath": "images/user_blank.png",
+        "selectedIconPath": "images/user_fill.png",
+        "text": "UIF"
       }
     ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "cloud":true
+  "cloud": true
 }
