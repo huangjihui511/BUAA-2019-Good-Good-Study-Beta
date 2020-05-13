@@ -60,6 +60,7 @@ Page({
       src: options.image,
       success: function (res) {
         // 获取图片信息，主要为宽高，选择合适的自适应方式（将最大边完整显示）
+        let rate = res.height / res.width
         let width = wx.getSystemInfoSync().windowWidth
         let height = Math.trunc(width * rate)
         const ctx = wx.createCanvasContext('myCanvas');
@@ -86,7 +87,11 @@ Page({
   },
 
   tapBtn: function (e) {
-    utils.tapBtn(e, this, 2);
+    if (e.target.dataset.type == 'clear') {
+      this.drawBack()
+    } else {
+      utils.tapBtn(e, this, 2);
+    }
   },
 
   touchStart: function (e) {
@@ -157,7 +162,7 @@ Page({
 
   drawBack() {
     const ctx = wx.createCanvasContext('myCanvas');
-    ctx.drawImage(this.data.background, 0, 0, this.data.canvasWidth, this.data.canvasHeight);
+    ctx.drawImage(this.data.background, 0, 0, this.data.cWidth, this.data.cHeight);
     ctx.draw();
     drawBack(this);
   },

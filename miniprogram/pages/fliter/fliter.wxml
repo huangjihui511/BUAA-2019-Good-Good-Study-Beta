@@ -17,7 +17,6 @@
     <view class="list-item" data-type="{{item.type}}" style="background: {{item.background}}" bindtap="tapBtn"></view>
   </block>
 </view>
-
 <view class='btnView'>
   <button class='addTextBtn' type='primary' disabled = '{{canAdd}}'  bindtap='onExport'>
     保存编辑

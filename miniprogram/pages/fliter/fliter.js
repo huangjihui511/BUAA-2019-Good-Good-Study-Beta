@@ -64,6 +64,7 @@ Page({
 
   filter(type) {
     let that = this
+    console.log(type)
     wx.canvasGetImageData({
       canvasId: 'fliter',
       x: 0,
@@ -74,6 +75,7 @@ Page({
         let data = result.data;
         switch (type) {
           case 'hd':
+            console.log("hd2")
             for (let i = 0; i < result.width * result.height;i++){
               //********************只有这里有区别****************************
                 let R = data[i * 4 + 0];
@@ -154,11 +156,16 @@ Page({
           canvasId: 'fliterOut',
           x: 0,
           y: 0,
-          width: that.data.cWidth,
-          height: that.data.cHeight,
+          width: parseInt(that.data.cWidth),
+          height: parseInt(that.data.cHeight),
           data: data,
           success(res) { 
             console.log(res)
+          },
+          fail (error) {
+            console.log(error)
+            console.log(data)
+            console.log(that.data)
           }
         })
       }
@@ -166,6 +173,7 @@ Page({
   },
 
   tapBtn: function(e) {
+    console.log(e)
     let btnType = e.target.dataset.type
     switch (btnType) {
       case '灰度':
