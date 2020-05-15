@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/FormalUIPage/FormailUIPage",
     "pages/login/login",
+    "pages/FormalUIPage/FormailUIPage",
     "pages/notify/notify",
     "pages/shop/shop",
     "pages/edit_functions/edit_functions",
