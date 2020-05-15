@@ -11,6 +11,18 @@ App({
     user_id:"123",
     max_exp:5,
     recordPoints: [],
+
+    //搜索内容，页面间共享变量
+    toSearch:'',
+    //导航栏信息
+    navHeight:'',
+    navTop:'',
+    windowHeight:'',
+    //商店页面中不同类别
+    shopPageFlag:0,
+    //商店子页面标题
+    shopPageTitle:'',
+
     notification_num:0
   },
   
@@ -30,6 +42,20 @@ App({
   })
   },
   onLaunch: function () {
+    let menuButtonObject = wx.getMenuButtonBoundingClientRect();
+    wx.getSystemInfo({
+      success: res => {
+        let statusBarHeight = res.statusBarHeight,
+          navTop = menuButtonObject.top,//胶囊按钮与顶部的距离
+          navHeight = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight)*2;//导航高度
+        this.globalData.navHeight = navHeight;
+        this.globalData.navTop = navTop;
+        this.globalData.windowHeight = res.windowHeight;
+      },
+      fail(err) {
+        console.log(err);
+      }
+    })
       if (!wx.cloud) {
         console.error('请使用 2.2.3 或以上的基础库以使用云能力')
       } else {

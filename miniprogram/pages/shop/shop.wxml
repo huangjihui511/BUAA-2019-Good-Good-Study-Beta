@@ -1,16 +1,14 @@
 <!--index.wxml-->
 <view class="container">
 <movable-area style="height: 100%; width: 100%;">
-  <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="350" y="500" animation="false"
+  <!--movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="350" y="500" animation="false"
     direction="all" bindtap="reFreshR">
     <image src="../../images/toRight.png" style="height:80rpx;width:80rpx;"></image>
-      <!--image class="refreshIcon" style="height:100rpx;width:100rpx" src="../../images/xs.png"></image-->
   </movable-view>
   <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="280" y="500" animation="false"
     direction="all" bindtap="reFreshL">
     <image src="../../images/toLeft.png" style="height:80rpx;width:80rpx;"></image>
-      <!--image class="refreshIcon" style="height:100rpx;width:100rpx" src="../../images/xs.png"></image-->
-  </movable-view>
+  </movable-view-->
   <view class="search">
     <!-- <view class="showWhatToSearch">查找你想要的表情：{{toSearch}}</view> -->
     <view class="searchInputConfirm">
@@ -22,16 +20,18 @@
        <!-- <view class="confirmFont"></view>-->
       </button>
     </view>
-  <view class="page__hd">
+  <!--view class="page__hd">
         <view class="page__title">商店页面</view>
         <view class="page__desc">浏通过关键词或者相关的句子找到匹配的表情</view>
         <view class="page__desc">查看作者发布的其他表情，下载和收藏</view>
-  </view>
+  </view-->
   </view>
   <view class="wordsAbovePics">
-    <view class="showWhatToSearch">猜你想要</view>
-    <view class="refresh" bindtap="reFresh">
-      当前页数：{{globalShowIndex+1}}<!--image class="refreshIcon" style="height:40rpx;width:40rpx" src="../../images/refresh.png"></image-->
+    <view class="showWhatToSearch">
+      <image src="../../images/heart1.png" style="width:40rpx;height:40rpx"></image>为你推荐
+    </view>
+    <view class="refresh" bindtap="jump_to_search" data-kind="为你推荐">
+      查看更多
     </view>
   </view>
   <view class="line"></view>
@@ -49,7 +49,24 @@
       <!--/view-->
     </view> 
   </view>
-
+  <view class="line"></view>
+  <view class="wordsAbovePics">
+    <view class="showWhatToSearch">
+      <image src="../../images/heart1.png" style="width:40rpx;height:40rpx"></image>黑人抬棺
+    </view>
+    <view class="refresh" bindtap="jump_to_search" data-kind="黑人抬棺">
+      查看更多
+    </view>
+  </view>
+  <view class="line"></view>
+  <view class="picShowList">
+    <view class="picShowRow" wx:for="{{showStaticPics1}}" wx:for-index="index">
+        <image class="buttonImage" wx:for="{{showStaticPics1[index]}}" wx:for-item="item" wx:key="*this"
+           bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}'
+           src="{{item.file_id}}">
+        </image>
+    </view> 
+  </view>
   <!--view class="line"></view-->
 
   <!--button class="uploadimage" bindtap="uploadimage">
