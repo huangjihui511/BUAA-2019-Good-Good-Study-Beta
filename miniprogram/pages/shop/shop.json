@@ -1,7 +1,8 @@
 {
-  "usingComponents": {},
   "onReachBottomDistance":10,
   "navigationBarBackgroundColor": "#0387FE",
    "navigationBarTitleText": "商店",
-  "navigationBarTextStyle":"white"
+  "navigationBarTextStyle":"white",
+  "usingComponents": {
+  }
 }

@@ -1,32 +1,40 @@
-<!-- <view class="pagebody">
-  <view class="search1">
-    <text class="text1">搜索内容：{{inputValue}}</text>
-    <input class="input1" bindinput="bindKeyInput" placeholder="请输入搜索关键字"></input>
-  </view>
-  <view class="showpic">
-    <text class="text2">推荐内容：</text>
-    <image class="imageShow" src="{{showPicList[0]}}"></image>
-    <image class="imageShow" src="{{showPicList[1]}}"></image>
-  </view>
-</view> -->
-
-<view class="page-body">
-  <view class="page-section">
-    <view class="weui-cells__title">搜索内容：{{inputValue}}</view>
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
-        <input class="weui-input" auto-focus bindconfirm="bindConfirmClick" data-input="input"
-         laceholder="请输入搜索关键字"/>
-        <button class="button_confirm" bindtap="confirm" >确认</button>
-      </view>
+<!--navbar page-name="你当前页面的名字"></navbar-->
+<view class="container">
+<movable-area style="height: 100%; width: 100%;">
+  <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="350" y="500" animation="false"
+    direction="all" bindtap="reFreshR">
+    <image src="../../images/toRight.png" style="height:80rpx;width:80rpx;"></image>
+  </movable-view>
+  <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="280" y="500" animation="false"
+    direction="all" bindtap="reFreshL">
+    <image src="../../images/toLeft.png" style="height:80rpx;width:80rpx;"></image>
+  </movable-view>
+  <view class="search">
+    <view class="searchInputConfirm">
+      <input class="input" bindinput="bindConfirmClick" data-input="input"
+         placeholder="{{inputValue}}">
+      </input>
+      <button class="button_confirm" style="width:150rpx" bindtap="confirm" >
+        <text class="confirmText" style="font-size:medium">确认</text>
+      </button>
     </view>
-    <view class="showWhatToSearch">将要搜索：{{toSearch}}，{{testButton}}</view>
+  </view>
+  <view class="wordsAbovePics">
+    <view class="showWhatToSearch">
+      猜你想要
+    </view>
+    <view class="refresh" bindtap="reFresh">
+      当前页数：{{globalShowIndex+1}}
+    </view>
   </view>
   <view class="line"></view>
-  <view class="page-section">
-    <image class="image_search" src="{{testButton}}"></image>
-  
-   <image class="image_search" src="{{showPicList[1]}}"></image>
-    <!--<view wx:for="{{array}}"> {{showPicList[]}} </view>-->
+  <view class="picShowList">
+    <view class="picShowRow" wx:for="{{showPicList}}" wx:for-index="index">
+        <image class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="*this"
+           bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}'
+           src="{{item.file_id}}">
+        </image>
+    </view> 
   </view>
+</movable-area>
 </view>
