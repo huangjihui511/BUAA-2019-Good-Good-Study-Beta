@@ -6,15 +6,6 @@ const db = wx.cloud.database()
 Page({
   data: {
     images: [
-      /*{
-        file_id : "cloud://ybw17373380-bu509.7962-ybw17373380-bu509-1301775711/test.jpg"
-      },
-      {
-        file_id : "cloud://ybw17373380-bu509.7962-ybw17373380-bu509-1301775711/test1.jpg"
-      },
-      {
-        file_id : "cloud://ybw17373380-bu509.7962-ybw17373380-bu509-1301775711/test2.jpg"
-      }*/,
       {file_id : "/images/test1.jfif"
       },
       {file_id :  "/images/test3.jpg"},
@@ -38,25 +29,15 @@ Page({
     testButton: '',
     globalShowIndex:0,
     showListCache:[],
-    showPicList: [
-      [
-        {file_id:''},{file_id:''},{file_id:''}
+    showPicList: [[{file_id:''},{file_id:''},{file_id:''}
+    ],[{file_id:''},{file_id:''},{file_id:''}
+    ],[{file_id:''},{file_id:''},{file_id:''}],
+    [{file_id:''},{file_id:''},{file_id:''}]
     ],
-      [
-        {file_id:''},{file_id:''},{file_id:''}
-    ],
-    [
-      {file_id:''},{file_id:''},{file_id:''}
-    ],
-    [
-      {file_id:''},{file_id:''},{file_id:''}
-  ],
-    [
-      {file_id:''},{file_id:''},{file_id:''}
-  ],
-  [
-    {file_id:''},{file_id:''},{file_id:''}
-  ]
+    showStaticPics1:[
+      [{file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger1.jpeg'},
+      {file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger2.jpeg'},
+      {file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger3.jpg'}]
     ],
     user_rank:5,
     user_exp:0,
@@ -72,9 +53,100 @@ Page({
     })
   },
 
+  jump_to_search:function(e) {
+    app.globalData.shopPageTitle = e.currentTarget.dataset.kind
+    app.globalData.shopPageFlag = 1
+    console.log("front_global:",app.globalData.shopPageTitle)
+    wx.navigateTo({
+      url: '/pages/search/search'
+    })
+  },
+
   shop_image_pagejump:function(e) {
     var app = getApp()
     console.log(e)
+    var fileid = e.currentTarget.dataset.fileid
+    var visits = 0
+    var _id = ''
+    var judge = 1
+    if (judge == 0) {
+    db.collection('expression_visit_times').where({
+      id:fileid
+    }).get({
+        success:function(res) {
+          console.log("res.data:",res.data)
+          if (res.data[0] == null) {
+            db.collection('expression_visit_times').add({
+              // data 字段表示需新增的 JSON 数据
+              data: {
+                // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
+                id:e.currentTarget.dataset.fileid,
+                times:1
+              },
+              success: function(res) {
+                // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
+                console.log("第一次访问表情")
+                console.log(res)
+              }
+            })
+          }
+          else {
+            visits = res.data[0].times
+            console.log("visits:",res.data[0].times)
+            console.log("visits2:",visits)
+            visits++
+            _id = res.data[0]._id
+            console.log("_id:",_id)
+
+            //为什么where子句加set不可以？
+            db.collection('expression_visit_times').doc(_id).set({
+              data:{
+                id:fileid,
+                times:visits
+              },
+              success:function(res){
+                console.log("再次访问表情")
+              },
+              fail() {
+                console.log("failed")
+              }
+            })
+            /*.get({
+              success:function(res) {
+                console.log("第二次访问:",res.data)
+              }
+            })*/
+            /*.update({
+              // data 传入需要局部更新的数据
+              data: {
+                _openid: _openid,
+               // 表示将 done 字段置为 true
+                times:visits
+              },
+              success: function(res) {
+                console.log("再次访问，次数加一")
+                console.log(res.data)
+              },
+              fail:function(res) {
+                console.log("再次访问，错误！")
+                console.log(res)
+              }
+            })*/
+          }
+        }
+    })
+  }
+  else if (judge == 1) {
+    console.log("test_cloud")
+    wx.cloud.callFunction({
+      name:'image_visit_times',
+      data:{
+        id:fileid
+      }
+    }).then(res=>{
+      console.log("call_cloud_success")
+    })
+  }
     // app.globalData.data = {'imagepath':imagepath}
     wx.navigateTo({
       url: '/pages/index/index?url='+ e.currentTarget.dataset.fileid
@@ -83,7 +155,6 @@ Page({
 
   bindConfirmClick: function(e) {
     var value = e.detail.value
-
     this.setData(
       {
         inputValue:value
@@ -111,15 +182,23 @@ Page({
   confirm: function() {
     var v = this.data.inputValue
     this.setData({toSearch:v})
+    app.globalData.toSearch = v
+    app.globalData.shopPageFlag = 0
+    console.log("front_global:",app.globalData.toSearch)
+    wx.navigateTo({
+      url: '/pages/search/search'
+    })
+
+    var jump = 1
+    if (jump == 1) {
+      console.log("jumpToSearch")
+      return
+    }
+    //之后不搜索
+
+
     let that = this
-    /*console.log("前：",this.data.showPicList)
-    var len = this.data.showPicList.length
-    console.log("len:",len)
-    this.data.showPicList.splice(3,len - 3)
-    //this.setData({
-    //  showPicList:this.data.showPicList
-    //})
-    console.log("后：",this.data.showPicList)*/
+    
     this.data.globalShowIndex = 0
     this.data.showListCache = []
 
@@ -525,15 +604,13 @@ Page({
     })
     var that = this
     console.log("初始化推荐表情")
-    db.collection('expression').where({
-      public: true
-    }).limit(18).get({
+    db.collection('expression_visit_times').limit(12).get({
       success:function(res) {
         var paths = res.data
         console.log("初始推荐表情:",paths)
         console.log(paths.length)
         for (var i = 0;i < paths.length;i++) {
-          var path = paths[i]['file_id']
+          var path = paths[i]['id']
           console.log(paths[i])
           console.log("init path:",path)
           that.data.showPicList[parseInt(i/3)][i%3]['file_id'] = path
