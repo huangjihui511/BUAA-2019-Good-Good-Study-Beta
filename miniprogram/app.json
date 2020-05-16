@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/team2/change_labels/index",
+    
     "pages/login/login",
+    "pages/team2/change_labels/index",
     "pages/FormalUIPage/FormailUIPage",
     "pages/notify/notify",
     "pages/shop/shop",
