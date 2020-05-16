@@ -1,5 +1,3 @@
-const App = getApp()
-
 function formatTime(date) {
   var year = date.getFullYear()
   var month = date.getMonth() + 1
@@ -22,18 +20,24 @@ function formatNumber(n) {
 function changeColor(e, _this) {
   let tempData = {};
   tempData[e.target.dataset.color] = e.detail.value;
-  console.log(tempData)
   _this.setData({
-    [e.target.dataset.color]: e.detail.value,
+    ...tempData,
     eraser: false,
   });
 }
 
 // 公用的修改画笔宽度
-function changeWidth(e, _this) {
+function changeWidth(e, _this, canvasHeight, pageType) {
+  let c = {};
+  if (pageType === 1) {
+    c.canvasHeight = canvasHeight;
+  } else {
+    c.canvasHeightLen = canvasHeight;
+  }
   _this.setData({
     w: e.detail.value,
     eraser: false,
+    ...c,
   })
 }
 
@@ -79,41 +83,49 @@ function tapBtn(e, _this, pageType) {
       return;
     // 清空按钮
     case 'clear':
-      c.canvasHeightLen = (!_this.data.clear) ? Math.min(_this.data.canvasHeight, _this.data.windowHeight - _this.data.w - 120) : 0;
+      if (pageType === 1) {
+        c.canvasHeight = (!_this.data.clear) ? 120 + _this.data.w : 50;
+      } else if (pageType === 2) {
+        c.canvasHeightLen = (!_this.data.clear) ? Math.min(_this.data.canvasHeight, _this.data.windowHeight - _this.data.w - 120) : 0;
+      }
       _this.setData({
         width: false,
         color: false,
         clear: !_this.data.clear,
         ...c,
       })
-      _this.drawBack();
       return;
     // 保存
     case 'save':
       saveImg(_this, pageType);
-      return
+      return;
     default:
       return;
   }
 }
 
 function saveImg(_this, pageType) {
-  let c = {};
-  if (pageType === 1) {
-    c.canvasHeight = 50;
-  } else if (pageType === 2) {
-    c.canvasHeightLen = 0;
-  }
-  
-  // 关闭所有的操作栏
-  _this.setData({
-    width: false,
-    color: false,
-    clear: false,
-    saving: true,
-    ...c,
+  wx.canvasToTempFilePath({
+    canvasId: 'myCanvas',
+    success: function (res) {
+      // 把单纯用户画的内容存好了
+      let src = res.tempFilePath;
+      let ctx = wx.createCanvasContext('myCanvas');
+      // 照片
+      ctx.drawImage(_this.data.background, 0, 0, _this.data.canvasWidth, _this.data.canvasHeight);
+      // 覆盖上画的内容
+      ctx.drawImage(src, 0, 0, _this.data.canvasWidth, _this.data.canvasHeight);
+      ctx.draw();
+      console.log(res.tempFilePath);
+      var pages = getCurrentPages()
+      pages[pages.length-2].setData({
+        curImage: res.tempFilePath
+      })
+      wx.showToast({
+        title: '保存成功',
+      })
+    }
   })
-   _canvaseSaveToImg(_this);
 }
 
 function _canvaseSaveToImg(_this) {
@@ -121,15 +133,34 @@ function _canvaseSaveToImg(_this) {
   wx.canvasToTempFilePath({
     canvasId: 'myCanvas',
     success: function (res) {
-      wx.showToast({
-        title: '保存成功',
-      })
-      var pages = getCurrentPages();
-      pages[pages.length-2].setData({
-        curImage: res.tempFilePath
+      // 转图片成功，继续调用存储相册接口
+      wx.saveImageToPhotosAlbum({
+        filePath: res.tempFilePath,
+        // 存储成功
+        success: function (r) {
+          wx.hideLoading();
+          wx.showToast({
+            title: '保存成功',
+          })
+          _this.setData({
+            saving: false,
+          })
+        },
+        // 失败弹窗
+        fail: function (res) {
+          wx.hideLoading();
+          wx.showToast({
+            title: '保存失败',
+            icon: 'loading',
+          })
+          _this.setData({
+            saving: false,
+          })
+        }
       })
     },
     fail: function (res) {
+      // canvas转图片失败
       wx.hideLoading();
       wx.showToast({
         icon: 'loading',

@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/team2/change_labels/index",
     "pages/login/login",
+    "pages/FormalUIPage/FormailUIPage",
     "pages/notify/notify",
     "pages/shop/shop",
     "pages/edit_functions/edit_functions",
@@ -12,6 +14,7 @@
     "pages/team2/my/index",
     "pages/team2/favorite_expression/index",
     "pages/team2/add_exp/index",
+    "pages/team2/recycle/index",
     "pages/photoCombine/photoCombine",
     "pages/wordCombine/wordCombine",
     "pages/paint/paint",
@@ -19,8 +22,8 @@
     "pages/mark_expression/mark_expression",
     "pages/fliter/fliter",
     "pages/aboutExp/aboutExp",
-    "pages/userpage/userpage",
-    "pages/UIpage/UIpage"
+    "pages/userpage/userpage"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -57,12 +60,13 @@
         "iconPath": "images/user_blank.png",
         "selectedIconPath": "images/user_fill.png",
         "text": "本地"
-      }, 
+      },
+      
       {
-        "pagePath": "pages/UIpage/UIpage",
+        "pagePath": "pages/FormalUIPage/FormailUIPage",
         "iconPath": "images/user_blank.png",
         "selectedIconPath": "images/user_fill.png",
-        "text": "UI"
+        "text": "UIF"
       }
     ]
   },

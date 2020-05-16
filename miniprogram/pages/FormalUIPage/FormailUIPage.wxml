@@ -1,0 +1,108 @@
+<!--miniprogram/pages/FormalUIPage/FormailUIPage.wxml-->
+<view>文本的显示</view>
+<view class="hh-title">这是标题</view>
+<view class="hh-text">这是内容这是内容这是内容这是内容这是内容这是内容这是内容</view>
+<view>图片显示和动画</view>
+<view class="hh-grid-square-3">
+  <view class="hh-img" wx:for="{{4}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
+</view>
+<view class="hh-grid-square-1">
+  <view class="hh-img" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10000.jpg);"></view>
+</view>
+
+<view>标签显示</view>
+
+<view class="hh-card">
+  <view class="hh-capsule-tag">
+    <view class="hh-capsule-tag-name">
+      说明
+    </view>
+    <view class="hh-capsule-tag-num">
+      123
+    </view>
+  </view>
+  <view class="hh-normal-tag">说明</view>
+  <view class="hh-avator" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);">
+    <view class="hh-notification">9</view>
+  </view>
+</view>
+<view>新的图标</view>
+<view class="hh-grid-3">
+  <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}">
+    <text class="cuIcon-{{item.name}} lg text-gray"></text>
+    <text>{{item.name}}</text>
+  </view>
+</view>
+<view>多选窗口</view>
+
+<view class="hh-grid-3">  
+    <button wx:for="{{checkbox}}" class="hh-choose-item{{checkbox[index].checked==true?'-choosed':''}}" wx:key="{{index}}" bindtap="ChooseCheckbox" data-value="{{item.value}}"> {{item.name}}
+      <view  wx:if="{{item.hot}}">HOT</view>
+    </button>
+</view>
+
+<view>顶部导航栏</view>
+<scroll-view scroll-x class="hh-mult-nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+  <view class="hh-nav-item{{index==TabCur?'-choosed':''}}" wx:for="{{10}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+    Tab{{index}}
+  </view>
+</scroll-view>
+
+<view>顶部导航栏</view>
+<scroll-view scroll-x class="hh-mult-nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+  <view class="hh-nav-item{{index==TabCur?'-choosed':''}}" wx:for="{{4}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+    Tab{{index}}
+  </view>
+  <view class="hh-nav-item" style="border-bottom: 10rpx solid;">编辑标签
+  </view>
+</scroll-view>
+
+<scroll-view scroll-x class="hh-nav">
+  <view class="hh-nav-item{{0==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="0">
+    <text class="cuIcon-camerafill"></text> 数码
+  </view>
+  <view class="hh-nav-item{{1==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="1">
+    <text class="cuIcon-upstagefill"></text> 排行榜
+  </view>
+  <view class="hh-nav-item{{2==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="2">
+    <text class="cuIcon-clothesfill"></text> 皮肤
+  </view>
+</scroll-view>
+
+<view>文本编辑</view>
+<view class = "hh-round-card">
+  <textarea type="text" placeholder="输入文本"></textarea>
+</view>
+
+<view class="hh-grid-3">
+  <view class="hh-icon">
+    <text class="cuIcon-comment lg text-gray"></text>
+    <text>comment</text>
+  </view>
+  <view class="hh-icon">
+    <text class="cuIcon-delete lg text-gray"></text>
+    <text>delete</text>
+  </view>
+  <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}">
+    <text class="cuIcon-{{item.name}} lg text-gray"></text>
+    <text>{{item.name}}</text>
+  </view>
+</view>
+
+<view>搜索模块</view>
+  <view class="hh-search-around">
+    <text class="cuIcon-search"></text>
+    <input type="text" placeholder="搜索icon" confirm-type="search"></input>
+  </view>
+
+<view>评论模块</view>
+<view class="hh-comment-card">
+  <view class="hh-avator-round" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+  <view class="hh-conment-content">
+    <view class="hh-avator-conmment-name">莫甘娜</view>
+    <view class="hh-avator-conmment-content">
+      凯尔，你被自己的光芒变的盲目。
+    </view>
+    <view>2018年12月4日</view>
+  </view>
+</view>

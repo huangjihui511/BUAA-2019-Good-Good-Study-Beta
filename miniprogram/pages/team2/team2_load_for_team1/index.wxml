@@ -2,27 +2,34 @@
 <!-- <text>pages/contect/contect.wxml</text> -->
 
 <view class="page">
-  <view class="submit" bindtap="submitted">
-    <text class='submit_text'>提交</text>
+  <view class="hh-grid-3">
+    <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}" bindtap="{{item.bind}}">
+      <text class="cuIcon-{{item.name}} lg text-gray"></text>
+      <text>{{item.chinese_name}}</text>
+    </view>
   </view>
-  <view class="page__hd">
-    <view class="page__title">上传图片、添加标签</view>
-   <text>\n</text>
-  </view>
-    <view class="label_button">
-      <button  style="width:160rpx"
-        data-index="{{index}}" 
-        bindtap="checkboxChange"
-        checked="{{item.selected}}"
-        wx:for="{{label_list}}" 
-        wx:key="index" 
-        class="button {{item.selected ? 'button-selected' : ''}}"><view class='text'>{{item.title}}</view></button>
+  <view class="label_button">
+    <button  style="width:160rpx"
+      data-index="{{index}}" 
+      bindtap="checkboxChange"
+      checked="{{item.selected}}"
+      wx:for="{{label_list}}" 
+      wx:key="index" 
+      class="hh-choose-item{{item.selected ? '-choosed' : ''}}">
+        {{item.title}}
+    </button>
     <view wx:for="{{add_label_list}}" wx:key="index">
-  <input id='{{index}}' class="add_label" bindblur="getinput"></input></view>
-  <image class="add_label_logo" src='../../../images/team2/add_label_logo.jpg' bindtap="add_label"></image>
+      <input id='{{index}}' class="add_label" bindblur="getinput"></input>
+    </view>
   </view>
-   <text>\n</text>
-  <view class="{{empty?'empty':'image'}}">
-    <image src="{{image_src}}"></image>
+   
+   <view class="{{empty?'empty':'canvas'}}">
+      <canvas style="width:{{canvasWidth}}px; height:{{canvasHeight}}px;position:fixed;left:9000px;" canvas-id="myCanvas"></canvas>
+   </view>
+   
+</view>
+<view class="{{empty?'empty':'image'}}">
+  <view class="hh-grid-square-1">
+    <view class="hh-img" style="background-image:url({{image_src}});"></view>
   </view>
 </view>

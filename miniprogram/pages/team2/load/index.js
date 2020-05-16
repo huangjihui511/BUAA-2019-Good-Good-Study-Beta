@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
 data: {
+  check:true,
   empty:true,
   title: '上传图片',
   file_id: "",
@@ -34,7 +35,8 @@ data: {
   time:"",
   add_label_list:[],
   add_label_text:[],
-  have_add_labels:[]
+  have_add_labels:[],
+  icon: [{ name: 'appreciate', isShow: false}, { name: 'check', isShow: true ,chinese_name:'确认',bind:'submitted'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'添加标签',bind:"add_label"}, { name: 'emoji', isShow: false }, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'选择图片',bind:"chooseImage"}],
 },
 getinput(e){
   var _this=this
@@ -106,11 +108,13 @@ two2one(a) {
                       _this.setData({
                         [file2]:file1,
                       })
-                      wx.showToast({
-                        title: '加载成功',
-                        icon: "success",
-                        duration: 1000
-                      })
+                      if(_this.data.check==true){
+                        wx.showToast({
+                          title: '加载成功',
+                          icon: "success",
+                          duration: 1000
+                        })
+                      }
                     },
                     fail: console.error
                   })
@@ -164,6 +168,9 @@ chooseImage: async function chooseImage(e) {
              icon: 'none',
              title: '图片含有违法信息，请换张图片',
              duration: 1000,
+           })
+           _this.setData({
+             check:false
            })
            setTimeout(function () {
             wx.redirectTo({
@@ -272,13 +279,15 @@ submitted: function submitted(e) {
       }
     }
     console.log("去已经有的"+temp_add_label_text)
-    wx.cloud.callFunction({
-      name: "add_label",
-      data:{
-        id:app.globalData.open_id,
-        label:temp_add_label_text
-      }
-    })
+    if(temp_add_label_text.length!=0){
+      wx.cloud.callFunction({
+        name: "add_label",
+        data:{
+          id:app.globalData.open_id,
+          label:temp_add_label_text
+        }
+      })
+    }
     wx.cloud.callFunction({
       name: "add_exp",
       data:{

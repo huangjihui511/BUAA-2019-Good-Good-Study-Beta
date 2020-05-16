@@ -184,6 +184,9 @@ Page({
     let that = this
     
     this.data.globalShowIndex = 0
+    this.setData({
+      globalShowIndex:this.data.globalShowIndex
+    })
     this.data.showListCache = []
 
     for (var i = 0;i < 5;i++) {
