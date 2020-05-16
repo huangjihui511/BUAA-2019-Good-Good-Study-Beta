@@ -21,6 +21,8 @@ Page({
     images_view_srcs:[],
     can_delete_selected:[],
     delete_selected:[],
+    expression:[],
+    expression_view:[],
     classes:['全部','公开','未公开','label2','label3','label4','label5','label6','label7'],
     navData:[
       {
@@ -115,20 +117,24 @@ Page({
     var src=this.data.images_srcs
     var labels=this.data.labels
     var temp_src=[]
+    var temp_expression=[]
     var j=0;
     let temp_view_src = "images_view_srcs"
     for(var i=0; i<labels.length; i++){
       if(labels[i]==undefined) {
         temp_src[j]=src[i];
+        temp_expression[j]=this.data.expression[i]
         j++;
       }
     }
     this.setData({
-      [temp_view_src]: temp_src
+      [temp_view_src]: temp_src,
+      expression_view:temp_expression
     })
   },
   onShow: async function () {
     var _this=this
+    console.log("1111",app.globalData.open_id)
     var res =await wx.cloud.callFunction({
       name:"get_label",
       data:{
@@ -158,6 +164,7 @@ Page({
     var images_src1=[];
     var delete_selected_temp=[];
     var can_delete_selected_temp=[];
+    var expression_temp=[];
     var res = await wx.cloud.callFunction({
       name:"add_expression",
       data:{
@@ -174,6 +181,7 @@ Page({
       num = res.result.data[0].expression_set.length
     }
     for (var i = 0; i < num; i++) {
+      expression_temp[i]=res.result.data[0].expression_set[i]
       freq1[i] = res.result.data[0].expression_set[i].times
       label1[i] = res.result.data[0].expression_set[i].tags
       images_src1[i] = res.result.data[0].expression_set[i].file_id
@@ -189,6 +197,8 @@ Page({
     let temp_delete_selected="delete_selected"
     let temp_can_delete_selected="can_delete_selected"
     this.setData({
+      expression:expression_temp,
+      expression_view:expression_temp,
       [temp_view_src]: images_src1,
       [temp_src]: images_src1,
       [temp_label]: label1,
@@ -200,6 +210,7 @@ Page({
   freq_order(){
     var freq=this.data.freqs
     var src=this.data.images_srcs
+    var expression=this.data.expression
     var label=this.data.labels
     var k
     var temp
@@ -208,6 +219,7 @@ Page({
         if(freq[j]>freq[j+1]){
           freq[j]=[freq[j+1],freq[j+1]=freq[j]][0];
           src[j]=[src[j+1],src[j+1]=src[j]][0];
+          expression[j]=[expression[j+1],expression[j+1]=expression[j]][0];
           temp=[]
           for(k=0;k<label[j].length;k++){
             temp[k]=label[j][k]
@@ -230,6 +242,7 @@ Page({
       [temp_view_src]: src,
       [temp_label]: label,
       [temp_freq]: freq,
+      expression_view:expression
     })
   },
   delete_or_previewImage: function (e){
@@ -288,12 +301,14 @@ Page({
     var src=this.data.images_srcs
     var labels=this.data.labels
     var temp_src=[]
+    var temp_expression=[]
     var j=0;
     var k
     let temp_view_src = "images_view_srcs"
     if(label=='全部'){
       this.setData({
-        [temp_view_src]: this.data.images_srcs
+        [temp_view_src]: this.data.images_srcs,
+        expression_view:this.data.expression
       })
       return;
     }
@@ -304,6 +319,7 @@ Page({
       for(k=0;k<labels[i].length;k++){
         if(labels[i][k].name==label){
           temp_src[j]=src[i];
+          temp_expression[j]=this.data.expression[i]
           j++;
           break;
         }
@@ -311,7 +327,8 @@ Page({
     }
     console.log("111",labels.length)
     this.setData({
-      [temp_view_src]: temp_src
+      [temp_view_src]: temp_src,
+      expression_view:temp_expression
     })
   },
   selected(){
@@ -358,11 +375,16 @@ Page({
       })
     }
   },
+  add_or_delete(){
+    wx.reLaunch({
+      url: '../change_labels/index',
+    })
+  },
  more_information(e){
    let _this=this
    console.log(e)
     wx.showActionSheet({
-      itemList: ['编辑','转发','保存图片','收藏到微信'],//显示的列表项
+      itemList: ['编辑','转发','保存图片','收藏到微信',"修改标签"],//显示的列表项
          success: function (res) {//res.tapIndex点击的列表项
             console.log("点击了列表项：" + res.tapIndex)
             if(res.tapIndex==0){
@@ -371,7 +393,28 @@ Page({
                 url: '../../edit_functions/edit_functions?src='+e.currentTarget.dataset.src,
               })
             }
-            else if(res.tapIndex==1){
+            else if(res.tapIndex==4){
+              wx.cloud.callFunction({
+                name:"add_expression",
+                data:{
+                  request:"sub_expression",
+                  data1:app.globalData.open_id,
+                  data2:e.currentTarget.dataset.src
+                },
+                success(res){
+                  wx.cloud.downloadFile({
+                    fileID: e.currentTarget.dataset.src,
+                    success(res) {
+                      console.log(res.tempFilePath)
+                      wx.reLaunch({
+                        url: '../team2_load_for_team1/index?src=' + res.tempFilePath,
+                      })
+                    }
+                  })
+                }
+              })
+            }
+            else{
               console.log("111111111")
               _this.forward(e.currentTarget.dataset.src,e.currentTarget.dataset.srcs)
             }
@@ -384,6 +427,14 @@ Page({
     var i;
     for(i=0;i<this.data.delete_selected.length;i++){
       if(this.data.delete_selected[i]==true){
+        console.log("1111",this.data.expression_view[i])
+        wx.cloud.callFunction({
+          name:"recycle",
+          data:{
+            id:app.globalData.open_id,
+            recycles:this.data.expression_view[i]
+          }
+        })
         //调用云函数删除
         wx.cloud.callFunction({
           name:"add_expression",

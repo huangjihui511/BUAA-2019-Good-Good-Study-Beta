@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
 data: {
+  icon: [{ name: 'appreciate', isShow: false}, { name: 'check', isShow: true ,chinese_name:'确认',bind:'submitted'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'添加标签',bind:"add_label"}, { name: 'emoji', isShow: false }, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: false ,chinese_name:'选择图片',bind:"chooseImage"}],
   title: '上传图片',
   file_id: "",
   maxCount: 10,
@@ -134,13 +135,15 @@ submitted: function submitted(e) {
       }
     }
     console.log("去已经有的"+temp_add_label_text)
-    wx.cloud.callFunction({
-      name: "add_label",
-      data:{
-        id:app.globalData.open_id,
-        label:temp_add_label_text
-      }
-    })
+    if(temp_add_label_text.length!=0){
+      wx.cloud.callFunction({
+        name: "add_label",
+        data:{
+          id:app.globalData.open_id,
+          label:temp_add_label_text
+        }
+      })
+    }
     //传回参数
     console.log(this.data.image_src)
     console.log(this.data.labels)

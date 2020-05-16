@@ -6,6 +6,18 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
+.add_labels{
+  position: fixed;
+  top: 0rpx;
+  right: 0rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  height: 80rpx;
+  background-color: rgb(252, 251, 251);
+}
 .delete_logo{
   width: 50rpx;
   height: 50rpx;
@@ -93,7 +105,7 @@ page {
 
 .nav {
   height: 80rpx;
-  width: 100%;
+  width: 90%;
   box-sizing: border-box;
   overflow: hidden;
   line-height: 80rpx;
