@@ -1,4 +1,5 @@
 /**index.wxss**/
+@import "../search/search.wxss";
 
 .goodbutton {  
   margin-top: 30px; 

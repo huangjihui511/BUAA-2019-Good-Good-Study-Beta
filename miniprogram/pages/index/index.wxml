@@ -14,4 +14,19 @@
   <button class='goodbutton'  hover-class="hover" bindtap="storeImage" data-fileid="{{imagePath}}">收藏</button>
   <button class='goodbutton'  hover-class="hover" bindtap="download" data-fileid="{{imagePath}}">下载</button>
   <button class='goodbutton'  hover-class="hover" bindtap="jump2userpage" data-fileid="{{imagePath}}">了解作者的收藏</button>
+
+  <view class="line"></view>
+   <view class="wordsAbovePics">
+    <view class="showWhatToSearch">
+      相似表情
+    </view>
+  </view>
+  <view class="picShowList">
+    <view class="picShowRow" wx:for="{{showPicList}}" wx:for-index="index">
+        <image class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="*this"
+           bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
+           data-tag='{{item.tag}}' src="{{item.file_id}}">
+        </image>
+    </view> 
+  </view>
 </view>

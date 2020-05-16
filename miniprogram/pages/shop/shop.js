@@ -29,10 +29,10 @@ Page({
     testButton: '',
     globalShowIndex:0,
     showListCache:[],
-    showPicList: [[{file_id:''},{file_id:''},{file_id:''}
-    ],[{file_id:''},{file_id:''},{file_id:''}
-    ],[{file_id:''},{file_id:''},{file_id:''}],
-    [{file_id:''},{file_id:''},{file_id:''}]
+    showPicList: [[{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}
+    ],[{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}
+    ],[{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
+    [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}]
     ],
     showStaticPics1:[
       [{file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger1.jpeg'},
@@ -66,6 +66,10 @@ Page({
     var app = getApp()
     console.log(e)
     var fileid = e.currentTarget.dataset.fileid
+    var tag = e.currentTarget.dataset.tag
+    app.globalData.shopImageTag = tag
+    console.log("app shopTag:",app.globalData.shopImageTag)
+    console.log("tag:",tag)
     var visits = 0
     var _id = ''
     var judge = 1
@@ -102,6 +106,7 @@ Page({
             db.collection('expression_visit_times').doc(_id).set({
               data:{
                 id:fileid,
+                tag:tag,
                 times:visits
               },
               success:function(res){
@@ -111,27 +116,6 @@ Page({
                 console.log("failed")
               }
             })
-            /*.get({
-              success:function(res) {
-                console.log("第二次访问:",res.data)
-              }
-            })*/
-            /*.update({
-              // data 传入需要局部更新的数据
-              data: {
-                _openid: _openid,
-               // 表示将 done 字段置为 true
-                times:visits
-              },
-              success: function(res) {
-                console.log("再次访问，次数加一")
-                console.log(res.data)
-              },
-              fail:function(res) {
-                console.log("再次访问，错误！")
-                console.log(res)
-              }
-            })*/
           }
         }
     })
@@ -607,13 +591,15 @@ Page({
     db.collection('expression_visit_times').limit(12).get({
       success:function(res) {
         var paths = res.data
-        console.log("初始推荐表情:",paths)
-        console.log(paths.length)
+        //console.log("初始推荐表情:",paths)
+        //console.log(paths.length)
         for (var i = 0;i < paths.length;i++) {
           var path = paths[i]['id']
-          console.log(paths[i])
-          console.log("init path:",path)
+          var tag = paths[i]['tag']
+          //console.log(paths[i])
+          //console.log("init path:",path)
           that.data.showPicList[parseInt(i/3)][i%3]['file_id'] = path
+          that.data.showPicList[parseInt(i/3)][i%3]['tag'] = tag
           that.setData({
             showPicList:that.data.showPicList
           }) 
