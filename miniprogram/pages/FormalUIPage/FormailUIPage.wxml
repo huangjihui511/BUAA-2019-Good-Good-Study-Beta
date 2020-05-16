@@ -4,10 +4,12 @@
 <view class="hh-text">这是内容这是内容这是内容这是内容这是内容这是内容这是内容</view>
 <view>图片显示和动画</view>
 <view class="hh-grid-square-3">
-  <view class="hh-img" wx:for="{{4}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
+  <image class="hh-img" wx:for="{{4}}" wx:key src="https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg" mode="aspectFill"></image>
+  <!-- <view class="hh-img" wx:for="{{4}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view> -->
 </view>
 <view class="hh-grid-square-1">
   <view class="hh-img" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10000.jpg);"></view>
+  <image class="hh-img" src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10000.jpg" mode="aspectFill"></image>
 </view>
 
 <view>标签显示</view>

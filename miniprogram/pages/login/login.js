@@ -7,13 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    appName: "潮流斗图",
+    appName: "斗图神器",
     appDes: "小程序UI组件库是基于WeUI封装的组件库，是一套同微信原生视觉体验一致的组件库，由微信官方设计团队和小程序团队为微信小程序量身设计，令用户的使用感知更加统一。",
     infos : [ {
-      title: "自己制作",
+      title: "强大的制作和管理",
       text: "我们提供了丰富的功能，让您可以使用自己的图片或者表情进行二次创作。"
     }, {
-      title: "云端储存",
+      title: "",
       text: "所有的表情和标签数据都会保存在云端，让你无需担心数据的丢失。"
     }, {
       title: "商店平台",
@@ -111,7 +111,7 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-      // this.navigateToMainPage()
+      this.navigateToMainPage()
     } else if (this.data.canIUse){
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -120,7 +120,7 @@ Page({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
-        //this.navigateToMainPage()
+        this.navigateToMainPage()
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
@@ -131,7 +131,7 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
-          //this.navigateToMainPage()
+          this.navigateToMainPage()
         }
       })
     }
