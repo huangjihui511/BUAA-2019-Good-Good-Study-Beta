@@ -1,0 +1,33 @@
+<!--pages/team2/expression_information/index.wxml-->
+<view class="hh-grid-square-1">
+  <view class="hh-img" bindtap="previewImage">
+    <image src="{{expression}}"></image>
+  </view>
+</view>
+<view class="hh-grid-3">
+  <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}" bindtap="{{item.bind}}">
+    <text class="cuIcon-{{item.name}} lg text-gray"></text>
+    <text>{{item.chinese_name}}</text>
+  </view>
+</view>
+<view>推荐表情</view>
+<view>表情的评论</view>
+<view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
+  <view class="hh-avator-round" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+  <view class="hh-conment-content">
+    <view class="hh-avator-conmment-name">{{comment[index].open_id}}</view>
+    <view class="hh-avator-conmment-content">
+      {{comment[index].comment}}
+    </view>
+    <view>{{comment[index].time}}</view>
+  </view>
+</view>
+<view class='comment'>
+  <view class = "hh-round-card">
+    <textarea type="text" placeholder="输入评论" bindinput="getinput"></textarea>
+  </view>
+  <view class="hh-icon1" bindtap="commented">
+    <text class="cuIcon-check lg text-gray"></text>
+    <text>发送</text>
+  </view>
+</view>

@@ -1,5 +1,16 @@
 /**index.wxss**/
-
+@import "../../../app.wxss";
+.hh-avator{
+  height: 160rpx;
+  width: 160rpx;
+}
+.empty{
+  display: none;
+}
+.image{
+  height: 160rpx;
+  width: 160rpx;
+}
 page {
   background:white;
   display: flex;
@@ -34,10 +45,6 @@ page {
   align-items: center;
   justify-content: center;
 }
-.image{
-  height: 160rpx;
-  width: 160rpx;
-}
 .load_image_login{
   height: 160rpx;
   width: 160rpx;
@@ -61,7 +68,6 @@ page {
   flex-direction: column;
   flex-wrap:wrap;
   justify-content:space-around;
-  margin: 30rpx;
 }
  .select{
   background-color: rgb(252, 251, 251);

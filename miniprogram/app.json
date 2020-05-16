@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/team2/change_labels/index",
+    
     "pages/login/login",
+    "pages/team2/change_labels/index",
+    "pages/team2/favorite_expression/index",
     "pages/FormalUIPage/FormailUIPage",
     "pages/notify/notify",
     "pages/shop/shop",
@@ -12,7 +14,6 @@
     "pages/search/search",
     "pages/logs/logs",
     "pages/team2/my/index",
-    "pages/team2/favorite_expression/index",
     "pages/team2/add_exp/index",
     "pages/team2/recycle/index",
     "pages/photoCombine/photoCombine",
