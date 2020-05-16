@@ -43,7 +43,7 @@
           <image class='image_search' src="{{item.file_id}}"></image>
         </button-->
         <image class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="*this"
-           bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}'
+           bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' data-tag='{{item.tag}}'
            src="{{item.file_id}}">
         </image>
       <!--/view-->

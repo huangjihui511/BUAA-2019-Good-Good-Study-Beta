@@ -9,12 +9,12 @@ Page(
       showListCache:[],
       //图片列表
       showPicList: [
-        [{file_id:''},{file_id:''},{file_id:''}],
-        [{file_id:''},{file_id:''},{file_id:''}],
-        [{file_id:''},{file_id:''},{file_id:''}],
-        [{file_id:''},{file_id:''},{file_id:''}],
-        [{file_id:''},{file_id:''},{file_id:''}],
-        [{file_id:''},{file_id:''},{file_id:''}]
+        [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
+        [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
+        [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
+        [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
+        [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
+        [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
       ],
     },
 
@@ -51,12 +51,15 @@ Page(
       var app = getApp()
       console.log(e)
       var fileid = e.currentTarget.dataset.fileid
-    
+      var tag = e.currentTarget.dataset.tag
+      app.globalData.shopImageTag = tag
+      console.log("tag:",app.globalData.shopImageTag)
       console.log("test_cloud")
       wx.cloud.callFunction({
         name:'image_visit_times',
         data:{
-         id:fileid
+         id:fileid,
+         tag:tag
         }
       }).then(res=>{
         console.log("call_cloud_success")
@@ -176,6 +179,7 @@ Page(
                             that.data.showListCache[globalPicIndex] = key
                             if (globalPicIndex < 18) {
                               that.data.showPicList[reflex2][reflex3]['file_id'] = key
+                              that.data.showPicList[reflex2][reflex3]['tag'] = tag
                               that.setData({
                                 showPicList:that.data.showPicList
                               }) 

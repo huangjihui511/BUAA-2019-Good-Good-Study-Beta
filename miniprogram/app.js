@@ -22,7 +22,8 @@ App({
     shopPageFlag:0,
     //商店子页面标题
     shopPageTitle:'',
-
+    //商店表情标签
+    shopImageTag:'',
     notification_num:0
   },
   
