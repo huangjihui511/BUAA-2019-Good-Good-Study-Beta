@@ -17,7 +17,13 @@
 
   <view wx:for="{{images_view_srcs}}" wx:key="index">
     <view class="image_struct">
-      <image class="image {{delete_selected[index]?'image_selected':''}}" mode="aspectFill" data-index="{{index}}" data-src="{{item}}" data-srcs="{{images_view_srcs}}" src="{{item}}" bindtap="delete_or_previewImage" bindlongtap="more_information"></image>
+      <view class="hh-avator">
+        <image class="image {{delete_selected[index]?'image_selected':''}}" mode="aspectFill" data-index="{{index}}" data-src="{{item}}" data-srcs="{{images_view_srcs}}" src="{{item}}" bindtap="delete_or_previewImage" bindlongtap="more_information">
+        </image>
+        <view class="{{((expression_view_comment[index]!=undifined)&&(expression_view_comment[index].length!=0))?'hh-notification':'empty'}}">
+          {{expression_view_comment[index].length}}
+        </view>
+        </view>
     </view>
   </view>
   
