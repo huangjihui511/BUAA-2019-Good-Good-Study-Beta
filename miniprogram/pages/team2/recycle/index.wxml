@@ -1,0 +1,28 @@
+<!--index.wxml-->
+
+<text>\n\n</text>
+<view class="page__hd">
+        <view class="page__title">回收站</view>
+        <view class="page__desc">您可以在本页面彻底删除表情包或者长按表情包还原</view>
+</view>
+<view class="struct">
+  
+
+  <view wx:for="{{images_view_srcs}}" wx:key="index">
+    <view class="image_struct">
+      <image class="image {{delete_selected[index]?'image_selected':''}}" mode="aspectFill" data-index="{{index}}" data-src="{{item}}" data-srcs="{{images_view_srcs}}" src="{{item}}" bindtap="delete_or_previewImage" bindlongtap="more_information"></image>
+    </view>
+  </view>
+  
+  <view class="{{button_select?'delete':'empty'}}" bindtap="delete">
+      <!-- <image class="delete_logo" src="../../../images/team2/timg.jpeg"></image> -->
+
+    <image class="delete_logo" src="../../../images/team2/delete_logo.jpg"></image>
+    删除
+  </view>
+</view>
+<view class='select' >
+  <view class="all_select" bindtap="all_select">{{all_select}}</view>
+  <view class='select_number'>{{select_number}}</view>
+  <view class="select_text" bindtap="selected">{{select_text}}</view>
+</view>

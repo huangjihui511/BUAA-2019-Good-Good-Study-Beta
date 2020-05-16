@@ -1,0 +1,16 @@
+<!--pages/team2/change_labels/index.wxml-->
+<view class="hh-grid-3">
+    <view class="hh-icon"  bindtap="complete">
+        <text class="cuIcon-check lg text-gray"></text>
+        <text>完成</text>
+    </view>
+</view>
+
+<text>已显示标签</text>
+<view wx:for="{{view_labels}}" wx:key="index">
+    <button class="label" data-index="{{index}}" bindtap="delete">{{view_labels[index]}}-</button> 
+</view>
+<text>未显示标签</text>
+<view wx:for="{{no_view_labels}}" wx:key="index">
+    <button class="vlabel" data-index="{{index}}" bindtap="add">{{no_view_labels[index]}}+</button> 
+</view>
