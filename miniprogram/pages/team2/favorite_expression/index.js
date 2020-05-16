@@ -7,6 +7,8 @@ return a+b
 }
 Page({
   data: {
+    expression_comment:[],
+    expression_view_comment:[],
     color:"black",
     all_select:"",
     selected:"",
@@ -118,18 +120,21 @@ Page({
     var labels=this.data.labels
     var temp_src=[]
     var temp_expression=[]
+    var temp_comment=[]
     var j=0;
     let temp_view_src = "images_view_srcs"
     for(var i=0; i<labels.length; i++){
       if(labels[i]==undefined) {
         temp_src[j]=src[i];
         temp_expression[j]=this.data.expression[i]
+        temp_comment[j]=this.data.expression_comment[i]
         j++;
       }
     }
     this.setData({
       [temp_view_src]: temp_src,
-      expression_view:temp_expression
+      expression_view:temp_expression,
+      expression_view_comment:temp_comment
     })
   },
   onShow: async function () {
@@ -187,9 +192,38 @@ Page({
       images_src1[i] = res.result.data[0].expression_set[i].file_id
       delete_selected_temp[i]=false
       can_delete_selected_temp[i]=false
+      wx.cloud.callFunction({
+        name:"get_expression_only_for_team2",
+        data:{
+          data1:images_src1[i],
+          data2:i,
+        },
+        success(res){
+          console.log("111111111111111111111111110",res)
+          
+          let expp="expression_comment["+res.result[1]+"]"
+          let expp1="expression_view_comment["+res.result[1]+"]"
+          if(res.result[0].data[0].comment!=undefined){
+            console.log("222")
+            _this.setData({
+              [expp]:res.result[0].data[0].comment,
+              [expp1]:res.result[0].data[0].comment
+            })
+          }
+          else{
+            console.log("111")
+            _this.setData({
+              [expp]:[],
+              [expp1]:[]
+            })
+          }
+          console.log(i,"1000",_this.data.expression_comment)
+        }
+      })
     }
     
     console.log(images_src1)
+    console.log("111111",expression_temp)
     let temp_view_src = "images_view_srcs"
     let temp_src = "images_srcs"
     let temp_label = "labels"
@@ -212,6 +246,7 @@ Page({
     var src=this.data.images_srcs
     var expression=this.data.expression
     var label=this.data.labels
+    var comment=this.data.expression_comment
     var k
     var temp
     for(var i=1; i<freq.length; i++){
@@ -220,6 +255,7 @@ Page({
           freq[j]=[freq[j+1],freq[j+1]=freq[j]][0];
           src[j]=[src[j+1],src[j+1]=src[j]][0];
           expression[j]=[expression[j+1],expression[j+1]=expression[j]][0];
+          comment[j]=[comment[j+1],comment[j+1]=comment[j]][0];
           temp=[]
           for(k=0;k<label[j].length;k++){
             temp[k]=label[j][k]
@@ -242,8 +278,10 @@ Page({
       [temp_view_src]: src,
       [temp_label]: label,
       [temp_freq]: freq,
-      expression_view:expression
+      expression_view:expression,
+      expression_view_comment:comment
     })
+    console.log("comment",this.data.expression_view_comment)
   },
   delete_or_previewImage: function (e){
     if(this.data.can_delete_selected[e.currentTarget.dataset.index]==true){
@@ -272,7 +310,7 @@ Page({
     else{
       //setTimeout(function () {},1000)
       
-      wx.showToast({
+      /*wx.showToast({
         title: '长按图片可转发',
         icon: 'loading',
         duration: 1000
@@ -281,8 +319,11 @@ Page({
       wx.previewImage({
         current: e.currentTarget.dataset.src, // 当前显示图片的https链接
         urls: e.currentTarget.dataset.srcs, // 需要预览的图片https链接列表
+      })*/
+      console.log(this.data.expression_view[e.currentTarget.dataset.index])
+      wx.reLaunch({
+        url: '../expression_information/index?expression='+this.data.images_view_srcs[e.currentTarget.dataset.index],
       })
-      
     }
   },
   forward(a,b){
@@ -302,13 +343,15 @@ Page({
     var labels=this.data.labels
     var temp_src=[]
     var temp_expression=[]
+    var temp_comment=[]
     var j=0;
     var k
     let temp_view_src = "images_view_srcs"
     if(label=='全部'){
       this.setData({
         [temp_view_src]: this.data.images_srcs,
-        expression_view:this.data.expression
+        expression_view:this.data.expression,
+        expression_view_comment:this.data.expression_comment
       })
       return;
     }
@@ -320,6 +363,7 @@ Page({
         if(labels[i][k].name==label){
           temp_src[j]=src[i];
           temp_expression[j]=this.data.expression[i]
+          temp_comment[j]=this.data.expression_comment[i]
           j++;
           break;
         }
@@ -328,7 +372,8 @@ Page({
     console.log("111",labels.length)
     this.setData({
       [temp_view_src]: temp_src,
-      expression_view:temp_expression
+      expression_view:temp_expression,
+      expression_view_comment:temp_comment
     })
   },
   selected(){

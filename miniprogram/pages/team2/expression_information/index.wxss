@@ -1,0 +1,21 @@
+/* pages/team2/expression_information/index.wxss */
+@import "../../../app.wxss";
+.hh-round-card{
+  min-height: 40rpx;
+  height: 40rpx;
+  width: 80%;
+}
+.comment{
+  display: flex;
+  flex-direction: row;
+}
+.hh-icon1{
+  position: relative;
+  display: flex;
+  padding: 20rpx 0 30rpx;
+  transition-duration: 0s;
+  flex-direction: column;
+  width: 100rpx;
+  align-items: center;
+  justify-content: center;
+}
