@@ -10,8 +10,8 @@ exports.main = async (event, context) => {
   //const wxContext = cloud.getWXContext()
   var expression_id = event.data1
   try{
-    return db.collection('expression').where({
-      _id:expression_id
+    return await db.collection('expression').where({
+      file_id:expression_id
     }).get()
   } catch(e){
     console.log(e)

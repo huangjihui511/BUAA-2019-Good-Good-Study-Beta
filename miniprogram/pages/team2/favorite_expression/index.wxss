@@ -1,10 +1,33 @@
 /**index.wxss**/
-
+@import "../../../app.wxss";
+.hh-avator{
+  height: 160rpx;
+  width: 160rpx;
+}
+.empty{
+  display: none;
+}
+.image{
+  height: 160rpx;
+  width: 160rpx;
+}
 page {
   background:white;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+.add_labels{
+  position: fixed;
+  top: 0rpx;
+  right: 0rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  height: 80rpx;
+  background-color: rgb(252, 251, 251);
 }
 .delete_logo{
   width: 50rpx;
@@ -21,10 +44,6 @@ page {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
-.image{
-  height: 160rpx;
-  width: 160rpx;
 }
 .load_image_login{
   height: 160rpx;
@@ -49,7 +68,6 @@ page {
   flex-direction: column;
   flex-wrap:wrap;
   justify-content:space-around;
-  margin: 30rpx;
 }
  .select{
   background-color: rgb(252, 251, 251);
@@ -93,7 +111,7 @@ page {
 
 .nav {
   height: 80rpx;
-  width: 100%;
+  width: 90%;
   box-sizing: border-box;
   overflow: hidden;
   line-height: 80rpx;

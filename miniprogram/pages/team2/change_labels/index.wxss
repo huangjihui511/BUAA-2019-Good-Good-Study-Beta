@@ -1,0 +1,7 @@
+/* pages/team2/change_labels/index.wxss */
+@import "../../../app.wxss";
+.hh-grid-3{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

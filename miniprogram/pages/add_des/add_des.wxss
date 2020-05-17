@@ -1,5 +1,7 @@
 /* pages/add_des/add_des.wxss */
 
+@import "../../app.wxss";
+
 
 .page-section-ctn {
   text-align: center;

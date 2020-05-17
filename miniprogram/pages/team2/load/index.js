@@ -35,7 +35,8 @@ data: {
   time:"",
   add_label_list:[],
   add_label_text:[],
-  have_add_labels:[]
+  have_add_labels:[],
+  icon: [{ name: 'appreciate', isShow: false}, { name: 'check', isShow: true ,chinese_name:'确认',bind:'submitted'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'添加标签',bind:"add_label"}, { name: 'emoji', isShow: false }, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'选择图片',bind:"chooseImage"}],
 },
 getinput(e){
   var _this=this
@@ -278,13 +279,15 @@ submitted: function submitted(e) {
       }
     }
     console.log("去已经有的"+temp_add_label_text)
-    wx.cloud.callFunction({
-      name: "add_label",
-      data:{
-        id:app.globalData.open_id,
-        label:temp_add_label_text
-      }
-    })
+    if(temp_add_label_text.length!=0){
+      wx.cloud.callFunction({
+        name: "add_label",
+        data:{
+          id:app.globalData.open_id,
+          label:temp_add_label_text
+        }
+      })
+    }
     wx.cloud.callFunction({
       name: "add_exp",
       data:{

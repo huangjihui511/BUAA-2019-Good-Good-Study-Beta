@@ -10,11 +10,15 @@ exports.main = async (event, context) => {
   const countResult = await db.collection('expression_visit_times').count()
   const total = countResult.total
       // 计算需分几次取
-  const batchTimes = Math.ceil(total / 20)
-  
+  var batchTimes = Math.ceil(total / 20)
+  const filetag = event.tag 
   const fileid = event.id
+  if (batchTimes==0) {
+    batchTimes = 1
+  }
   console.log("batchtimes:",batchTimes)
   console.log("fileid:",fileid)
+  console.log("filetag:",filetag)
   for (var i = 0;i < batchTimes;i++) {
     console.log("i:",i)
     var isnull = 0
@@ -28,6 +32,7 @@ exports.main = async (event, context) => {
       data: {
                 // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
         id:fileid,
+        tag:filetag,
         times:1
       }
       }).then(res=>{
@@ -48,6 +53,7 @@ exports.main = async (event, context) => {
             await db.collection('expression_visit_times').doc(_id).set({
               data:{
                 id:fileid,
+                tag:filetag,
                 times:visits
               }
             }).then(res=>{

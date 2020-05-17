@@ -1,6 +1,8 @@
 /* miniprogram/pages/test/test.wxss */
 /* miniprogram/pages/feedback/feedback.wxss */
 
+@import "../../app.wxss";
+
 
 .page-section-ctn {
   text-align: center;
