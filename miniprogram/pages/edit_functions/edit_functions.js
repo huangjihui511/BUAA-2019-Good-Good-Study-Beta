@@ -306,6 +306,43 @@ Page({
     //   }
   },
 
+  rotatePhoto:function() {
+    this.setData({
+      text: false,
+      paint: false,
+      filter: false,
+      joint: false,
+      save:false
+    })
+    var cWidth = this.data.cWidth;
+    var cHeight = this.data.cHeight;
+    var that = this;
+    let cxt = wx.createCanvasContext('edit');
+    cxt.translate(that.data.cWidth,0);
+    cxt.rotate(90 * Math.PI / 180);
+    cxt.drawImage(that.data.curImage, 0, 0, cHeight, cWidth);
+    cxt.draw(false,wx.canvasToTempFilePath({
+      canvasId: 'edit',
+      //width: that.data.cWidth,
+      //height: that.data.cHeight,
+      //destWidth: that.data.cWidth * 750 / wx.getSystemInfoSync().windowWidth,
+      //destHeight: that.data.cHeight * 750 / wx.getSystemInfoSync().windowWidth,
+      success: function(res) {
+        console.log("success!更新curImage")
+        console.log(res.tempFilePath);
+        that.setData({
+          curImage: res.tempFilePath
+        })
+      }
+    }));
+    
+  },
+
+  cutPhoto() {
+
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -50,6 +50,14 @@
     <image src="../../images/save.png"></image>
     <text>保存图片</text>
   </view>
+  <view class="iconView" bindtap="rotatePhoto">
+    <image src="../../images/refresh.png"></image>
+    <text>双击旋转</text>
+  </view>
+  <view class="iconView" bindtap="cutPhoto">
+    <image></image>
+    <text>裁切图片</text>
+  </view>
 </view>
 
 <view class="{{save ? 'weui-show' :'weui-hidden'}}">

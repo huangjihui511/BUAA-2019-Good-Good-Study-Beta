@@ -21,7 +21,6 @@
     "pages/fliter/fliter",
     "pages/aboutExp/aboutExp",
     "pages/userpage/userpage"
-    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -59,7 +58,6 @@
         "selectedIconPath": "images/user_fill.png",
         "text": "本地"
       },
-      
       {
         "pagePath": "pages/FormalUIPage/FormailUIPage",
         "iconPath": "images/user_blank.png",
