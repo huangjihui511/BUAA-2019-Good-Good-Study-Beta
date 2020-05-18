@@ -9,13 +9,16 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view-->
-  <view class='content'>
-    <image class="image_show"  src="{{imagePath}}"></image>
+  <view class="hh-grid-square-1">
+    <image class="hh-img"  src="{{imagePath}}"></image>
   </view>
-  
-  <button class='goodbutton'  hover-class="hover" bindtap="storeImage" data-fileid="{{imagePath}}">收藏</button>
-  <button class='goodbutton'  hover-class="hover" bindtap="download" data-fileid="{{imagePath}}">下载</button>
-  <button class='goodbutton'  hover-class="hover" bindtap="jump2userpage" data-fileid="{{imagePath}}">了解作者的收藏</button>
+
+  <view class="hh-grid-3">
+    <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}">
+      <text class="cuIcon-{{item.name}} lg text-gray" bindtap='{{item.action}}' ></text>
+      <text>{{item.text}}</text>
+    </view>
+  </view>
 
   
   <view class="wordsAbovePics">
