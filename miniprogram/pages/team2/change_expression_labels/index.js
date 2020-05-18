@@ -69,6 +69,7 @@ checkboxChange(e){
       this.setData({
         [flags]: detailValue
     })
+    console.log("777",this.data.labels)
 },
 submitted: function submitted(e) {
   var that = this;
@@ -286,8 +287,21 @@ submitted: function submitted(e) {
             }
           }
         }
+        
+    let detailValue = _this.data.label_list.filter(it => it.selected).map(it => it.title)
+    let flags="labels"
+    console.log('所有选中的值为：', detailValue)
+    if(_this.data.label_list[0].selected==false){
+      console.log("未公开")
+      detailValue[detailValue.length]='未公开'
+    }
+    _this.setData({
+      [flags]: detailValue
+  })
+  console.log("777",_this.data.labels)
       }
     })
+    
   },
 
   /**
