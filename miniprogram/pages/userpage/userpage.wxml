@@ -1,13 +1,22 @@
 <!--miniprogram/pages/userpage/userpage.wxml-->
+
+<view class='hh-text'>上传用户:{{uploaderName}}</view>
+<view class = "line"></view>
+<view class="swiper-tab"> 
+  <view class="swiper-tab-list {{TopIndex == 0 ? 'active':''}} " data-index="0" bindtap='changstyle'>上传者收藏</view>    
+  <view class="swiper-tab-list {{TopIndex == 1 ? 'active':''}} " data-index="1" bindtap='changstyle'>上传者自制</view>
+</view>
 <view class="container">
-  <text>制作者名字：{{uploader[0].name}}</text>
-  <text>公开表情:</text>
-  <view class='content'>
-    <view class='content-item' wx:for="{{collection}}" wx:for-item="item">
+  <view wx:if="{{TopIndex == 0}}">
+    <view class='content'>
+      <view class='content-item' wx:for="{{collection}}" wx:for-item="item">
       <!-- 图片 -->
-      <button class='image_button' data-fileid='{{item.file_id}}' bindtap="shop_image_pagejump" style="width:110%">
-        <image class="image_search" src="{{item.file_id}}" ></image>
-      </button>
+        <button class='image_button' data-fileid='{{item.file_id}}' bindtap="shop_image_pagejump" style="width:110%">
+          <image class="image_search" src="{{item.file_id}}" ></image>
+        </button>
+      </view>
     </view>
+  </view>
+  <view wx:if="{{TopIndex == 1}}">
   </view>
 </view>

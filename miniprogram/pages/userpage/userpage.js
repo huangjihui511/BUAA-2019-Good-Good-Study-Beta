@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    uploaderName: "开发者",
+    TopIndex: 0,
     uploader:[],
     collection: []
   },
@@ -15,16 +17,34 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    db.collection('user').where({
-      openid: options.uploader
-    }).get().then(res=>{
-      console.log(res)
-      this.setData({
-        uploader: res.data,
-        collection: res.data[0].expression_set
+    if (options.upload == ""){
+      console.log("noUploader")
+      wx.showToast({
+        title: '此表情由开发者上传',
+        icon: 'none',
+        duration: 3000//持续的时间
       })
-      console.log(this.data.uploader)
-      console.log(this.data.collection)
+    }
+    else {
+      db.collection('user').where({
+        open_id: options.upload
+      }).get().then(res=>{
+        console.log(res)
+        this.setData({
+          uploader: res.data,
+          collection: res.data[0].expression_set,
+          uploaderName: res.data[0].name
+        })
+        console.log(this.data.uploader)
+        console.log(this.data.collection)
+      })
+    }
+  },
+
+  changstyle:function(e){
+    let index=e.currentTarget.dataset.index;
+    this.setData({
+      TopIndex:index
     })
   },
 
