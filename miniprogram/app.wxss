@@ -450,8 +450,8 @@ color: var(--grey);
 }
 
 .hh-img-icon {
-  width: 40%;
-  height: 100rpx;
+  width: 23%;
+  height: 60rpx;
   display: inline-block;
   overflow: hidden;
   position: relative;
