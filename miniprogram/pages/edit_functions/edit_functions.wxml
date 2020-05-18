@@ -29,34 +29,42 @@
   </block>
 </view> -->
 
-<view class="bottom">
-  <view class="iconView" bindtap="addText">
-    <image src="../../images/text.png"></image>
+<view class="hh-grid-3">
+  <view class="hh-icon" bindtap="addText">
+    <image src="../../images/text.png" class="hh-img-icon"></image>
     <text>添加文字</text>
   </view>
-  <view class="iconView" bindtap="addLine">
-    <image src="../../images/paint.png"></image>
+  <view class="hh-icon" bindtap="addLine">
+    <image src="../../images/paint.png" class="hh-img-icon"></image>
     <text>图片涂鸦</text>
   </view>
-  <view class="iconView" bindtap="addFilter">
-    <image src="../../images/fliter.png"></image>
+  <view class="hh-icon" bindtap="addFilter">
+    <image src="../../images/fliter.png" class="hh-img-icon"></image>
     <text>添加滤镜</text>
   </view>
-  <view class="iconView" bindtap="addPhoto">
-    <image src="../../images/joint.png"></image>
+  <view class="hh-icon" bindtap="addPhoto">
+    <image src="../../images/joint.png" class="hh-img-icon"></image>
     <text>图片拼接</text>
   </view>
-  <view class="iconView" bindtap="savePhoto">
-    <image src="../../images/save.png"></image>
+  <view class="hh-icon" bindtap="savePhoto">
+    <image src="../../images/save.png" class="hh-img-icon"></image>
     <text>保存图片</text>
   </view>
-  <view class="iconView" bindtap="rotatePhoto">
-    <image src="../../images/rotate.png"></image>
+  <view class="hh-icon" bindtap="rotatePhoto">
+    <image src="../../images/rotate.png" class="hh-img-icon"></image>
     <text>双击旋转</text>
   </view>
-  <view class="iconView" bindtap="cutPhoto">
-    <image src="../../images/crop.png"></image>
+  <view class="hh-icon" bindtap="cutPhoto">
+    <image src="../../images/crop.png" class="hh-img-icon"></image>
     <text>裁切图片</text>
+  </view>
+  <view class="hh-icon" bindtap="addImg">
+    <image src="../../images/album.png" class="hh-img-icon"></image>
+    <text>从相册选择</text>
+  </view>
+  <view class="hh-icon" bindtap="addImg2">
+    <image src="../../images/collection.png" class="hh-img-icon"></image>
+    <text>收藏夹选择</text>
   </view>
 </view>
 
