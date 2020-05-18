@@ -5,3 +5,9 @@
   align-items: center;
   justify-content: center;
 }
+.logo{
+  position: absolute;
+  right: 10rpx;
+  font-size: small;
+  color: rgb(196, 193, 193);
+}

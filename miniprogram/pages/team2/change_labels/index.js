@@ -8,7 +8,38 @@ Page({
    */
   data: {
     view_labels:[],
-    no_view_labels:[]
+    no_view_labels:[],
+    checkbox: [{
+      value: 0,
+      name: '10元',
+      checked: false,
+      hot: true,
+    }, {
+      value: 1,
+      name: '20元',
+      checked: true,
+      hot: false,
+    }, {
+      value: 2,
+      name: '30元',
+      checked: true,
+      hot: true,
+    }, {
+      value: 3,
+      name: '60元',
+      checked: false,
+      hot: true,
+    }, {
+      value: 4,
+      name: '80元',
+      checked: false,
+      hot: false,
+    }, {
+      value: 5,
+      name: '100元',
+      checked: false,
+      hot: false,
+    }]
   },
   complete(){
     var that=this
@@ -17,22 +48,26 @@ Page({
       data:{
         id:app.globalData.open_id,
         labels:that.data.view_labels
-      }
-    })
-    wx.cloud.callFunction({
-      name:"change_del_labels",
-      data:{
-        id:app.globalData.open_id,
-        del_labels:that.data.no_view_labels
-      }
-    })
-    wx.showToast({
-      title: '修改成功',
-      icon: "success",
-      duration: 1000,
+      },
       success(res){
-        wx.reLaunch({
-          url: '../favorite_expression/index',
+        wx.cloud.callFunction({
+          name:"change_del_labels",
+          data:{
+            id:app.globalData.open_id,
+            del_labels:that.data.no_view_labels
+          },
+          success(res){
+            wx.showToast({
+              title: '修改成功',
+              icon: "success",
+              duration: 1000,
+              success(res){
+                wx.reLaunch({
+                  url: '../favorite_expression/index',
+                })
+              }
+          })
+          }
         })
       }
     })

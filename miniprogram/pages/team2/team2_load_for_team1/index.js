@@ -278,9 +278,8 @@ submitted: function submitted(e) {
       [cu_time]:timestamp
     })
     wx.cloud.uploadFile({
-      cloudPath:'test'+Math.round(Math.random()*1000)+'.jpg',
+      cloudPath:'test'+app.globalData.open_id+Math.round(Math.random()*100000)+'.jpg',
       filePath:src,
-      config:"pyb-database-n2c6s",
       success: res => {
         console.log("图片file_id", res.fileID)
         const file1 = res.fileID
