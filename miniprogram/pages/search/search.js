@@ -21,7 +21,8 @@ Page(
     onLoad:function(e) {
       var searchString = app.globalData.toSearch
       var pageJudge = app.globalData.shopPageFlag
-      //如果judge为0，由搜索跳转至当前页面；judge为1，由推荐表情转至当前页面
+      //如果judge为0，由搜索跳转至当前页面；judge为1，由推荐表情转至当前页面；
+      //judge为2，由商店的某个热门模块转至当前页面
       if (pageJudge == 0) {
         this.data.inputValue = searchString
         console.log("searchString:",searchString)
@@ -33,6 +34,7 @@ Page(
         })
         this.confirm()
       }
+      //显示所有推荐表情
       else if (pageJudge == 1){
         var title = app.globalData.shopPageTitle
         console.log("title",title)
@@ -43,6 +45,19 @@ Page(
         wx.setNavigationBarTitle({
           title: title,
         })
+        this.showRecommond()
+      }
+      //显示某个热门标签的所有表情
+      else if (pageJudge == 2) {
+        this.data.inputValue = searchString
+        console.log("searchString:",searchString)
+        this.setData({
+          inputValue:this.data.inputValue
+        })
+        wx.setNavigationBarTitle({
+          title: searchString
+        })
+        this.confirm()
       }
     },
 
@@ -92,9 +107,47 @@ Page(
       }
     },
 
+    //显示推荐表情
+    showRecommond:function() {
+      var that = this
+      console.log("显示推荐表情")
+      wx.cloud.callFunction({
+        name:'image_visit_times',
+        data:{
+         request:1
+        }
+      }).then(res=>{
+        console.log("call_cloud_success:",res)
+        var paths = res.result.data
+        var globalPicIndex = 0
+        console.log("paths:",paths)
+        for (var i = 0;i < paths.length;i++) {
+          var path = paths[i]['id']
+          var tag = paths[i]['tag']
+          //console.log(paths[i])
+          //console.log("init path:",path)
+          that.data.showListCache[globalPicIndex] = {'file_id':path,'tag':tag}
+          if (globalPicIndex < 18) {
+            that.data.showPicList[parseInt(i/3)][i%3]['file_id'] = path
+            that.data.showPicList[parseInt(i/3)][i%3]['tag'] = tag
+            that.setData({
+              showPicList:that.data.showPicList
+            }) 
+          }
+          globalPicIndex++
+        }
+        var fill = globalPicIndex
+        for (;fill < 18;fill++) {
+          that.data.showPicList[parseInt(fill/3)][fill%3]['file_id'] = ''
+          that.setData({
+            showPicList:that.data.showPicList
+          })
+        }
+      })
+    },
+
     //搜索图片
     confirm: function() {
-
       console.log("confirm")
       var v = this.data.inputValue
       this.setData({toSearch:v})
@@ -149,7 +202,7 @@ Page(
                   }
                   }, 20000)
                 var all_tags = res.data[0].name
-                console.log("all_tags:",all_tags)
+                //console.log("all_tags:",all_tags)
                 for (var runover = 0;runover < all_tags.length;runover++) {
                   var judge = 0 
                   var inputString = String(label)
@@ -169,14 +222,14 @@ Page(
                         var datas = res.data
                         for (var f = 0;f < datas.length;f++) {
                           var ids = datas[f]['expression_id']
-                          console.log("ids:",ids) 
+                          //console.log("ids:",ids) 
                           for (var key in ids) {
                             var reflex1 = globalPicIndex%18
                               var reflex2 =  parseInt(reflex1/3)
                               var reflex3 = reflex1%3
-                              console.log("globalPicIndex:",globalPicIndex)
-                              console.log("key:",key)
-                            that.data.showListCache[globalPicIndex] = key
+                              //console.log("globalPicIndex:",globalPicIndex)
+                              //console.log("key:",key)
+                            that.data.showListCache[globalPicIndex] = {'file_id':key,'tag':tag}
                             if (globalPicIndex < 18) {
                               that.data.showPicList[reflex2][reflex3]['file_id'] = key
                               that.data.showPicList[reflex2][reflex3]['tag'] = tag
@@ -246,12 +299,24 @@ Page(
         })
         var length = globalList.length
         var init = this.data.globalShowIndex*18
-        for (var i = 0;i < 18;i++) {
-          var path = globalList[init+i]
+        for (var i = 0;(i < 18)&&(init+i < length);i++) {
+          var path = globalList[init+i]['file_id']
+          var tag = globalList[init+i]['tag']
           console.log("path:",path)
+          console.log("tag:",tag)
           var reflex1 = parseInt(i/3)
           var reflex2 = i%3
           this.data.showPicList[reflex1][reflex2]['file_id'] = path
+          this.data.showPicList[reflex1][reflex2]['tag'] = tag
+          this.setData({
+            showPicList:this.data.showPicList
+          })
+        }
+        for (;i < 18;i++) {
+          var reflex1 = parseInt(i/3)
+          var reflex2 = i%3
+          this.data.showPicList[reflex1][reflex2]['file_id'] = ''
+          this.data.showPicList[reflex1][reflex2]['tag'] = ''
           this.setData({
             showPicList:this.data.showPicList
           })
@@ -276,12 +341,24 @@ Page(
           globalShowIndex:this.data.globalShowIndex
         })
         var length = globalList.length
-        for (var i = 0;i < 18;i++) {
-          var path = globalList[init+i]
+        for (var i = 0;(i < 18)&&(init+i < length);i++) {
+          var path = globalList[init+i]['file_id']
+          var tag = globalList[init+i]['tag']
           console.log("path:",path)
+          console.log("tag:",tag)
           var reflex1 = parseInt(i/3)
           var reflex2 = i%3
           this.data.showPicList[reflex1][reflex2]['file_id'] = path
+          this.data.showPicList[reflex1][reflex2]['tag'] = tag
+          this.setData({
+            showPicList:this.data.showPicList
+          })
+        }
+        for (;i < 18;i++) {
+          var reflex1 = parseInt(i/3)
+          var reflex2 = i%3
+          this.data.showPicList[reflex1][reflex2]['file_id'] = ''
+          this.data.showPicList[reflex1][reflex2]['tag'] = ''
           this.setData({
             showPicList:this.data.showPicList
           })

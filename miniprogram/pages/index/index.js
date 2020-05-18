@@ -202,6 +202,7 @@ Page({
     
     var tag = app.globalData.shopImageTag
     this.data.tag_image = tag
+    console.log("tag_onload:",this.data.tag_image)
     this.searchOnload()
 
     console.log(option)
