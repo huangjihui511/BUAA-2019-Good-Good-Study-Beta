@@ -390,6 +390,13 @@ submitted: function submitted(e) {
         have_add_labels:res.result.data[0].labels
       })
     }
+    if(res.result.data[0].del_labels!=undefined){
+      _this.setData({
+        have_add_labels: _this.data.have_add_labels.concat(res.result.data[0].del_labels)
+      })
+      console.log(res.result.data[0].del_labels)
+      console.log(_this.data.have_add_labels)
+    }
     console.log(this.data.have_add_labels)
     console.log(app)
     console.log(app.globalData.open_id)

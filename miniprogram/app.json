@@ -3,6 +3,7 @@
     
     "pages/login/login",
     "pages/team2/change_labels/index",
+    
     "pages/team2/favorite_expression/index",
     "pages/FormalUIPage/FormailUIPage",
     "pages/notify/notify",

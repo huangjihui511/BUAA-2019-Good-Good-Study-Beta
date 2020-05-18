@@ -7,6 +7,8 @@ return a+b
 }
 Page({
   data: {
+    icon: [{ name: 'appreciate', isShow: true }, { name: 'check', isShow: true }, { name: 'close', isShow: true }, { name: 'edit', isShow: true }, { name: 'emoji', isShow: true }, { name: 'favorfill', isShow: true }, { name: 'favor', isShow: true }],
+   
     expression_comment:[],
     expression_view_comment:[],
     color:"black",
@@ -74,12 +76,29 @@ Page({
     ],
     currentTab: 0,
     navScrollLeft: 0,
-    clickcolor:"red"
+    clickcolor:"red",
+    TabCur : 0,
+    scrollLeft:0,
   },
-  switchNav(event){
+  tabSelect(e) {
     if(this.data.button_select==true){
       return
     }
+    this.setData({
+      TabCur: e.currentTarget.dataset.id
+    })
+    if(this.data.TabCur==1){this.from_shop()}
+    else if(this.data.TabCur==2){this.freq_order();}
+    else{
+      console.log(this.data.TabCur)
+      this.label_select(this.data.navData[this.data.TabCur].text)
+    }
+    var singleNavWidth = 54;
+    this.setData({
+      scrollLeft: (this.data.TabCur - 2) * singleNavWidth
+    })      
+  },
+  switchNav(event){
     var _this=this
     var k
     var cur = event.currentTarget.dataset.current;
@@ -203,7 +222,8 @@ Page({
           
           let expp="expression_comment["+res.result[1]+"]"
           let expp1="expression_view_comment["+res.result[1]+"]"
-          if(res.result[0].data[0].comment!=undefined){
+          console.log(images_src1[res.result[1]])
+          if((res.result[0].data[0]!=undefined)&&(res.result[0].data[0].comment!=undefined)){
             console.log("222")
             _this.setData({
               [expp]:res.result[0].data[0].comment,
@@ -321,7 +341,7 @@ Page({
         urls: e.currentTarget.dataset.srcs, // 需要预览的图片https链接列表
       })*/
       console.log(this.data.expression_view[e.currentTarget.dataset.index])
-      wx.reLaunch({
+      wx.navigateTo({
         url: '../expression_information/index?expression='+this.data.images_view_srcs[e.currentTarget.dataset.index],
       })
     }
@@ -421,7 +441,7 @@ Page({
     }
   },
   add_or_delete(){
-    wx.reLaunch({
+    wx.navigateTo({
       url: '../change_labels/index',
     })
   },
@@ -439,24 +459,8 @@ Page({
               })
             }
             else if(res.tapIndex==4){
-              wx.cloud.callFunction({
-                name:"add_expression",
-                data:{
-                  request:"sub_expression",
-                  data1:app.globalData.open_id,
-                  data2:e.currentTarget.dataset.src
-                },
-                success(res){
-                  wx.cloud.downloadFile({
-                    fileID: e.currentTarget.dataset.src,
-                    success(res) {
-                      console.log(res.tempFilePath)
-                      wx.reLaunch({
-                        url: '../team2_load_for_team1/index?src=' + res.tempFilePath,
-                      })
-                    }
-                  })
-                }
+              wx.navigateTo({
+                url: '../change_expression_labels/index?src=' + e.currentTarget.dataset.src,
               })
             }
             else{

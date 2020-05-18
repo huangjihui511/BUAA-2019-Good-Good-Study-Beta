@@ -10,12 +10,12 @@
     <text>{{item.chinese_name}}</text>
   </view>
 </view>
-<view>推荐表情</view>
-<view>表情的评论</view>
+<view class="hh-text">推荐表情</view>
+<view class="hh-text">表情的评论</view>
 <view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
   <view class="hh-avator-round" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
   <view class="hh-conment-content">
-    <view class="hh-avator-conmment-name">{{comment[index].open_id}}</view>
+    <view class="hh-avator-conmment-name">{{comment[index].user_name}}</view>
     <view class="hh-avator-conmment-content">
       {{comment[index].comment}}
     </view>

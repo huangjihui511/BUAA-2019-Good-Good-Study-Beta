@@ -22,29 +22,39 @@ Page({
     var _this=this
     console.log("评论",_this.data.comment)
     wx.cloud.callFunction({
-      name: 'add_comment',
+      name:'get_exp',
       data: {
-        src:_this.data.expression,
-        comment:{"open_id":app.globalData.open_id,"comment":_this.data.comment,"time":new Date()}
+        id:app.globalData.open_id
       },
       success(res){
-        console.log(res)
-        
-    wx.showToast({
-      title: '评论成功',
-      icon: 'loading',
-      duration: 1000,
-      success(res){
-        wx.reLaunch({
-          url: '../expression_information/index?expression='+_this.data.expression,
+        console.log("666666",res)
+        wx.cloud.callFunction({
+          name: 'add_comment',
+          data: {
+            src:_this.data.expression,
+            comment:{"open_id":app.globalData.open_id,"user_name":res.result.data[0].user_name,"comment":_this.data.comment,"time":new Date()}
+          },
+          success(res){
+            console.log(res)
+            
+        wx.showToast({
+          title: '评论成功',
+          icon: 'success',
+          duration: 1000,
+          success(res){
+            wx.redirectTo({
+              url: '../expression_information/index?expression='+_this.data.expression,
+            })
+          }
+        })
+          },
+          fail(res){
+            console.log("错误"+res)
+          }
         })
       }
     })
-      },
-      fail(res){
-        console.log("错误"+res)
-      }
-    })
+    
   },
   forward(){
     wx.showToast({

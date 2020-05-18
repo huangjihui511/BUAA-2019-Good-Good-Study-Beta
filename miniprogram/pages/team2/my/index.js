@@ -449,6 +449,14 @@ Page({
         }
       })
     }
+    console.log('userInfo',this.data.userInfo)
+    wx.cloud.callFunction({
+      name:'add_user_name',
+      data:{
+        id:app.globalData.open_id,
+        name:that.data.userInfo.nickName
+      }
+    })
     var that = this
     var tempid = '123'
     wx.cloud.callFunction({
