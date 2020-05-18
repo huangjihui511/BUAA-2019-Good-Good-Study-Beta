@@ -9,22 +9,32 @@
     direction="all" bindtap="reFreshL">
     <image src="../../images/toLeft.png" style="height:80rpx;width:80rpx;"></image>
   </movable-view-->
-  <view class="search">
-    <!-- <view class="showWhatToSearch">查找你想要的表情：{{toSearch}}</view> -->
+  <!--view class="search">
     <view class="searchInputConfirm">
-      <input class="input" bindinput="bindConfirmClick" data-input="input"
+      <input class="input" bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"
          placeholder="请输入搜索关键字">
       </input>
       <button class="button_confirm" style="width:150rpx" bindtap="confirm" >
         <text class="confirmText" style="font-size:medium">确认</text>
-       <!-- <view class="confirmFont"></view>-->
       </button>
     </view>
-  <!--view class="page__hd">
-        <view class="page__title">商店页面</view>
-        <view class="page__desc">浏通过关键词或者相关的句子找到匹配的表情</view>
-        <view class="page__desc">查看作者发布的其他表情，下载和收藏</view>
   </view-->
+  <!--view class="hh-search-around">
+    <text class="cuIcon-search"></text>
+    <input type="text" placeholder="请输入搜索关键字" confirm-type="search"
+      bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"></input>
+  </view-->
+  <view class="search">
+    <view class="searchInputConfirm">
+      <view class="hh-search-around">
+        <text class="cuIcon-search"></text>
+        <input type="text" placeholder="请输入搜索关键字" confirm-type="search"
+          bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"></input>
+      </view>
+      <view class="button_confirm" style="width:150rpx;height:50rpx" bindtap="confirm" >
+        <text class="confirmText" style="font-size:medium">确认</text>
+      </view>
+    </view>
   </view>
   <view class="wordsAbovePics">
     <view class="showWhatToSearch">
@@ -36,17 +46,18 @@
   </view>
   <view class="line"></view>
   <view class="picShowList">
+    <!--view class="hh-grid-square-3" wx:for="{{showPicList}}" wx:for-index="index">
+      <view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
+       wx:key style="background-image:url({{item.file_id}});"
+       bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
+       data-tag='{{item.tag}}'>
+      </view>
+    </view-->
     <view class="picShowRow" wx:for="{{showPicList}}" wx:for-index="index">
-      <!--view wx:for="{{showPicList}}" wx:for-item="item" wx:key="*this"-->
-        <!--button class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="*this"
-           bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}'>
-          <image class='image_search' src="{{item.file_id}}"></image>
-        </button-->
         <image class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="*this"
            bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' data-tag='{{item.tag}}'
            src="{{item.file_id}}">
         </image>
-      <!--/view-->
     </view> 
   </view>
   <view class="line"></view>
@@ -62,10 +73,17 @@
   <view class="picShowList">
     <view class="picShowRow" wx:for="{{showStaticPics1}}" wx:for-index="index">
         <image class="buttonImage" wx:for="{{showStaticPics1[index]}}" wx:for-item="item" wx:key="*this"
-           bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}'
+           bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' data-tag='{{item.tag}}'
            src="{{item.file_id}}">
         </image>
     </view> 
+    <!--view class="hh-grid-square-3" wx:for="{{showStaticPics1}}" wx:for-index="index">
+    <image class="hh-img" wx:for="{{showStaticPics1[index]}}" wx:for-item="item"
+       wx:key 
+       bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
+       data-tag='{{item.tag}}' src="{{item.file_id}}">
+    </image>
+    </view-->
   </view>
   <!--view class="line"></view-->
 

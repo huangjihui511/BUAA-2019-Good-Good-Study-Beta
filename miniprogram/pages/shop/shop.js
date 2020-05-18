@@ -35,9 +35,12 @@ Page({
     [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}]
     ],
     showStaticPics1:[
-      [{file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger1.jpeg'},
-      {file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger2.jpeg'},
-      {file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger3.jpg'}]
+      [{file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger1.jpeg',
+        tag:'黑人抬棺'},
+      {file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger2.jpeg',
+        tag:'黑人抬棺'},
+      {file_id:'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/nigger3.jpg',
+        tag:'黑人抬棺'}]
     ],
     user_rank:5,
     user_exp:0,
@@ -54,9 +57,18 @@ Page({
   },
 
   jump_to_search:function(e) {
-    app.globalData.shopPageTitle = e.currentTarget.dataset.kind
-    app.globalData.shopPageFlag = 1
+    var kind = e.currentTarget.dataset.kind
+    app.globalData.shopPageTitle = kind
+    if (kind == "为你推荐") {
+      app.globalData.shopPageFlag = 1
+    }
+    else {
+      app.globalData.shopPageFlag = 2
+      app.globalData.toSearch = kind
+    }
     console.log("front_global:",app.globalData.shopPageTitle)
+    console.log("front_flag:",app.globalData.shopPageFlag)
+    console.log("front_toSearch",app.globalData.toSearch)
     wx.navigateTo({
       url: '/pages/search/search'
     })
@@ -85,6 +97,7 @@ Page({
               data: {
                 // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
                 id:e.currentTarget.dataset.fileid,
+                tag:tag,
                 times:1
               },
               success: function(res) {
@@ -125,7 +138,8 @@ Page({
     wx.cloud.callFunction({
       name:'image_visit_times',
       data:{
-        id:fileid
+        id:fileid,
+        tag:tag
       }
     }).then(res=>{
       console.log("call_cloud_success")
@@ -395,16 +409,6 @@ Page({
         }
         else if (judge == 4) {
           console.log("test+++")
-        /*  wx.cloud.callFunction({
-            name:'add_expression',
-            data:{
-              request:'search_upgrade',
-              data1:
-            }
-          }).then(res=>{
-            console.log("888")
-            console.log(res)
-          })*/
           var tempRes = []
           console.log("label:",label)
           wx.cloud.callFunction({
@@ -594,8 +598,8 @@ Page({
     db.collection('expression_visit_times').limit(12).get({
       success:function(res) {
         var paths = res.data
-        //console.log("初始推荐表情:",paths)
-        //console.log(paths.length)
+        console.log("初始推荐表情:",paths)
+        console.log(paths.length)
         for (var i = 0;i < paths.length;i++) {
           var path = paths[i]['id']
           var tag = paths[i]['tag']
