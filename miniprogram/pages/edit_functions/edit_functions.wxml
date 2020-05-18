@@ -11,7 +11,7 @@
 <view wx:if="{{!choosed}}">
   <view class="page__hd">
           <view class="page__title">编辑表情</view>
-          <view class="page__desc">目前支持添加文字，图片涂鸦，添加滤镜，图片拼接</view>
+          <view class="page__desc">目前支持添加文字，图片涂鸦，添加滤镜，图片拼接、裁切、旋转</view>
           <view class="page__desc">长按已选，重新选择照片</view>
   </view>
   <button class="weui-btn" type="primary" bindtap="addImg">从本地选择</button>
@@ -20,7 +20,7 @@
   
 </view>
 <view class="canvasView" bindlongtap="addImg" wx:if="{{choosed}}" style="--height--: {{CVH}}px">
-  <image src='{{curImage}}' style='width: {{cWidth}}px; height: {{cHeight}}px'></image>
+  <image class="hh-img" src='{{curImage}}' style='width: {{cWidth}}px; height: {{cHeight}}px'></image>
 </view>
 
 <!-- <view class="bottom">
@@ -29,26 +29,42 @@
   </block>
 </view> -->
 
-<view class="bottom">
-  <view class="iconView" bindtap="addText">
-    <image src="../../images/text.png"></image>
+<view class="hh-grid-3">
+  <view class="hh-icon" bindtap="addText">
+    <image src="../../images/text.png" class="hh-img-icon"></image>
     <text>添加文字</text>
   </view>
-  <view class="iconView" bindtap="addLine">
-    <image src="../../images/paint.png"></image>
+  <view class="hh-icon" bindtap="addLine">
+    <image src="../../images/paint.png" class="hh-img-icon"></image>
     <text>图片涂鸦</text>
   </view>
-  <view class="iconView" bindtap="addFilter">
-    <image src="../../images/fliter.png"></image>
+  <view class="hh-icon" bindtap="addFilter">
+    <image src="../../images/fliter.png" class="hh-img-icon"></image>
     <text>添加滤镜</text>
   </view>
-  <view class="iconView" bindtap="addPhoto">
-    <image src="../../images/joint.png"></image>
+  <view class="hh-icon" bindtap="addPhoto">
+    <image src="../../images/joint.png" class="hh-img-icon"></image>
     <text>图片拼接</text>
   </view>
-  <view class="iconView" bindtap="savePhoto">
-    <image src="../../images/save.png"></image>
+  <view class="hh-icon" bindtap="savePhoto">
+    <image src="../../images/save.png" class="hh-img-icon"></image>
     <text>保存图片</text>
+  </view>
+  <view class="hh-icon" bindtap="rotatePhoto">
+    <image src="../../images/rotate.png" class="hh-img-icon"></image>
+    <text>双击旋转</text>
+  </view>
+  <view class="hh-icon" bindtap="cutPhoto">
+    <image src="../../images/crop.png" class="hh-img-icon"></image>
+    <text>裁切图片</text>
+  </view>
+  <view class="hh-icon" bindtap="addImg">
+    <image src="../../images/album.png" class="hh-img-icon"></image>
+    <text>从相册选择</text>
+  </view>
+  <view class="hh-icon" bindtap="addImg2">
+    <image src="../../images/collection.png" class="hh-img-icon"></image>
+    <text>收藏夹选择</text>
   </view>
 </view>
 

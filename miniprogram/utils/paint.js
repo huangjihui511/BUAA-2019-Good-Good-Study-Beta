@@ -3,12 +3,13 @@ const App = getApp();
 const recordPoints = App.globalData.recordPoints;
 
 // 记录一条线的起始点，顺便记录一下这条线的颜色和为宽度
-export const startTouch = (e, color, width) => {
+export const startTouch = (e, color, width, ismasaic) => {
   recordPoints.push([{
     x: e.touches[0].x,
     y: e.touches[0].y,
     color,
     width,
+    masaic: ismasaic,
   }]);
 };
 
@@ -23,27 +24,44 @@ export const reDraw = (_this) => {
   const ctx = wx.createCanvasContext('myCanvas');
 
   recordPoints.forEach(line => {
-    const { width, color, x, y } = line[0];
-    // 线的宽度
-    ctx.setLineWidth(width);
-    // 线的颜色
-    ctx.setStrokeStyle(color);
-    // 起始位置
-    ctx.moveTo(x, y);
-    // 这些样式就默认了
-    ctx.setLineCap('round');
-    ctx.setLineJoin('round');
+    if (line[0].masaic) {
+      line.forEach((p, i) => {
+        if (i === 0) {
+          return;
+        }
+        ctx.setFillStyle('red')
+        ctx.fillRect(...p.move, 10, 10)
+        ctx.fillRect(p.move[0] + 10,p.move[1] + 10, 10, 10)
+        ctx.setFillStyle('pink')
+        ctx.fillRect(p.move[0] + 10, p.move[1], 10, 10)
+        ctx.fillRect(p.move[0], p.move[1] + 10, 10, 10)
+        ctx.draw(true)
+      });
+      
+    }else {
+      const { width, color, x, y } = line[0];
+      // 线的宽度
+      ctx.setLineWidth(width);
+      // 线的颜色
+      ctx.setStrokeStyle(color);
+      // 起始位置
+      ctx.moveTo(x, y);
+      // 这些样式就默认了
+      ctx.setLineCap('round');
+      ctx.setLineJoin('round');
 
-    console.log(line);
-    line.forEach((p, i) => {
-      if (i === 0) {
-        return;
-      }
-      ctx.moveTo(...p.move);
-      ctx.quadraticCurveTo(...p.draw);
-      ctx.stroke();
-      ctx.draw(true);
-    });
+      console.log(line);
+      line.forEach((p, i) => {
+        if (i === 0) {
+          return;
+        }
+        ctx.moveTo(...p.move);
+        ctx.quadraticCurveTo(...p.draw);
+        ctx.stroke();
+        ctx.draw(true);
+      });
+    }
+    
   });
 
   _this.setData({

@@ -1,5 +1,5 @@
 /* pages/edit_functions/edit_functions.wxss */
-
+@import "../../app.wxss";
 .canvasView {
   width: 750rpx;
   height: var(--height--);

@@ -24,6 +24,10 @@ Page({
         background: 'url("http://static.jsososo.com/bmob-cdn-20716.b0.upaiyun.com/2018/10/29/a516340a402e93ea8025fe0eb6f2f080.png") white no-repeat; background-size: 18px 18px;background-position: 3px 3px;'
       },
       {
+        type: 'masaic',
+        background: 'url("../../images/masaic.png") white no-repeat; background-size: 20px 20px;background-position: 2px 2px;'
+      },
+      {
         type: 'clear',
         background: 'url("http://static.jsososo.com/bmob-cdn-20716.b0.upaiyun.com/2019/03/15/56ae37da404a12628036b2a332516567.png") white no-repeat; background-size: 18px 18px;background-position: 3px 3px;'
       },
@@ -42,6 +46,7 @@ Page({
     eraser: false, // 是否开启橡皮擦
     saving: false, // 是否在保存状态
     scope: false, // 是否有保存图片的权限
+    masaic: false, //是否是添加马赛克
   },
 
   /**
@@ -89,8 +94,16 @@ Page({
   tapBtn: function (e) {
     if (e.target.dataset.type == 'clear') {
       this.drawBack()
-    } else {
+    } else if(e.target.dataset.type == 'masaic') {
+      this.setData({
+        masaic: true,
+      })
+    } 
+    else {
       utils.tapBtn(e, this, 2);
+      this.setData({
+        masaic: false,
+      })
     }
   },
 
@@ -106,7 +119,7 @@ Page({
     const { r, g, b } = this.data;
     let color = `rgb(${r},${g},${b})`;
     let width = this.data.w;
-    startTouch(e, color, width);
+    startTouch(e, color, width, this.data.masaic);
   },
 
   touchMove: function (e) {
@@ -124,15 +137,25 @@ Page({
 
     const [pX, pY, cX, cY] = [...prevPosition, e.touches[0].x, e.touches[0].y];
     const drawPosition = [pX, pY, (cX + pX) / 2, (cY + pY) / 2];
-    ctx.setLineWidth(width);
-    ctx.setStrokeStyle(color);
+    if (this.data.masaic == true) { 
+      ctx.setFillStyle('red')
+      ctx.fillRect(e.touches[0].x, e.touches[0].y, 10, 10)
+      ctx.fillRect(e.touches[0].x + 10, e.touches[0].y + 10, 10, 10)
+      ctx.setFillStyle('pink')
+      ctx.fillRect(e.touches[0].x + 10, e.touches[0].y, 10, 10)
+      ctx.fillRect(e.touches[0].x, e.touches[0].y + 10, 10, 10)
+      ctx.draw(true)
+    }else {
+      ctx.setLineWidth(width);
+      ctx.setStrokeStyle(color);
 
-    ctx.setLineCap('round');
-    ctx.setLineJoin('round');
-    ctx.moveTo(...movePosition);
-    ctx.quadraticCurveTo(...drawPosition);
-    ctx.stroke();
-    ctx.draw(true);
+      ctx.setLineCap('round');
+      ctx.setLineJoin('round');
+      ctx.moveTo(...movePosition);
+      ctx.quadraticCurveTo(...drawPosition);
+      ctx.stroke();
+      ctx.draw(true);
+    }
 
     recordPointsFun(movePosition, drawPosition)
 
