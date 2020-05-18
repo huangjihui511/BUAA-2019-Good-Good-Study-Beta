@@ -1,15 +1,22 @@
 /**index.wxss**/
 @import "../../../app.wxss";
+.hh-mult-nav {
+  background: var(--green);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
 .hh-avator{
-  height: 160rpx;
-  width: 160rpx;
+  height: 130rpx;
+  width: 130rpx;
 }
 .empty{
   display: none;
 }
 .image{
-  height: 160rpx;
-  width: 160rpx;
+  height: 130rpx;
+  width: 130rpx;
 }
 page {
   background:white;
@@ -46,9 +53,9 @@ page {
   justify-content: center;
 }
 .load_image_login{
-  height: 160rpx;
-  width: 160rpx;
-  margin: 30rpx 30rpx 400rpx 30rpx;
+  height: 130rpx;
+  width: 130rpx;
+  margin: 50rpx 50rpx 400rpx 50rpx;
 }
 .temp{
   margin: 30rpx 30rpx 400rpx 30rpx;

@@ -9,7 +9,7 @@
     direction="all" bindtap="reFreshL">
     <image src="../../images/toLeft.png" style="height:80rpx;width:80rpx;"></image>
   </movable-view>
-  <view class="search">
+  <!--view class="search">
     <view class="searchInputConfirm">
       <input class="input" bindinput="bindConfirmClick" data-input="input"
          placeholder="{{inputValue}}">
@@ -17,6 +17,18 @@
       <button class="button_confirm" style="width:150rpx" bindtap="confirm" >
         <text class="confirmText" style="font-size:medium">确认</text>
       </button>
+    </view>
+  </view-->
+  <view class="search">
+    <view class="searchInputConfirm">
+      <view class="hh-search-around">
+        <text class="cuIcon-search"></text>
+        <input type="text" placeholder="{{inputValue}}" confirm-type="search"
+          bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"></input>
+      </view>
+      <view class="button_confirm" style="width:150rpx;height:50rpx" bindtap="confirm" >
+        <text class="confirmText" style="font-size:medium">确认</text>
+      </view>
     </view>
   </view>
   <view class="wordsAbovePics">
@@ -34,7 +46,14 @@
            bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
            data-tag='{{item.tag}}' src="{{item.file_id}}">
         </image>
-    </view> 
+    </view>
+    <!--view class="hh-grid-square-3" wx:for="{{showPicList}}" wx:for-index="index">
+    <view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
+       wx:key style="background-image:url({{item.file_id}});"
+       bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
+       data-tag='{{item.tag}}'>
+    </view>
+    </view--> 
   </view>
 </movable-area>
 </view>

@@ -1,0 +1,31 @@
+/* pages/contect/contect.wxss */
+@import "../../../app.wxss";
+.hh-grid-3{
+  width: 100%;
+}
+.hh-choose-item{
+  margin: 5rpx;
+}
+.hh-choose-item-choosed{
+  margin: 5rpx;
+}
+.hh-grid-3{
+  display: flex;
+  flex-direction: row;
+}
+.add_label{
+  background-color: white;
+  height: 120rpx;
+  width: 160rpx;
+  margin: 5rpx 10rpx;
+  text-align: center;
+}
+.empty{
+  display: none;
+}
+.label_button{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}

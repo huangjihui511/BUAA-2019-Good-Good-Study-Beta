@@ -7,12 +7,45 @@ cloud.init()
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const db = cloud.database()
+  const request = event.request
+
+  //查找推荐表情
+  if (request == 1) {
+    const countResult = await db.collection('expression_visit_times').count()
+    const total = countResult.total
+      // 计算需分几次取
+    var batchTimes = Math.ceil(total / 20)
+    if (batchTimes==0) {
+      batchTimes = 1
+    }
+    console.log("request=1:",batchTimes)
+    var resultArray = []
+    for (var i = 0;i < batchTimes;i++) {
+      var temp = await db.collection("expression_visit_times").skip(i*100).get()
+      console.log("第"+i+"次取,结果为:",temp)
+      console.log("temp.data:",temp.data)
+      resultArray = resultArray.concat(temp.data)
+      /*await db.collection("expression_visit_times").skip(i*100).get({
+        success:function(res) {
+          console.log("第"+i+"次取,结果为:")
+          console.log(res)
+          resultArray.concat(res.data)
+        }
+      })*/ 
+    }
+    console.log("resultArray:",resultArray)
+    return {
+      data:resultArray
+    }
+  }
+
   const countResult = await db.collection('expression_visit_times').count()
   const total = countResult.total
       // 计算需分几次取
   var batchTimes = Math.ceil(total / 20)
   const filetag = event.tag 
   const fileid = event.id
+  
   if (batchTimes==0) {
     batchTimes = 1
   }
@@ -24,7 +57,7 @@ exports.main = async (event, context) => {
     var isnull = 0
     var res = await db.collection("expression_visit_times").where({
       id:fileid
-    }).skip(i*20).get()
+    }).skip(i*100).get()
     console.log("res.data:",res)         
     if ((res.data[0] == null) && (i == batchTimes-1)) {
       await db.collection('expression_visit_times').add({

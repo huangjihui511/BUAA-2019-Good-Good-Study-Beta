@@ -8,14 +8,13 @@
 }
 
 .button_confirm{
-  /*size:default;*/
-  /**background-color: rgb(164, 164, 236);**/
- /* background-color: burlywood;*/
   background-color: #0387FE;
   display: flex;
   justify-content: center;
   position: relative;
   color: white;
+  border-radius: 50rpx;
+  margin-top: 10rpx;
 }
 
 .conformFont{
@@ -255,6 +254,24 @@
   margin:20rpx;
 }
 
+
+/*input/search*/
+.hh-search-around {
+  background-color: #f5f5f5;
+  line-height: 64rpx;
+  height: 64rpx;
+  font-size: 24rpx;
+  color: var(--black);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0 30rpx;
+  border-radius: 5000rpx;
+  box-sizing: border-box;
+  padding: 30rpx;
+  width: 500rpx;
+}
+
 .input {
   height: 2.58823529em;
   min-height: 2.58823529em;
@@ -265,12 +282,13 @@
 }
 .buttonImage {
   padding: 0;
-  margin:20rpx;
-  width: 100px;
-  height: 100px;
+  margin:10rpx;
+  width: 220rpx;
+  height: 220rpx;
   align-items: center;
   justify-content: center;
   background-color: white;
+  border-radius: 20rpx;
 }
 .buttonImage::after {
   border: none;

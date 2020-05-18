@@ -1,32 +1,29 @@
 <!--index.wxml-->
-
-<view class="add_labels" bindtap="add_or_delete">+</view>
-<scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
-  <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
-    <view class="nav-item {{currentTab == idx ?'active':''}}"  style="color:{{navItem.show?clickcolor:color}}" data-current="{{idx}}" bindtap="switchNav">{{navItem.text}}</view>
-  </block>        
+<scroll-view scroll-x class="hh-mult-nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+  <view class="hh-nav-item{{index==TabCur?'-choosed':''}}" wx:for="{{navData}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+    {{navData[index].text}}
+  </view>
+  <view class="hh-nav-item" style="border-bottom: 10rpx solid;" bindtap="add_or_delete">编辑标签
+  </view>
 </scroll-view>
 <text>\n\n</text>
+
 <view class="page__hd">
         <view class="page__title">收藏的表情</view>
         <view class="page__desc">您可以在本页面浏览已上传或者收藏的表情，也可点击上传按钮上传本地图片</view>
         <view class="page__desc">点击预览，长按更多功能待你挖掘</view>
 </view>
 <view class="struct">
-  
-
-  <view wx:for="{{images_view_srcs}}" wx:key="index">
-    <view class="image_struct">
-      <view class="hh-avator">
-        <image class="image {{delete_selected[index]?'image_selected':''}}" mode="aspectFill" data-index="{{index}}" data-src="{{item}}" data-srcs="{{images_view_srcs}}" src="{{item}}" bindtap="delete_or_previewImage" bindlongtap="more_information">
-        </image>
-        <view class="{{((expression_view_comment[index]!=undifined)&&(expression_view_comment[index].length!=0))?'hh-notification':'empty'}}">
-          {{expression_view_comment[index].length}}
-        </view>
-        </view>
+  <view wx:for="{{images_view_srcs}}" wx:key="index">      
+    <view class="hh-avator">  
+      <image class="image {{delete_selected[index]?'image_selected':''}}" mode="aspectFill" data-index="{{index}}" data-src="{{item}}" data-srcs="{{images_view_srcs}}" src="{{item}}" bindtap="delete_or_previewImage" bindlongtap="more_information">
+      </image>
+      <view class="{{((expression_view_comment[index]!=undifined)&&(expression_view_comment[index].length!=0))?'hh-notification':'empty'}}">
+        {{expression_view_comment[index].length}}
+      </view>
     </view>
   </view>
-  
+
   <block wx:if="{{button_select}}">
     <view class="temp"></view>
   </block>
@@ -42,8 +39,9 @@
   <view class="{{button_select?'delete':'empty'}}" bindtap="delete">
       <!-- <image class="delete_logo" src="../../../images/team2/timg.jpeg"></image> -->
 
-    <image class="delete_logo" src="../../../images/team2/delete_logo.jpg"></image>
-    删除
+    <view class="hh-icon">
+      <text class="cuIcon-delete lg text-gray">delete</text>
+    </view>
   </view>
 </view>
 <view class='select' >

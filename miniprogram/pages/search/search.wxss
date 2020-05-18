@@ -2,20 +2,10 @@
 
 @import "/lib/shared.wxss";
 @import "/lib/weui.wxss";
+@import "../shop/shop.wxss";
 
 .page-section{
   margin-bottom: 20rpx;
-}
-
-.button_confirm{
-  /*size:default;*/
-  /**background-color: rgb(164, 164, 236);**/
- /* background-color: burlywood;*/
-  background-color: #0387FE;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  color: white;
 }
 
 .conformFont{
@@ -238,7 +228,7 @@
   flex-direction: column;
   padding:10rpx;
   background-color: white;
-  max-height: fit-content;
+  /*max-height: fit-content;*/
 }
 
 .picShowRow {
@@ -263,12 +253,13 @@
 }
 .buttonImage {
   padding: 0;
-  margin:20rpx;
-  width: 100px;
-  height: 100px;
+  margin:10rpx;
+  width: 220rpx;
+  height: 220rpx;
   align-items: center;
   justify-content: center;
   background-color: white;
+  border-radius: 20rpx;
 }
 .buttonImage::after {
   border: none;

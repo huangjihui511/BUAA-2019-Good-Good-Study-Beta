@@ -238,7 +238,8 @@ exports.main = async (event, context) => {
     } catch(e) {
       console.log(e)
     }
-  } else if (request == "sub_expression") {
+  } 
+  if (request == "sub_expression") {
     var user_id = event.data1
     var expression = event.data2
     try{
@@ -299,4 +300,34 @@ exports.main = async (event, context) => {
       console.log(e)
     }
   }
+  else if (request == "delete_user_exp_tag") {
+    var open_id0 = event.data1
+    var path = event.data2
+    var tag_de = event.data3
+    try {
+      await db.collection('user').where({
+        open_id:open_id0,
+        'expression_set.file_id':path
+      }).update({
+        data:{
+          'expression_set.$.tags':_.pull({name:tag_de})
+        },
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  else if (request == "get_user_exp_tag") {
+    var open_id0 = event.data1
+    var path = event.data2
+    try {
+      await db.collection('user').where({
+        open_id:open_id0,
+        'expression_set.file_id':path
+      }).get()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 }

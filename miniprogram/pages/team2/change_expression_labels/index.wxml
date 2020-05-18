@@ -1,0 +1,35 @@
+<!--pages/team2/change_labels/index.wxml--><!--pages/contect/contect.wxml-->
+
+<view class="page">
+  <view class="hh-grid-3">
+    <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}" bindtap="{{item.bind}}">
+      <text class="cuIcon-{{item.name}} lg text-gray"></text>
+      <text>{{item.chinese_name}}</text>
+    </view>
+  </view>
+  <view class="label_button">
+    <button  style="width:160rpx"
+      data-index="{{index}}" 
+      bindtap="checkboxChange"
+      checked="{{item.selected}}"
+      wx:for="{{label_list}}" 
+      wx:key="index" 
+      class="hh-choose-item{{item.selected ? '-choosed' : ''}}">
+        {{item.title}}
+    </button>
+    <view wx:for="{{add_label_list}}" wx:key="index">
+      <input id='{{index}}' class="add_label" bindblur="getinput"></input>
+    </view>
+  </view>
+   
+   <view class="{{empty?'empty':'canvas'}}">
+      <canvas style="width:{{canvasWidth}}px; height:{{canvasHeight}}px;position:fixed;left:9000px;" canvas-id="myCanvas"></canvas>
+   </view>
+   
+</view>
+<view class="{{empty?'empty':'image'}}">
+  <view class="hh-grid-square-1">
+    <image class="hh-img" mode="aspectFill" src="{{image_src}}"></image>
+  </view>
+</view>
+
