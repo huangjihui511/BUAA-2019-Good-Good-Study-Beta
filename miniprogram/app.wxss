@@ -441,6 +441,25 @@ color: var(--grey);
   font-size: larger;
   background-color: lightblue;
 }
+
+
+
+
+.hh-grid-3>image {
+  width: 33.33%;
+}
+
+.hh-img-icon {
+  width: 40%;
+  height: 100rpx;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  margin: auto;
+
+}
+
 page {
   background-color: #F8F8F8;
   height: 100%;
