@@ -51,11 +51,11 @@
     <text>保存图片</text>
   </view>
   <view class="iconView" bindtap="rotatePhoto">
-    <image src="../../images/refresh.png"></image>
+    <image src="../../images/rotate.png"></image>
     <text>双击旋转</text>
   </view>
   <view class="iconView" bindtap="cutPhoto">
-    <image></image>
+    <image src="../../images/crop.png"></image>
     <text>裁切图片</text>
   </view>
 </view>

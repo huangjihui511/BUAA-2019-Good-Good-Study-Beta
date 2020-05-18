@@ -323,10 +323,8 @@ Page({
     cxt.drawImage(that.data.curImage, 0, 0, cHeight, cWidth);
     cxt.draw(false,wx.canvasToTempFilePath({
       canvasId: 'edit',
-      //width: that.data.cWidth,
-      //height: that.data.cHeight,
-      //destWidth: that.data.cWidth * 750 / wx.getSystemInfoSync().windowWidth,
-      //destHeight: that.data.cHeight * 750 / wx.getSystemInfoSync().windowWidth,
+      destWidth: 3*cWidth,
+      destHeight: 3*cHeight,
       success: function(res) {
         console.log("success!更新curImage")
         console.log(res.tempFilePath);
@@ -339,7 +337,16 @@ Page({
   },
 
   cutPhoto() {
-
+    this.setData({
+      text: false,
+      paint: false,
+      filter: false,
+      joint: false,
+      save:false
+    })
+    wx.navigateTo({
+      url: '../cropper/cropper-example',
+    })
   },
 
 

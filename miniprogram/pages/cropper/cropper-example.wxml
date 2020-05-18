@@ -1,0 +1,13 @@
+<!--pages/cropper/cropper-sample.wxml-->
+<view class='body'>
+
+  <cropper id='cropper' class='stage'></cropper>
+
+  <view class='btnView'>
+    <button class='produceBtn' type='primary' bindtap='fnSubmit'>
+      保存编辑
+    </button>
+  </view>
+
+</view>
+

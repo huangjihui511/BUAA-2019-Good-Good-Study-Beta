@@ -25,7 +25,7 @@ Page({
       },
       {
         type: 'masaic',
-        background: 'url("http://static.jsososo.com/bmob-cdn-20716.b0.upaiyun.com/2018/10/29/b2caae93401a9be1809edfb314a91159.png") white no-repeat; background-size: 20px 20px;background-position: 2px 2px;'
+        background: 'url("../../images/masaic.png") white no-repeat; background-size: 20px 20px;background-position: 2px 2px;'
       },
       {
         type: 'clear',
