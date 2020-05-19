@@ -5,6 +5,36 @@ Page({
    * 页面的初始数据
    */
   data: {
+    cardCur: 0,
+    swiperList: [{
+      id: 0,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
+    }, {
+      id: 1,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg',
+    }, {
+      id: 2,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
+    }, {
+      id: 3,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
+    }, {
+      id: 4,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
+    }, {
+      id: 5,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
+    }, {
+      id: 6,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
+    }],
     icon: [{ name: 'appreciate', isShow: true }, { name: 'check', isShow: true }, { name: 'close', isShow: true }, { name: 'edit', isShow: true }, { name: 'emoji', isShow: true }, { name: 'favorfill', isShow: true }, { name: 'favor', isShow: true }],
     TabCur : 0,
     scrollLeft:0,
@@ -40,7 +70,12 @@ Page({
       hot: false,
     }]
   },
-
+  cardSwiper(e) {
+    this.setData({
+      cardCur: e.detail.current
+    })
+    console.log(this.data.cardCur)
+  },
   tabSelect(e) {
     this.setData({
       TabCur: e.currentTarget.dataset.id,

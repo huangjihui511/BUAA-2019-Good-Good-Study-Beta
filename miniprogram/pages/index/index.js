@@ -5,6 +5,7 @@ const db = wx.cloud.database()
 //var path = require('app.js')
 Page({
   data: {
+    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞', action: 'appreciate'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2userpage'}],
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
