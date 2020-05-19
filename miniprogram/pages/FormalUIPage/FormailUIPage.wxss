@@ -1,2 +1,42 @@
 /* miniprogram/pages/FormalUIPage/FormailUIPage.wxss */
 @import "../../app.wxss";
+
+.hh-card-swiper {
+  box-sizing: border-box;
+  height: 600rpx;
+
+}
+
+.hh-card-swiper-item {
+  width: 610rpx !important;
+  left: 70rpx;
+  box-sizing: border-box;
+  padding: 40rpx 0rpx 90rpx;
+  overflow: initial;
+
+}
+
+.hh-card-swiper-item-cur {
+  width: 610rpx !important;
+  left: 70rpx;
+  box-sizing: border-box;
+  padding: 0rpx 20rpx 60rpx;
+  overflow: initial;
+
+}
+
+.hh-swiper-item {
+  width: 100%;
+display: block;
+height: 100%;
+border-radius: 30rpx;
+transform: scale(0.95);
+transition: all 0.2s ease-in 0s;
+overflow: hidden;
+
+}
+
+.hh-swiper-item>image {
+  width: 100%;
+  height: 100%;
+}

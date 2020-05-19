@@ -98,7 +98,7 @@ Page{
 
 .hh-grid-square-3>image {
   /* padding-bottom: calc((100% - 40rpx)/3); */
-	height: calc((750rpx - 60rpx)/3);
+	height: calc((750rpx - 68rpx)/3);
 	width: calc((100% - 66rpx)/3);
 }
 
@@ -118,7 +118,7 @@ Page{
 }
 .hh-grid-square-1>image {
   /* padding-bottom: calc((100% - 40rpx)); */
-	height: 750rpx;
+	height: 700rpx;
 	width: calc((100%rpx));
 }
 .hh-img {
