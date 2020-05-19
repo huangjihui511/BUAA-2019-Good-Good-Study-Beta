@@ -2,6 +2,15 @@
 <view>文本的显示</view>
 <view class="hh-title">这是标题</view>
 <view class="hh-text">这是内容这是内容这是内容这是内容这是内容这是内容这是内容</view>
+<view>轮播</view>
+<swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
+  <swiper-item wx:for="{{swiperList}}" wx:key class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
+    <view class="hh-swiper-item">
+      <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+      <!-- <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video> -->
+    </view>
+  </swiper-item>
+</swiper>
 <view>图片显示和动画</view>
 <view class="hh-grid-square-3">
   <image class="hh-img" wx:for="{{4}}" wx:key src="https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg" mode="aspectFill"></image>
