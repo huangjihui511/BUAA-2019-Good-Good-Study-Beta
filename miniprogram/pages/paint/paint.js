@@ -25,7 +25,7 @@ Page({
       },
       {
         type: 'masaic',
-        background: 'url("../../images/masaic.png") white no-repeat; background-size: 20px 20px;background-position: 2px 2px;'
+        background: 'url("https://i.niupic.com/images/2020/05/20/7TNs.png") white no-repeat; background-size: 18px 18px;background-position: 3px 3px;'
       },
       {
         type: 'clear',
