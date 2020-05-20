@@ -1,9 +1,7 @@
 {
   "pages": [
-    
     "pages/login/login",
     "pages/team2/change_labels/index",
-    
     "pages/team2/favorite_expression/index",
     "pages/FormalUIPage/FormailUIPage",
     "pages/notify/notify",
@@ -25,7 +23,8 @@
     "pages/fliter/fliter",
     "pages/aboutExp/aboutExp",
     "pages/userpage/userpage",
-    "pages/cropper/cropper_example"
+    "pages/cropper/cropper_example",
+    "pages/hotSearch/hotSearch"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -39,6 +39,84 @@ exports.main = async (event, context) => {
     }
   }
 
+  //更新关键词检索次数
+  else if (request == 2) {
+    const tag_search = event.tag
+    const countResult = await db.collection('tag_search_times').count()
+    const total = countResult.total
+      // 计算需分几次取
+    var batchTimes = Math.ceil(total / 20)
+    if (batchTimes == 0) {
+      batchTimes = 1
+    }
+    for (var i = 0;i < batchTimes;i++) {
+      console.log("i:",i)
+      var tag_record = await db.collection('tag_search_times').where({
+        tag:tag_search
+      }).skip(i*100).get()
+      console.log("tag_record:",tag_record)
+      var tag_record_length = tag_record.data.length
+      console.log("data_length:",tag_record_length)
+      if ((tag_record_length == 0)&&(i == batchTimes-1)) {
+        console.log("no records")
+        //添加记录
+        await db.collection('tag_search_times').add({
+          data:{
+            tag:tag_search,
+            times:1
+          }
+        }).then(res=>{
+          console.log("第一次搜索该关键词")
+        })
+      }
+      else {
+        console.log("get record")
+        var _id = tag_record.data[0]._id
+        var times = tag_record.data[0].times
+        console.log("search times:",times)
+        await db.collection('tag_search_times').doc(_id).update({
+          data:{
+            times:times+1
+          }
+        }).then(res=>{
+          console.log("再次搜索该关键词，次数加一")
+        })
+      }
+    }
+    return
+  }
+
+  //获取所有关键词检索记录
+  else if (request == 3) {
+    //获取搜索次数最多的关键词
+    const getAmount = 8
+    
+    const countResult = await db.collection('tag_search_times').count()
+    const total = countResult.total
+      // 计算需分几次取
+    var batchTimes = Math.ceil(total / 20)
+    if (batchTimes == 0) {
+      batchTimes = 1
+    }
+    var resultArray = []
+    var resultLength = 0
+    for (var i = 0;i < batchTimes;i++) {
+      var temp = await db.collection('tag_search_times').limit(32).
+        orderBy("times","desc").skip(i*batchTimes).get()
+      console.log("取一次关键词记录:",temp)
+      resultLength = resultLength + temp.data.length
+      console.log("temp_length:",resultLength)
+      resultArray = resultArray.concat(temp.data)
+      if (resultLength > 0) {
+        break
+      }
+    }
+    console.log("resultArray:",resultArray)
+    return {
+      data:resultArray
+    }
+  }
+
   const countResult = await db.collection('expression_visit_times').count()
   const total = countResult.total
       // 计算需分几次取
