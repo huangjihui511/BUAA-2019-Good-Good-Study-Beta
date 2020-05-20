@@ -20,10 +20,36 @@
     </view>
   </view>
 
+
+<view class="divLine"></view>
+
+<view class="hh-text">表情的评论</view>
+<view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
+  <view class="hh-avator-round" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+  <view class="hh-conment-content">
+    <view class="hh-avator-conmment-name">{{comment[index].user_name}}</view>
+    <view class="hh-avator-conmment-content">
+      {{comment[index].comment}}
+    </view>
+    <view>{{comment[index].time}}</view>
+  </view>
+</view>
+<view class='comment'>
+  <view class = "hh-round-card">
+    <textarea type="text" placeholder="输入评论" bindinput="getinput"></textarea>
+  </view>
+  <view class="hh-icon1" bindtap="commented">
+    <text class="cuIcon-check lg text-gray"></text>
+    <text>发送</text>
+  </view>
+</view>
+
+<view class="divLine"></view>
   
   <view class="wordsAbovePics">
     <view class="showWhatToSearch">
-      相似表情
+      <view class="hh-text">相似表情</view>
+      
     </view>
   </view>
   <!--view class="picShowList">

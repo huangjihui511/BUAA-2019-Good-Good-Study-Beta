@@ -1,6 +1,14 @@
 /**index.wxss**/
 @import "../search/search.wxss";
 
+@import "../../app.wxss";
+
+.divLine{
+  background: #E0E3DA;
+  width: 100%;
+  height: 5rpx;
+}
+
 .goodbutton {  
   margin-top: 30px; 
   width: 80%;  

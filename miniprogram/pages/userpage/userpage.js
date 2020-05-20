@@ -6,6 +6,21 @@ Page({
    * 页面的初始数据
    */
   data: {
+    headImage: [
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal1.png',
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal2.png'
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal3.png'
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal4.png'
+      },
+    ],
+    headImageNum: 1,
     uploaderName: "开发者",
     TopIndex: 0,
     uploader:[],
@@ -39,12 +54,23 @@ Page({
         console.log(this.data.collection)
       })
     }
+    this.setData({
+      headImageNum: Math.floor(Math.random()*3) + 1
+    })
+    console.log(this.data.headImageNum)
   },
 
-  changstyle:function(e){
+  changestyle:function(e){
     let index=e.currentTarget.dataset.index;
     this.setData({
       TopIndex:index
+    })
+  },
+
+  tabSelect(e) {
+    this.setData({
+      TabCur: e.currentTarget.dataset.id,
+      scrollLeft: (e.currentTarget.dataset.id-1)*60
     })
   },
 
