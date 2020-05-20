@@ -294,7 +294,7 @@ Page({
   upLoad() {
     let path = this.data.curImage
     wx.navigateTo({
-      url: '../team2/team2_load_for_team1/index?src=' + path,
+      url: '../team2/team2_load_for_team1/index?src=' + path+"&pre_src="+this.options.src,
     })
     // wx.cloud.uploadFile({
     //   cloudPath: 'test.jpg',

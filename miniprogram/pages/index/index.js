@@ -288,18 +288,21 @@ Page({
   },
   //收藏图片
   storeImage(e){
+    var _this=this
     const _ = db.command
     var temp_image = {
       file_id: e.currentTarget.dataset.fileid
     }
     var user_openid = app.globalData.open_id
     console.log(user_openid)
+    console.log(e.currentTarget.dataset.fileid)
     wx.cloud.callFunction({
       name: 'add_expression',
       data:{
         request: 'add_expression',
         data1: app.globalData.open_id,
-        data2: e.currentTarget.dataset.fileid
+        data2: _this.data.imagePath,
+        data3:[{"name":_this.data.tag_image,"num":0},{"name":"商店","num":0}]
       },
     }).then(res=> {
       wx.showToast({                

@@ -7,7 +7,6 @@
   <view class="swiper-tab-list {{TopIndex == 1 ? 'active':''}} " data-index="1" bindtap='changstyle'>上传者自制</view>
 </view>
 <view class="container">
-  <view wx:if="{{TopIndex == 0}}">
     <view class='content'>
       <view class='content-item' wx:for="{{collection}}" wx:for-item="item">
       <!-- 图片 -->
@@ -16,7 +15,4 @@
         </button>
       </view>
     </view>
-  </view>
-  <view wx:if="{{TopIndex == 1}}">
-  </view>
 </view>
