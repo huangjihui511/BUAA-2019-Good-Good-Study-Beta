@@ -182,8 +182,8 @@ submitted: function submitted(e) {
       duration: 1000,
       success(data) {
         setTimeout(function () {
-          wx.reLaunch({
-            url: '../favorite_expression/index',
+          wx.navigateBack({
+            delta:1
           })
         }, 1000) //延迟时间
       }

@@ -143,7 +143,7 @@ Page({
     var j=0;
     let temp_view_src = "images_view_srcs"
     for(var i=0; i<labels.length; i++){
-      if(labels[i]==undefined) {
+      if((labels[i].length==2)&&(labels[i][1].name=="商店")) {
         temp_src[j]=src[i];
         temp_expression[j]=this.data.expression[i]
         temp_comment[j]=this.data.expression_comment[i]

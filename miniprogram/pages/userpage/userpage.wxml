@@ -27,7 +27,6 @@
 </scroll-view>
 
 <view class="container">
-  <view wx:if="{{TopIndex == 0}}">
     <view class='content'>
       <view class='content-item' wx:for="{{collection}}" wx:for-item="item">
       <!-- 图片 -->
@@ -36,7 +35,4 @@
         </button>
       </view>
     </view>
-  </view>
-  <view wx:if="{{TopIndex == 1}}">
-  </view>
 </view>
