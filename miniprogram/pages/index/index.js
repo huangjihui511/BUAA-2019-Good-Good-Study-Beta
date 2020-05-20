@@ -257,7 +257,7 @@ Page({
     this.data.tag_image = tag
     console.log("tag_onload:",this.data.tag_image)
     this.searchOnload()
-
+    //console.log("paths:",this.data.showListCache)
     console.log(option)
     this.setData({
       imagePath : option.url
