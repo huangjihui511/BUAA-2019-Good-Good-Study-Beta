@@ -9,7 +9,7 @@ Page({
    */
   data: {
     CVW: wx.getSystemInfoSync().windowWidth,
-    CVH: Math.trunc(wx.getSystemInfoSync().windowHeight - 89),
+    CVH: Math.trunc(wx.getSystemInfoSync().windowHeight - 200),
     cWidth: 0,
     cHeight: 0, // canvas的完整高度
     curImage: '',

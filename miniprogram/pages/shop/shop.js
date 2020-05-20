@@ -27,6 +27,8 @@ Page({
     inputValue: '',
     toSearch: '',
     testButton: '',
+    //热搜关键词
+    hotTags:[],
     globalShowIndex:0,
     showListCache:[],
     showPicList: [[{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}
@@ -50,6 +52,19 @@ Page({
     user_exp_Upbound:25
   },
   
+  hotTagJump:function(e) {
+    var tag = e.currentTarget.dataset.tag
+    console.log("hotTagJump's tag:",tag)
+    this.data.inputValue = tag
+    this.confirm()
+  },
+
+  hotTagMore:function(e) {
+    wx.navigateTo({
+      url: '/pages/hotSearch/hotSearch',
+    })
+  },
+
   jumpToExp:function(e) {
     wx.navigateTo({
       url: '/pages/aboutExp/aboutExp',
@@ -186,253 +201,8 @@ Page({
     wx.navigateTo({
       url: '/pages/search/search'
     })
-
-    var jump = 1
-    if (jump == 1) {
-      console.log("jumpToSearch")
-      return
-    }
     //之后不搜索
-
-
-    let that = this
-    
-    this.data.globalShowIndex = 0
-    this.setData({
-      globalShowIndex:this.data.globalShowIndex
-    })
-    this.data.showListCache = []
-
-    for (var i = 0;i < 5;i++) {
-      for (var j = 0;j < 3;j++) {
-        this.data.showPicList[i][j]['file_id'] = ''
-        this.setData({
-          showPicList:this.data.showPicList
-        })
-      }
-    }
-
-    //console.log("showPicList:",this.data.showPicList)
-
-    //暂存所有查找的图片路径
-    var tempPaths = []
-    
-    var labels=['label7']
-    labels[0] = v
-    var globalPicIndex = 0
-    wx.cloud.init()
-    //索引方式
-    var judge = 3
-    //for (var i = 0;i < labels.length;i++) {
-      //var label = labels[i]
-    for (var i = 0;i < 1;i++) {  
-      var label = labels[i]
-      if (judge == 1) {
-        db.collection('expression').where({
-          tags:{
-            [label]:0
-          }
-        }).get({
-          success:function(res) {
-          console.log("获取表情成功:",res.data)
-          var datas = res.data
-          for (var j = 0;j < datas.length;j++) {
-          var path = datas[j]['file_id']
-          console.log("路径:",path)
-          //that.data.showPicList[(globalPicIndex%9)/3][(globalPicIndex%9)%3]['file_id'] = path
-          var reflex1 = globalPicIndex%9
-          var reflex2 =  parseInt(reflex1/3)
-          var reflex3 = reflex1%3
-          if (path=='') {
-            path = that.data.showPicList[reflex2][reflex3]['file_id']
-          }
-          that.data.showPicList[reflex2][reflex3]['file_id'] = path
-          that.setData({
-            showPicList:that.data.showPicList
-          })
-          globalPicIndex++
-        }
-         }
-        })
-      }
-      else if (judge == 2) {
-        //tags读取权限问题
-     // const countResult = db.collection('todos').count()
-    //  const total = countResult.total
-      // 计算需分几次取
-   //   const batchTimes = Math.ceil(total / 20)
-   const batchTimes = 1
-  // 承载所有读操作的 promise 的数组
-      var tempPaths = []
-      for (let a = 0;a < batchTimes;a++) {
-        db.collection("tags").limit(20).get({
-          success:function(res){
-            var datas = res.data
-            console.log("获取表情成功2:",res.data)
-            console.log("tags长度：",datas.length)
-            for (var j = 0;j < datas.length;j++) {
-              var tag = datas[j]['name']
-             // console.log("fuck")
-             // console.log(label,tag,matchingInput(label,tag))
-              var judge = 0 
-              var inputString = String(label)
-              var labelString = String(tag)
-              console.log(inputString,"---",labelString,"是否匹配:",inputString.indexOf(labelString))
-              if (inputString.indexOf(labelString) >= 0) {
-                judge = 1
-              }
-              if (judge == 1) {
-                console.log("match")
-                var ids = datas[j]['expression_id']
-                console.log(ids)
-                var max = 0
-                for (var key in ids) {
-                  var path
-                  console.log(key)
-                  db.collection('expression').where({
-                    id:key
-                  }).get({
-                    success:function(res) {
-                      console.log("查找成功！",res)
-                      var reflex1 = globalPicIndex%9
-                      var reflex2 =  parseInt(reflex1/3)
-                      var reflex3 = reflex1%3
-                      console.log(res.data)
-                      path = res.data[0]['file_id']
-                      console.log("path:",path)
-                      that.data.showPicList[reflex2][reflex3]['file_id'] = path
-                      that.setData({
-                        showPicList:that.data.showPicList
-                      })
-                      //tempPaths.push(path)
-                      globalPicIndex++
-                    }
-                  })
-                }
-              } 
-            }
-            }
-          })
-        }
-        }
-        else if (judge == 3) {
-          db.collection("tag_names").get({
-            success:function(res) {
-              wx.showLoading({
-                title: '加载中',
-               })
-               setTimeout(function () {
-                wx.hideLoading()
-                if (globalPicIndex == 0){
-                  console.log("未找到：",globalPicIndex)
-                  wx.showToast({
-                  title: '抱歉，未找到您想要的表情，换个关键词试试^_^?', // 标题
-                  icon: 'none',  // 图标类型，none
-                  duration: 2500  // 提示窗停留时间，默认1500ms
-                })
-                }
-                }, 20000)
-              var all_tags = res.data[0].name
-              console.log("all_tags:",all_tags)
-              for (var runover = 0;runover < all_tags.length;runover++) {
-                var judge = 0 
-                var inputString = String(label)
-                var tag = all_tags[runover]
-                var labelString = String(tag)
-                //console.log(inputString,"---",labelString,"是否匹配:",inputString.indexOf(labelString))
-                if (inputString.indexOf(labelString) >= 0) {
-                  judge = 1
-                }
-                if (judge == 1) {
-                  //console.log("匹配成功")
-                  var path
-                  db.collection("tags").where({
-                    name:tag
-                  }).get({
-                    success:function(res) {
-                      var datas = res.data
-                      for (var f = 0;f < datas.length;f++) {
-                        var ids = datas[f]['expression_id']
-                        console.log("ids:",ids) 
-                        for (var key in ids) {
-                          var reflex1 = globalPicIndex%18
-                            var reflex2 =  parseInt(reflex1/3)
-                            var reflex3 = reflex1%3
-                            console.log("globalPicIndex:",globalPicIndex)
-                            console.log("key:",key)
-                          that.data.showListCache[globalPicIndex] = key
-                          if (globalPicIndex < 18) {
-                            that.data.showPicList[reflex2][reflex3]['file_id'] = key
-                            that.setData({
-                              showPicList:that.data.showPicList
-                            }) 
-                          }
-                          globalPicIndex++
-                      }
-                    }
-                    var fill = globalPicIndex
-                    if (fill < 18) {
-                      for (;fill < 18;fill++) {
-                        that.data.showPicList[parseInt(fill/3)][fill%3]['file_id'] = ''
-                        that.setData({
-                          showPicList:that.data.showPicList
-                        })
-                      }
-                    }
-                    }
-                  })
-                  // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
-                  break;
-                }
-                if (runover == all_tags.length) {
-                  // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
-                  console.log("结束")
-                }
-                if ((runover == all_tags.length) && (globalPicIndex == 0)) {
-                  // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
-                }
-                if ((runover == all_tags.length) && (globalPicIndex > 0)) {
-                  // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
-                }
-                if (globalPicIndex >= 9) {
-                  // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
-                  break
-                }
-              } 
-            }
-          })
-        }
-        else if (judge == 4) {
-          console.log("test+++")
-          var tempRes = []
-          console.log("label:",label)
-          wx.cloud.callFunction({
-            name:'add_expression',
-            data:{
-              request:'search_upgrade',
-              data1:label
-            },
-            success:function(res) {
-              console.log("res:",res)
-            }
-          }
-          )
-         /* wx.cloud.callFunction({
-            name:'add_expression',
-            data:{
-              request:'user_exp',
-              data1:exp
-            }
-          }).then(res=>{
-            console.log("testfunctionExp:",res.result)
-          })*/
-        }
-      }
+  },
     
    /* wx.cloud.callFunction({    
       name: 'login'  
@@ -447,7 +217,7 @@ Page({
         })      
       })    
     }) */
-  },
+  
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
@@ -546,41 +316,26 @@ Page({
     }
   },
 
- /* onReachBottom:function() {
-    var judge = 1
-    if (this.data.isLoading == 1) return;
-    //第1种上拉加载方式：拼接数组
-    var loadTime = this.data.globalShowIndex
-    console.log("loadTime:",loadTime)
-    var init = 9 + loadTime*3
-    var globalList = this.data.showListCache
-    console.log("globalLenth:",globalList.length)
-    //var tempList = this.data.showPicList
-   // setTimeout( () =>{
-      if (init >= globalList.length) {
-        wx.showToast({
-          title: '抱歉，没有更多了',
-          duration:2000
-        })
-      }
-      else {
-        var temp3 = []
-        for (var i = init;i < init+3;i++) {
-          var path = globalList[i]
-          temp3.push({'file_id':path})
-        }
-        this.data.showPicList.push(temp3)
-        this.setData({
-          isLoading:0,
-          showPicList:this.data.showPicList
-       })
-        this.data.globalShowIndex++
-      }
-     // }, 2000)
-    
-  },*/
-
   onLoad: function () {
+    console.log("初始化热搜词")
+    var that = this
+    wx.cloud.callFunction({
+      name:'image_visit_times',
+      data:{
+        request:3
+      },
+      success:function(res) {
+        console.log("热搜res:",res)
+        var resultArray = res.result.data
+        console.log("resultArray:",resultArray)
+        that.data.hotTags = resultArray
+        that.setData({
+          hotTags:that.data.hotTags
+        })
+        app.globalData.hotTagsGlobal = resultArray
+      }
+    })
+
     this.setData({
       globalShowIndex:this.data.globalShowIndex
     })

@@ -24,6 +24,7 @@
     <input type="text" placeholder="请输入搜索关键字" confirm-type="search"
       bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"></input>
   </view-->
+
   <view class="search">
     <view class="searchInputConfirm">
       <view class="hh-search-around">
@@ -36,6 +37,67 @@
       </view>
     </view>
   </view>
+
+  <!--热搜关键词-->
+  <view class="hotTagsList">
+    <view class="hot_icon_title" style="height:50rpx">
+      <image src="../../images/mirror_hotTags.png" style="height:40rpx;width:40rpx;margin:5rpx"></image>
+      <text style="font-size:small;font-style:inherit;color:#0387FE;margin-bottom:5rpx">热搜标签</text>
+    </view>
+    <view class="hotTagsList_row" wx:if="{{hotTags.length>0}}">
+      <view class="hotTagsList_cell">
+        <text class="hotTagsText" data-tag="{{hotTags[0].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top1.</text>{{hotTags[0].tag}}
+        </text>
+      </view>
+      <view class="hotTagsList_cell" wx:if="{{hotTags.length>1}}">
+        <text class="hotTagsText" data-tag="{{hotTags[1].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top2.</text>{{hotTags[1].tag}}
+        </text>
+      </view>
+    </view>
+    <view class="hotTagsList_row" wx:if="{{hotTags.length>2}}">
+      <view class="hotTagsList_cell">
+        <text class="hotTagsText" data-tag="{{hotTags[2].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top3.</text>{{hotTags[2].tag}}
+        </text>
+      </view>
+      <view class="hotTagsList_cell" wx:if="{{hotTags.length>3}}">
+        <text class="hotTagsText" data-tag="{{hotTags[3].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top4.</text>{{hotTags[3].tag}}
+        </text>
+      </view>
+    </view>
+    <view class="hotTagsList_row" wx:if="{{hotTags.length>4}}">
+      <view class="hotTagsList_cell">
+        <text class="hotTagsText" data-tag="{{hotTags[4].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top5.</text>{{hotTags[4].tag}}
+        </text>
+      </view>
+      <view class="hotTagsList_cell" wx:if="{{hotTags.length>5}}">
+        <text class="hotTagsText" data-tag="{{hotTags[5].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top6.</text>{{hotTags[5].tag}}
+        </text>
+      </view>
+    </view>
+    <view class="hotTagsList_row" wx:if="{{hotTags.length>6}}">
+      <view class="hotTagsList_cell">
+        <text class="hotTagsText" data-tag="{{hotTags[6].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top7.</text>{{hotTags[6].tag}}
+        </text>
+      </view>
+      <view class="hotTagsList_cell" wx:if="{{hotTags.length>7}}">
+        <text class="hotTagsText" data-tag="{{hotTags[7].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top8.</text>{{hotTags[7].tag}}
+        </text>
+      </view>
+    </view>
+    <view style="height:50rpx" style="display:flex;justify-content:center;font-size:small;color:#0387FE"
+      bindtap="hotTagMore">
+      更多热搜内容 >
+    </view>
+  </view>
+
   <view class="wordsAbovePics">
     <view class="showWhatToSearch">
       <image src="../../images/heart1.png" style="width:40rpx;height:40rpx"></image>为你推荐

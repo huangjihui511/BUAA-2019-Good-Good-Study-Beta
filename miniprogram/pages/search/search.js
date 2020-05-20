@@ -214,6 +214,16 @@ Page(
                   }
                   if (judge == 1) {
                     //console.log("匹配成功")
+                    wx.cloud.callFunction({
+                      name:'image_visit_times',
+                      data:{
+                        request:2,
+                        tag:tag
+                      },
+                      success:function(res) {
+                        console.log("更新标签检索次数成功!")
+                      }
+                    })
                     var path
                     db.collection("tags").where({
                       name:tag

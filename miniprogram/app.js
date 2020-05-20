@@ -24,7 +24,9 @@ App({
     shopPageTitle:'',
     //商店表情标签
     shopImageTag:'',
-    notification_num:0
+    notification_num:0,
+    //热搜标签
+    hotTagsGlobal:[]
   },
   
   //app 全局属性监听
