@@ -62,11 +62,15 @@
   </view-->
   <view class="picShowList">
   <view class="hh-grid-square-3" wx:for="{{showPicList}}" wx:for-index="index">
-    <view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
+    <!--view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
        wx:key style="background-image:url({{item.file_id}});"
        bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
+       data-tag='{{item.tag}}'-->
+    <image class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
+       wx:key src="{{item.file_id}}"
+       bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
        data-tag='{{item.tag}}'>
-    </view>
+    </image>
   </view>
   </view>
 </view>
