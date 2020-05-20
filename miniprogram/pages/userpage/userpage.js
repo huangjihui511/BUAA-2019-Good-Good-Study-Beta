@@ -92,7 +92,7 @@ Page({
   },
 
   changestyle:function(e){
-    let index=e.currentTarget.dataset.index;
+    let index=e.currentTarget.dataset.id;
     let _this=this
     if(index==0){
       this.setData({
@@ -113,6 +113,21 @@ Page({
     this.setData({
       TabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id-1)*60
+    })
+    let index=e.currentTarget.dataset.id;
+    let _this=this
+    if(index==0){
+      this.setData({
+        collection:_this.data.have_shop_collection
+      })
+    }
+    else{
+      this.setData({
+        collection:_this.data.no_shop_collection
+      })
+    }
+    this.setData({
+      TopIndex:index
     })
   },
 
