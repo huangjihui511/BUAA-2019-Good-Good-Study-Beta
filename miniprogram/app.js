@@ -7,7 +7,7 @@ App({
     fileID: null,
     tempUrl: "http://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&f=JPEG?w=900&h=1350",
     data:{},
-    open_id:"123456",
+    open_id:"o9dmv4kmf37Td4utR9HzSSOhs2yw",
     user_id:"123",
     max_exp:5,
     recordPoints: [],
@@ -24,7 +24,9 @@ App({
     shopPageTitle:'',
     //商店表情标签
     shopImageTag:'',
-    notification_num:0
+    notification_num:0,
+    //热搜标签
+    hotTagsGlobal:[]
   },
   
   //app 全局属性监听

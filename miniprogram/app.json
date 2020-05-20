@@ -1,10 +1,15 @@
 {
   "pages": [
-    
     "pages/login/login",
+    "pages/team2/expression_information/index",
     "pages/team2/change_labels/index",
-    
     "pages/team2/favorite_expression/index",
+    "pages/team2/friend/index",
+    "pages/team2/load/index",
+    "pages/team2/setting/index",
+    "pages/team2/team2_load_for_team1/index",
+    "pages/team2/coin/index",
+    "pages/team2/change_expression_labels/index",
     "pages/FormalUIPage/FormailUIPage",
     "pages/notify/notify",
     "pages/shop/shop",
@@ -25,7 +30,8 @@
     "pages/fliter/fliter",
     "pages/aboutExp/aboutExp",
     "pages/userpage/userpage",
-    "pages/cropper/cropper_example"
+    "pages/cropper/cropper_example",
+    "pages/hotSearch/hotSearch"
   ],
   "window": {
     "backgroundTextStyle": "light",

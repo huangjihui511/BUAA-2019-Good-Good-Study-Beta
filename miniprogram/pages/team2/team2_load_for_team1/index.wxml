@@ -30,6 +30,6 @@
 </view>
 <view class="{{empty?'empty':'image'}}">
   <view class="hh-grid-square-1">
-    <view class="hh-img" style="background-image:url({{image_src}});"></view>
+    <image class="hh-img" src="{{image_src}}"></image>
   </view>
 </view>

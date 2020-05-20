@@ -27,7 +27,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.8.1",
 	"appid": "wxdad72fcb9a2a88ab",
-	"projectname": "house-of-face-express-wechat-program",
+	"projectname": "beta3",
 	"miniprogramRoot": "miniprogram/",
 	"cloudfunctionRoot": "cloudfunctions/",
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",

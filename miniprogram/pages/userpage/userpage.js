@@ -6,10 +6,27 @@ Page({
    * 页面的初始数据
    */
   data: {
+    headImage: [
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal1.png',
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal2.png'
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal3.png'
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal4.png'
+      },
+    ],
+    headImageNum: 1,
     uploaderName: "开发者",
     TopIndex: 0,
     uploader:[],
-    collection: []
+    collection: [],
+    have_shop_collection:[],
+    no_shop_collection:[],
   },
 
   /**
@@ -30,21 +47,72 @@ Page({
         open_id: options.upload
       }).get().then(res=>{
         console.log(res)
+        var temp=res.data[0].expression_set
+        var no_shop_public_expressions=[]
+        var public_expressions=[]
+        var i,j,k,h
+        k=0
+        h=0
+        console.log(temp)
+        for(i=0;i<temp.length;i++){
+          if(temp[i].tags!=undefined){
+            for(j=0;j<temp[i].tags.length;j++){
+              if(temp[i].tags[j].name=="未公开"){
+                break
+              }
+            }
+            if(j==temp[i].tags.length){
+              if((temp[i].tags.length==2)&&(temp[i].tags[1].name=="商店")){}
+              else{
+                no_shop_public_expressions[k]=temp[i]
+                k++
+              }
+              public_expressions[h]=temp[i]
+              h++
+            }
+          }
+        }
         this.setData({
           uploader: res.data,
-          collection: res.data[0].expression_set,
+          collection: public_expressions,
+          have_shop_collection:public_expressions,
+          no_shop_collection:no_shop_public_expressions,
           uploaderName: res.data[0].name
         })
         console.log(this.data.uploader)
         console.log(this.data.collection)
+        console.log(this.data.have_shop_collection)
+        console.log(this.data.no_shop_collection)
       })
     }
+    this.setData({
+      headImageNum: Math.floor(Math.random()*3) + 1
+    })
+    console.log(this.data.headImageNum)
   },
 
-  changstyle:function(e){
+  changestyle:function(e){
     let index=e.currentTarget.dataset.index;
+    let _this=this
+    if(index==0){
+      this.setData({
+        collection:_this.data.have_shop_collection
+      })
+    }
+    else{
+      this.setData({
+        collection:_this.data.no_shop_collection
+      })
+    }
     this.setData({
       TopIndex:index
+    })
+  },
+
+  tabSelect(e) {
+    this.setData({
+      TabCur: e.currentTarget.dataset.id,
+      scrollLeft: (e.currentTarget.dataset.id-1)*60
     })
   },
 

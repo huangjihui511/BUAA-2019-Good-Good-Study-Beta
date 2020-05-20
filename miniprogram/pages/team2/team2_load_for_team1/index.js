@@ -69,11 +69,9 @@ checkboxChange(e){
       this.setData({
         [flags]: detailValue
     })
+    console.log("777",this.data.labels)
 },
 submitted: function submitted(e) {
-  if(this.data.file_id==''){
-    return
-  }
   var that = this;
   if(this.data.image_src==""){
     wx.showToast({
@@ -89,7 +87,13 @@ submitted: function submitted(e) {
       }
     })
   }
-  else{    var temp_add_label_text=[]
+  else{    
+    wx.showToast({
+      title: '提交中',
+      icon: 'loading',
+      duration: 1000000
+    })
+    var temp_add_label_text=[]
     var add_label_text_temp=[]
     var temp1=[]
     var ii
@@ -167,48 +171,45 @@ submitted: function submitted(e) {
       name:"add_expression",
       data:{
         request:"add_picture",
-        data1:this.data.time,
+        data1:new Date(),
         data2:app.globalData.open_id,
         data3:"test002",
-        data4:this.data.file_id,
+        data4:this.data.image_src,
         data5:public1
         //data2:["fun", "wdnmd"]
       },
       success:function(res){
-        console.log("获取表情成功",res)
+        wx.cloud.callFunction({
+          name:"add_expression",
+          data:{
+            request:"add_expression",
+            data1:app.globalData.open_id,
+            data2:that.data.image_src,
+            data3:temp
+            //data3:this.data.labels
+            //data2:["fun", "wdnmd"]
+          },
+          success:function(res){
+            wx.showToast({
+              title: '成功提交',
+              icon: 'success',
+              duration: 1000,
+              success(data) {
+                setTimeout(function () {
+                  wx.reLaunch({
+                    url: '../favorite_expression/index',
+                  })
+                }, 1000) //延迟时间
+              }
+            })
+          },fail:function(res){
+            console.log("获取表情失败",res)
+          }
+        })
       },fail:function(res){
         console.log("获取表情失败",res)
       }
     })
-    wx.cloud.callFunction({
-      name:"add_expression",
-      data:{
-        request:"add_expression",
-        data1:app.globalData.open_id,
-        data2:this.data.file_id,
-        data3:temp
-        //data3:this.data.labels
-        //data2:["fun", "wdnmd"]
-      },
-      success:function(res){
-        console.log("获取表情成功",res)
-      },fail:function(res){
-        console.log("获取表情失败",res)
-      }
-    })
-    wx.showToast({
-      title: '成功提交',
-      icon: 'success',
-      duration: 1000,
-      success(data) {
-        setTimeout(function () {
-          wx.reLaunch({
-            url: '../favorite_expression/index',
-          })
-        }, 1000) //延迟时间
-      }
-    })
-
   }
 },
   /**
@@ -229,11 +230,6 @@ submitted: function submitted(e) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading',
-      duration: 10000000 
-    })
     var _this=this
     wx.cloud.callFunction({
       name:"get_label",
@@ -264,36 +260,73 @@ submitted: function submitted(e) {
       success(result) {
       }
     })*/
-    
-    let temp_src="image_src"
-    var src=this.options.src
-    console.log(src)
-    _this.setData({
-      [temp_src]:src
-    })
-    console.log("src"+_this.data.image_src)
-    var timestamp =new Date();
-    let cu_time="time"
-    _this.setData({
-      [cu_time]:timestamp
-    })
     wx.cloud.uploadFile({
       cloudPath:'test'+app.globalData.open_id+Math.round(Math.random()*100000)+'.jpg',
-      filePath:src,
+      filePath:_this.options.src,
       success: res => {
-        console.log("图片file_id", res.fileID)
-        const file1 = res.fileID
-        let file2 = "file_id"
+        console.log("666")
+        let temp_src="image_src"
+        var src=res.fileID
+        console.log(src)
         _this.setData({
-          [file2]:file1,
+          [temp_src]:src
         })
-        wx.showToast({
-          title: '加载成功',
-          icon: "success",
-          duration: 1000
+        console.log("pre src"+_this.data.image_src)
+        wx.cloud.callFunction({
+          name:"get_user_exp_tag",
+          data:{
+            data1:app.globalData.open_id,
+            data2:_this.options.pre_src
+          },
+          success(res){
+            var i
+            var j
+            console.log("555",res)
+            var temp
+            for(i=0;i<res.result.data[0].expression_set.length;i++){
+              if(res.result.data[0].expression_set[i].file_id==_this.options.pre_src){
+                temp=res.result.data[0].expression_set[i]
+                break
+              }
+            }
+            console.log("temp",temp)
+            if((temp.tags!=undefined)){
+              for(i=0;i<temp.tags.length;i++){
+                if(temp.tags[i].name=="未公开"){
+                  continue
+                }
+                for(j=0;j<_this.data.label_list.length;j++){
+                  if(temp.tags[i].name==_this.data.label_list[j].title){
+                    let temp="label_list["+j+"].selected"
+                    _this.setData({
+                      [temp]:true
+                    })
+                    break;
+                  }
+                }
+                if(j==_this.data.label_list.length){
+                  let temp1="label_list["+j+"]"
+                  _this.setData({
+                    [temp1]:{title:temp.tags[i].name,selected:true}
+                  })
+                }
+              }
+            }
+            
+        let detailValue = _this.data.label_list.filter(it => it.selected).map(it => it.title)
+        let flags="labels"
+        console.log('所有选中的值为：', detailValue)
+        if(_this.data.label_list[0].selected==false){
+          console.log("未公开")
+          detailValue[detailValue.length]='未公开'
+        }
+        _this.setData({
+          [flags]: detailValue
+      })
+      console.log("777",_this.data.labels)
+          }
         })
-      },
-      fail: console.error
+      }
     })
   },
 

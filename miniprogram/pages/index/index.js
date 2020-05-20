@@ -26,6 +26,7 @@ Page({
     //vars used to search similar expressions onload
     globalShowIndex:0,
     showListCache:[],
+    comment:[],
   },
   //事件处理函数
   bindViewTap: function() {
@@ -33,8 +34,59 @@ Page({
       url: '../logs/logs'
     })
   },
+
+
+  commented(){
+    wx.showToast({
+      title: '评论中',
+      icon: 'loading',
+      duration: 100000
+    })
+    console.log("评论",this.data.comment)
+    wx.cloud.callFunction({
+      name:'get_exp',
+      data: {
+        id:app.globalData.open_id
+      },
+      success(res){
+        console.log("666666",res)
+        wx.cloud.callFunction({
+          name: 'add_comment',
+          data: {
+            src:this.data.expression,
+            comment:{"open_id":app.globalData.open_id,"user_name":res.result.data[0].user_name,"comment":this.data.comment,"time":new Date()}
+          },
+          success(res){
+            console.log(res)
+            
+        wx.showToast({
+          title: '评论成功',
+          icon: 'success',
+          duration: 1000,
+          success(res){
+            wx.redirectTo({
+              url: '../expression_information/index?expression='+this.data.expression,
+            })
+          }
+        })
+          },
+          fail(res){
+            console.log("错误"+res)
+          }
+        })
+      }
+    })
+    
+  },
   
- 
+  appreciate:function(){
+    wx.showToast({
+      title: '您已点赞',
+      icon: 'success',
+      duration: 3000
+    })
+  },
+
 //定义监听回调方法
 //app 监听回调方法
   watchBack: value=> { //这里的value 就是 app.js 中 watch 方法中的 set, 返回整个 globalData
@@ -241,10 +293,28 @@ Page({
     db.collection('expression').where({
       file_id: this.data.imagePath
     }).get().then(res=>{
-      this.setData({
-        uploaduser: res.data[0].open_id
-      })
+      if (res.data.length == 0){
+
+      }
+      else {
+        this.setData({
+          uploaduser: res.data[0].open_id
+        })
+      }
       console.log(this.data.uploaduser)
+    })
+
+    wx.cloud.callFunction({
+      name:"get_expression",
+      data:{
+        data1:this.option.url
+      },
+      success(res){
+        this.setData({
+          comment:res.result.data[0].comment
+        })
+        console.log("1111",this.data.comment)
+      }
     })
   },
   getUserInfo: function(e) {
@@ -288,18 +358,30 @@ Page({
   },
   //收藏图片
   storeImage(e){
+    var _this=this
     const _ = db.command
     var temp_image = {
       file_id: e.currentTarget.dataset.fileid
     }
     var user_openid = app.globalData.open_id
-    console.log(user_openid)
+    console.log(app.globalData.open_id)
+    console.log(this.data.imagePath)
+    var util = require('../../utils/util.js'); 
+    var TIME = util.formatTime(new Date());
     wx.cloud.callFunction({
       name: 'add_expression',
-      data:{
+      /*data:{
+        request: 'add_picture',
+        data1: TIME,
+        data2: app.globalData.open_id,
+        data4: this.data.imagePath,
+        data5: true
+      },*/
+      data: {
         request: 'add_expression',
         data1: app.globalData.open_id,
-        data2: e.currentTarget.dataset.fileid
+        data2: _this.data.imagePath,
+        data3:[{"name":_this.data.tag_image,"num":0},{"name":"商店","num":0}]
       },
     }).then(res=> {
       wx.showToast({                
