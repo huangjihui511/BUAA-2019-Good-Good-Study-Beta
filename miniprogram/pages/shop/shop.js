@@ -79,7 +79,36 @@ Page({
       id: 6,
       type: 'image',
       url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-    }]
+    }],
+    /*swiperList: [{
+      id: 0,
+      tag:'英雄联盟',
+      type: 'image',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/yasuo1.jfif'
+    }, {
+      id: 1,
+      tag:'英雄联盟',
+        type: 'image',
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/yasuo2.jfif',
+    }, {
+      id: 2,
+      tag:'英雄联盟',
+      type: 'image',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/mf1.jpg'
+    }, {
+      id: 3,
+      tag:'英雄联盟',
+      type: 'image',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/jinx1.jpg'
+    }],*/
+    cardCur: 0,
+  },
+
+  cardSwiper(e) {
+    this.setData({
+      cardCur: e.detail.current
+    })
+    //console.log(this.data.cardCur)
   },
   
   hotTagJump:function(e) {
