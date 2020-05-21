@@ -126,7 +126,7 @@
 
 /*input/search*/
 .hh-search-around {
-  background-color: #f5f5f5;
+  background-color:lightgray;
   line-height: 64rpx;
   height: 64rpx;
   font-size: 24rpx;
