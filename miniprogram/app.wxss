@@ -68,7 +68,8 @@ Page{
   justify-content: space-between;
   background-color: var(--white);
   color: var(--darkGray);
-  margin-top: 30rpx;  
+	margin-top: 30rpx;  
+	box-shadow: 0 30rpx 20rpx rgba(0, 0, 0, 0.2);
 }
 .hh-title {
   font-size: 60rpx;
@@ -108,7 +109,8 @@ Page{
   display: flex;
   flex-wrap: wrap;
   /* background-color: var(--white); */
-  color: var(--darkGray);
+	color: var(--darkGray);
+	
 }
 
 .hh-grid-square-1>view {
@@ -244,7 +246,8 @@ Page{
   flex-wrap: wrap;
   box-sizing: border-box;
   background-color: var(--white);
-  text-align: center;
+	text-align: center;
+	box-shadow: 0 30rpx 20rpx rgba(0, 0, 0, 0.2);
   
 }
 .hh-grid-3>view {
@@ -362,7 +365,8 @@ padding: 30rpx;
   display: block;
   background-color:lightgray;
   min-height: 30rpx;
-  padding: 30rpx;
+	padding: 30rpx;
+	box-shadow: 0 30rpx 20rpx rgba(0, 0, 0, 0.2);
   
 }
 
@@ -501,6 +505,111 @@ overflow: hidden;
   height: 100%;
 }
 
+
+.hh-user-profile {
+	background-image: url(https://image.weilanwl.com/color2.0/index.jpg);
+	background-size: cover;
+	height: 550rpx;
+	display: flex;
+	justify-content: center;
+	padding-top: 40rpx;
+	overflow: hidden;
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	color: #fff;
+	font-weight: 300;
+	text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+	}
+	
+	.hh-user-avator {
+		width: 200rpx;
+	height: 200rpx;
+	border-radius: 50%;
+	
+	}
+	
+	.hh-user-card {
+		/* position: absolute; */
+		content: "";
+		top: 20rpx;
+		bottom: 30rpx;
+		left: 20rpx;
+		/* width: 50%; */
+		box-shadow: 0 30rpx 20rpx rgba(0, 0, 0, 0.2);
+		/* transform: rotate(-3deg); */
+		/* z-index: -1; */
+		color: var(--grey);
+		text-align: center;
+		background-color: var(--white);
+		padding: 30rpx;
+		display: flex;
+	
+	}
+	
+	.hh-user-card-sub {
+		width: 33.3%;
+		display: flex;
+		position: relative;
+		flex-direction: column;
+	}
+	
+	.hh-menu-list {
+		overflow: hidden;
+	margin-right: 30rpx;
+	margin-left: 30rpx;
+	margin-top: 50rpx;
+	border-radius: 20rpx;
+	--ShadowSize: 0rpx 40rpx 100rpx 0rpx;
+	
+	
+	}
+	
+	.hh-menu-item {
+		position: relative;
+		display: flex;
+		padding: 0 30rpx;
+		min-height: 100rpx;
+		background-color: var(--white);
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 0.2rpx solid lightgray ;
+	
+	
+	
+		
+	
+	}
+	.hh-menu-item::after{
+		top: 0;
+	right: 30rpx;
+	bottom: 0;
+	display: block;
+	margin: auto;
+	width: 30rpx;
+	height: 30rpx;
+	color: var(--grey);
+	content: "\e6a3";
+	text-align: center;
+	font-size: 34rpx;
+	font-family: "cuIcon";
+	line-height: 30rpx;
+	}
+	.hh-menu-content {
+		font-size: 30rpx;
+		line-height: 1.6em;
+		flex: 1;
+		color: gray;
+	}
+	.hh-menu-img {
+		display: inline-block;
+		margin-right: 10rpx;
+		width: 1.6em;
+		height: 1.6em;
+		vertical-align: middle;
+	
+	}
+	
 page {
   background-color: #F8F8F8;
   height: 100%;
