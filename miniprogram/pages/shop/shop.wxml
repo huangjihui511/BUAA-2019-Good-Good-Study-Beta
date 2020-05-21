@@ -1,6 +1,14 @@
 <!--index.wxml-->
-<view class="container">
-<movable-area style="height: 100%; width: 100%;">
+<swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" 
+bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
+  <swiper-item wx:for="{{swiperList}}" wx:key class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
+    <view class="hh-swiper-item">
+      <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+      <!-- <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video> -->
+    </view>
+  </swiper-item>
+</swiper>
+<view>
   <!--movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="350" y="500" animation="false"
     direction="all" bindtap="reFreshR">
     <image src="../../images/toRight.png" style="height:80rpx;width:80rpx;"></image>
@@ -24,16 +32,15 @@
     <input type="text" placeholder="请输入搜索关键字" confirm-type="search"
       bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"></input>
   </view-->
-  <swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true"
+  <!--swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true"
    interval="5000" duration="500" 
    indicator-color="#8799a3" indicator-active-color="#0081ff">
   <swiper-item wx:for="{{swiperList}}" wx:key class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
     <view class="hh-swiper-item">
       <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-      <!-- <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video> -->
     </view>
   </swiper-item>
-  </swiper>
+  </swiper-->
   <view class="search">
     <view class="searchInputConfirm">
       <view class="hh-search-around">
@@ -172,5 +179,4 @@
     </view>
     
 </view-->
-</movable-area>
 </view>
