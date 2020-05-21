@@ -182,13 +182,11 @@
 .hotTagsList_row {
   display: flex;
   flex-direction: row;
-  margin-top: 5rpx;
-  margin-bottom: 5rpx;
 }
 
 .hotTagsList_cell {
   width:50%;
-  height: 50rpx;
+  height: 60rpx;
 }
 
 .hotTagsText {
