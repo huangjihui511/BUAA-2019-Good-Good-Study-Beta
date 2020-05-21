@@ -23,7 +23,7 @@
 
 <view class="divLine"></view>
 
-<view class="hh-text">表情的评论</view>
+<!--view class="hh-text">表情的评论</view>
 <view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
   <view class="hh-avator-round" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
   <view class="hh-conment-content">
@@ -37,6 +37,28 @@
 <view class='comment'>
   <view class = "hh-round-card">
     <textarea type="text" placeholder="输入评论" bindinput="getinput"></textarea>
+  </view>
+  <view class="hh-icon1" bindtap="commented">
+    <text class="cuIcon-check lg text-gray"></text>
+    <text>发送</text>
+  </view>
+</view-->
+
+<view class="hh-title">表情的评论</view>
+<view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
+  <view class="hh-avator-round" data-id="{{item}}" bindtap="jump2userpage"
+   style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+  <view class="hh-conment-content">
+    <view class="hh-avator-conmment-name">{{comment[index].user_name}}</view>
+    <view class="hh-avator-conmment-content">
+      {{comment[index].comment}}
+    </view>
+    <view>{{comment[index].time}}</view>
+  </view>
+</view>
+<view class='comment'>
+  <view class = "hh-round-card">
+    <textarea type="text" value="{{info}}" placeholder="输入评论" bindinput="getinput"></textarea>
   </view>
   <view class="hh-icon1" bindtap="commented">
     <text class="cuIcon-check lg text-gray"></text>
@@ -62,11 +84,15 @@
   </view-->
   <view class="picShowList">
   <view class="hh-grid-square-3" wx:for="{{showPicList}}" wx:for-index="index">
-    <view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
+    <!--view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
        wx:key style="background-image:url({{item.file_id}});"
        bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
+       data-tag='{{item.tag}}'-->
+    <image class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
+       wx:key src="{{item.file_id}}"
+       bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
        data-tag='{{item.tag}}'>
-    </view>
+    </image>
   </view>
   </view>
 </view>

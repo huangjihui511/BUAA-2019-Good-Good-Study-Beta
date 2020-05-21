@@ -129,3 +129,59 @@
     <view>2018年12月4日</view>
   </view>
 </view>
+
+<view>设置页面</view>
+<view class="hh-user-profile">
+  <image class="hh-user-avator" src="https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png"></image>
+  <view class="hh-user-name">hjhhjh</view>
+</view>
+
+<view class="hh-user-card">
+  <view class="hh-user-card-sub">
+    <view style="color:red;font-size:60rpx">
+    123
+    </view>
+    <view>
+    关注者
+    </view>
+  </view>
+  <view class="hh-user-card-sub">
+    <view style="color:orange;font-size:60rpx">
+    12
+    </view>
+    <view>
+    被关注者
+    </view>
+  </view>
+  <view class="hh-user-card-sub">
+    <view style="color:green;font-size:60rpx">
+    3
+    </view>
+    <view>
+    等级
+    </view>
+  </view>
+  <view class="hh-user-card-sub">
+    <view style="color:blue;font-size:60rpx">
+    3
+    </view>
+    <view>
+    收藏
+    </view>
+  </view>
+</view>
+<view class="hh-menu-list">
+  <view class="hh-menu-item">
+    <navigator class="hh-menu-content">
+      <image class="hh-menu-img" mode="aspectFit" src="../../images/team2/coin_logo.jpg"></image>
+      <text>设置</text>
+    </navigator>
+  </view>
+  <view class="hh-menu-item">
+    <navigator class="hh-menu-content">
+      <image class="hh-menu-img" mode="aspectFit" src="../../images/team2/coin_logo.jpg"></image>
+      <text>设置</text>
+    </navigator>
+  </view>
+</view>
+<view>end</view>

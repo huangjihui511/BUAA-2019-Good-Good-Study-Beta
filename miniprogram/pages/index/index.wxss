@@ -1,6 +1,6 @@
 /**index.wxss**/
 @import "../search/search.wxss";
-
+@import "../team2/expression_information/index.wxss";
 @import "../../app.wxss";
 
 .divLine{

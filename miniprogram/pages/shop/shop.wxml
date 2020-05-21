@@ -1,6 +1,14 @@
 <!--index.wxml-->
-<view class="container">
-<movable-area style="height: 100%; width: 100%;">
+<swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" 
+bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
+  <swiper-item wx:for="{{swiperList}}" wx:key class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
+    <view class="hh-swiper-item">
+      <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+      <!-- <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video> -->
+    </view>
+  </swiper-item>
+</swiper>
+<view>
   <!--movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="350" y="500" animation="false"
     direction="all" bindtap="reFreshR">
     <image src="../../images/toRight.png" style="height:80rpx;width:80rpx;"></image>
@@ -24,7 +32,15 @@
     <input type="text" placeholder="请输入搜索关键字" confirm-type="search"
       bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"></input>
   </view-->
-
+  <!--swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true"
+   interval="5000" duration="500" 
+   indicator-color="#8799a3" indicator-active-color="#0081ff">
+  <swiper-item wx:for="{{swiperList}}" wx:key class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
+    <view class="hh-swiper-item">
+      <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+    </view>
+  </swiper-item>
+  </swiper-->
   <view class="search">
     <view class="searchInputConfirm">
       <view class="hh-search-around">
@@ -40,35 +56,26 @@
 
   <!--热搜关键词-->
   <view class="hotTagsList">
-    <view class="hot_icon_title" style="height:50rpx">
+    <view class="hot_icon_title" style="height:40rpx">
       <image src="../../images/mirror_hotTags.png" style="height:40rpx;width:40rpx;margin:5rpx"></image>
       <text style="font-size:small;font-style:inherit;color:#0387FE;margin-bottom:5rpx">热搜标签</text>
     </view>
-    <view class="hotTagsList_row" wx:if="{{hotTags.length>0}}">
-      <view class="hotTagsList_cell">
-        <text class="hotTagsText" data-tag="{{hotTags[0].tag}}" bindtap="hotTagJump">
+    <view class="hotTagsList_row">
+      <view class="hotTagsList_cell" wx:for="{{3}}" wx:for-index="index">
+        <!--text class="hotTagsText" data-tag="{{hotTags[0].tag}}" bindtap="hotTagJump">
           <text style="font-size:small;font-style:oblique;">Top1.</text>{{hotTags[0].tag}}
-        </text>
-      </view>
-      <view class="hotTagsList_cell" wx:if="{{hotTags.length>1}}">
-        <text class="hotTagsText" data-tag="{{hotTags[1].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top2.</text>{{hotTags[1].tag}}
-        </text>
-      </view>
-    </view>
-    <view class="hotTagsList_row" wx:if="{{hotTags.length>2}}">
-      <view class="hotTagsList_cell">
-        <text class="hotTagsText" data-tag="{{hotTags[2].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top3.</text>{{hotTags[2].tag}}
-        </text>
-      </view>
-      <view class="hotTagsList_cell" wx:if="{{hotTags.length>3}}">
-        <text class="hotTagsText" data-tag="{{hotTags[3].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top4.</text>{{hotTags[3].tag}}
-        </text>
+        </text-->
+        <view class="hh-capsule-tag" data-tag="{{hotTags[index].tag}}" bindtap="hotTagJump">
+          <view class="hh-capsule-tag-name">
+            {{hotTags[index].tag}}
+          </view>
+          <view class="hh-capsule-tag-num">
+            Top{{index+1}}.
+          </view>
+        </view>
       </view>
     </view>
-    <view class="hotTagsList_row" wx:if="{{hotTags.length>4}}">
+    <!--view class="hotTagsList_row" wx:if="{{hotTags.length>4}}">
       <view class="hotTagsList_cell">
         <text class="hotTagsText" data-tag="{{hotTags[4].tag}}" bindtap="hotTagJump">
           <text style="font-size:small;font-style:oblique;">Top5.</text>{{hotTags[4].tag}}
@@ -91,8 +98,9 @@
           <text style="font-size:small;font-style:oblique;">Top8.</text>{{hotTags[7].tag}}
         </text>
       </view>
-    </view>
-    <view style="height:50rpx" style="display:flex;justify-content:center;font-size:small;color:#0387FE"
+    </view-->
+    <view style="height:50rpx" 
+      style="display:flex;justify-content:center;font-size:small;color:#0387FE;margin-top:60rpx"
       bindtap="hotTagMore">
       更多热搜内容 >
     </view>
@@ -171,5 +179,4 @@
     </view>
     
 </view-->
-</movable-area>
 </view>
