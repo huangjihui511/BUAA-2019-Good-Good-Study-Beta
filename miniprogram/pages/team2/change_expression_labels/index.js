@@ -87,7 +87,8 @@ submitted: function submitted(e) {
       }
     })
   }
-  else{    var temp_add_label_text=[]
+  else{    
+    var temp_add_label_text=[]
     var add_label_text_temp=[]
     var temp1=[]
     var ii
@@ -160,7 +161,35 @@ submitted: function submitted(e) {
         public1=true
       }
     }
-    console.log(temp)
+    console.log("88888",public1)
+    if(public1==true){
+      wx.cloud.callFunction({
+        name: "add_exp",
+        data:{
+          id:app.globalData.open_id,
+          incNum:10
+        }
+      })
+    }
+    else{
+      wx.cloud.callFunction({
+        name: "add_exp",
+        data:{
+          id:app.globalData.open_id,
+          incNum:-10
+        }
+      })
+    }
+    wx.cloud.callFunction({
+      name:'change_picture_public',
+      data: {
+        src:that.data.image_src,
+        do_public:public1
+      },
+      success(res){
+        console.log(1)
+      }
+    })
     wx.cloud.callFunction({
       name:"change_user_exp_tags",
       data:{

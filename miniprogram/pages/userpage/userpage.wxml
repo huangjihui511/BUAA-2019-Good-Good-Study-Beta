@@ -9,6 +9,7 @@
   <view class='hh-text'>上传用户:{{uploaderName}}</view>
 </view>
 
+  <button bindtap="interest_or_no">{{do_interest}}</button> 
 <!--
 <view class = "line"></view>
 <view class="swiper-tab"> 

@@ -405,7 +405,17 @@ Page({
         duration: 1500,                
         mask: false,             
       })
-   	})*/
+     })*/
+     wx.cloud.callFunction({
+      name: "add_like_or_favor",
+      data:{
+        src:_this.data.imagePath,
+        flag:"favor"
+      },
+      success(res){
+        console.log(res)
+      }
+    })
   },
   jump2userpage:function(e) {
     var app = getApp()

@@ -13,7 +13,8 @@ Page({
       {url:"../../mark_expression/mark_expression",name:"增加经验",logo_address:"../../../images/team2/favorite_logo.jpg"},
       {url:"../../feedback/feedback",name:"使用反馈",logo_address:"../../../images/team2/feedback_logo.jpg"},
       {url:"../../notify/notify",name:"通知信息",logo_address:"../../../images/notify.jpg"},
-      {url:"../recycle/index",name:"回收站",logo_address:"../../../images/notify.jpg"}
+      {url:"../recycle/index",name:"回收站",logo_address:"../../../images/notify.jpg"},
+      {url:"../interest/index",name:"我的关注",logo_address:"../../../images/notify.jpg"}
     ],
     images: [
       /*{

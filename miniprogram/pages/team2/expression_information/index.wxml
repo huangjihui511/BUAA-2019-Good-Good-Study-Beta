@@ -2,6 +2,8 @@
 <view class="hh-grid-square-1">
     <image class="hh-img"  src="{{expression}}" bindtap="previewImage"></image>
 </view>
+<view>这张表情包已被收藏{{favor_number}}次</view>
+<view>这张表情包已被点赞{{like_number}}次</view>
 <view class="hh-grid-3">
   <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}" bindtap="{{item.bind}}">
     <text class="cuIcon-{{item.name}} lg text-gray"></text>
