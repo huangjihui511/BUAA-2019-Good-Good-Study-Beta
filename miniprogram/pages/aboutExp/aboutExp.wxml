@@ -1,6 +1,97 @@
 <!--miniprogram/pages/aboutExp/aboutExp.wxml-->
 
-<view class="global">
+<scroll-view scroll-x class="hh-nav">
+  <view class="hh-nav-item{{0==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="0">
+    <text class="cuIcon-text"></text>规则
+  </view>
+  <view class="hh-nav-item{{1==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="1">
+    <text class="cuIcon-pullup"></text>增加经验
+  </view>
+</scroll-view>
+<view >
+  <view class="userinfo">
+    <image class="userHead" bindtap="bindViewTap" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <view class="userNameDetail">
+      <view class="nameAndCoin">
+        <view class="nameExp">
+          <text class="userName">{{userInfo.nickName}}</text>
+          <text class="userRank">等级：{{user_rank}}</text>
+        </view>
+        <view class="Coin">
+          <view class="exp_bar" style="width:400rpx;height:30rpx" bindtap="jumpToExp">
+            <view class="expBar" style="width:{{(user_exp/user_exp_Upbound)*400}}rpx;height:30rpx"></view>
+            <view class="expBar_bg" style="width:{{(1-user_exp/user_exp_Upbound)*400}}rpx;height:30rpx"></view>
+            <text class="expFont">{{user_exp}}/{{user_exp_Upbound}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<block wx:if="{{TabCur==0}}">
+  <view class="hh-card">
+    <view class="hh-title">等级的作用{{'\n'}}</view>
+    <view class="hh-text">更多的下载次数</view>
+    <view class="hh-text">更大的管理空间</view>
+    <view class="hh-text">更多的编辑功能</view>
+    <view class="hh-text">云存储容量=10+等级*20（单位：张））</view>
+    <view class="hh-text">每日下载量=等级</view>
+  </view>
+  <view class="hh-card">
+    <view class="hh-title">等级和经验的关系{{'\n'}}</view>
+    <text class="introItem">1级：0-4{{'\n'}}2级：5-14{{'\n'}}3级：15-29{{'\n'}}
+    4级：30-49{{'\n'}}5级：50-99{{'\n'}}6级：100-199{{'\n'}}7级：200-499{{'\n'}}
+    8级：500-999{{'\n'}}9级：1000-1999{{'\n'}}10级：2000-2999{{'\n'}}
+    11级：3000-5999{{'\n'}}12级：6000-9999{{'\n'}}13级：10000-17999{{'\n'}}
+    14级：18000-29999{{'\n'}}15级：30000-59999{{'\n'}}16级：60000-99999{{'\n'}}
+    17级：100000-299999{{'\n'}}18级：300000（满级）</text>
+  </view>
+</block>
+
+<block wx:if="{{TabCur==1}}">
+  <view class="hh-title">尝试使用以下功能</view>
+  <view class="hh-grid-3">
+    <view class="hh-icon">
+      <text class="cuIcon-edit lg text-gray"></text>
+      <text>编辑表情</text>
+    </view>
+    <view class="hh-icon">
+      <text class="cuIcon-we lg text-gray"></text>
+      <text>公开表情</text>
+    </view>
+    <view class="hh-icon">
+      <text class="cuIcon-share lg text-gray"></text>
+      <text>分享小程序</text>
+    </view>
+    
+    <view>
+      <navigator url="../team2/load/index"  class="hh-icon">
+        <text class="cuIcon-upload lg text-gray"></text>
+        <text>上传表情</text>
+      </navigator>
+    </view>
+    
+    
+  </view>
+  <view class="hh-title">帮助我们完成机器学习</view>
+  <view class="hh-grid-3">
+    <view>
+    <navigator url="../mark_expression/mark_expression" class="hh-icon">
+      <text class="cuIcon-read lg text-gray"></text>
+      <text>标记表情</text>
+    </navigator>
+    </view>
+  </view>
+  <view class="hh-title">其他方式</view>
+  <view class="hh-grid-3">
+    <navigator url="" class="hh-icon">
+      <text class="cuIcon-favor lg text-gray"></text>
+      <text>表情被收藏下载</text>
+    </navigator>
+  </view>
+</block>
+<!-- <view class="global">
   <view class="head">
     <text class="title">用户经验介绍</text>
   </view>
@@ -23,4 +114,4 @@
     <text class="introItem">1.提升云存储容量（云存储容量=10+等级*20（单位：张））</text>
     <text class="introItem">2.向你的小伙伴们炫耀</text>
   </view>
-</view>
+</view>  -->

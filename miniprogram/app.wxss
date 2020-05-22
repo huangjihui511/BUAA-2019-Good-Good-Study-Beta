@@ -70,6 +70,7 @@ Page{
   color: var(--darkGray);
 	margin-top: 30rpx;  
 	box-shadow: 0 30rpx 20rpx rgba(0, 0, 0, 0.2);
+	padding: 30rpx;
 }
 .hh-title {
   font-size: 60rpx;
@@ -272,6 +273,7 @@ Page{
   box-sizing: border-box;
   display: block;
 	width: 100%;
+	box-shadow: 0 30rpx 20rpx rgba(0, 0, 0, 0.2);
 }
 .hh-nav-item {
   height: 120rpx;
@@ -297,12 +299,13 @@ Page{
 
 .hh-nav {
   text-align: center;
-  background-color: var(--green);
+  background-color: var(--blue);
   color: var(--white);
   white-space: nowrap;
   box-sizing: border-box;
   display: block;
-  width: 100%;
+	width: 100%;
+	box-shadow: 0 30rpx 20rpx rgba(0, 0, 0, 0.2);
     
 }
 .hh-dialog {
