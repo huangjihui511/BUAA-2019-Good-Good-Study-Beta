@@ -27,6 +27,14 @@
 </view> -->
 
 <view class="hh-grid-3">
+  <view class="hh-icon" bindtap="addImg">
+    <image src="../../images/album.png" class="hh-img-icon"></image>
+    <text>从相册选择</text>
+  </view>
+  <view class="hh-icon" bindtap="addImg2">
+    <image src="../../images/collection.png" class="hh-img-icon"></image>
+    <text>收藏夹选择</text>
+  </view>
   <view class="hh-icon" bindtap="addText">
     <image src="../../images/text.png" class="hh-img-icon"></image>
     <text>添加文字</text>
@@ -55,14 +63,7 @@
     <image src="../../images/crop.png" class="hh-img-icon"></image>
     <text>裁切图片</text>
   </view>
-  <view class="hh-icon" bindtap="addImg">
-    <image src="../../images/album.png" class="hh-img-icon"></image>
-    <text>从相册选择</text>
-  </view>
-  <view class="hh-icon" bindtap="addImg2">
-    <image src="../../images/collection.png" class="hh-img-icon"></image>
-    <text>收藏夹选择</text>
-  </view>
+  
 </view>
 
 <view class="{{save ? 'weui-show' :'weui-hidden'}}">
