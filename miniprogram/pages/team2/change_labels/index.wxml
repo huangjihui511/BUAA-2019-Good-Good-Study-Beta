@@ -5,15 +5,22 @@
         <text>完成</text>
     </view>
 </view>
-<div class="hh-title">已显示标签</div>
+<text>已显示标签</text>
 <view class="hh-grid-3">  
     <button wx:for="{{view_labels}}" class="hh-choose-item" bindtap="delete" data-index="{{index}}"> {{item}}
         <text class="logo">-</text>
     </button>
+
 </view>
-<div class="hh-title">未显示标签</div>
+<text>未显示标签</text>
 <view class="hh-grid-3">  
     <button wx:for="{{no_view_labels}}" class="hh-choose-item" bindtap="add" data-index="{{index}}"> {{item}}
+        <text class="logo">+</text>
+    </button>
+</view>
+<text>删除标签</text>
+<view class="hh-grid-3">  
+    <button wx:for="{{delete_labels}}" class="hh-choose-item" bindtap="de" data-index="{{index}}"> {{item}}
         <text class="logo">+</text>
     </button>
 </view>

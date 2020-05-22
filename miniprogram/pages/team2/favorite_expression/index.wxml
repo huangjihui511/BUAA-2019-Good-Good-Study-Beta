@@ -1,4 +1,4 @@
-<!--index.wxml-->
+﻿<!--index.wxml-->
 <scroll-view scroll-x class="hh-mult-nav" scroll-with-animation scroll-left="{{scrollLeft}}">
   <view class="hh-nav-item{{index==TabCur?'-choosed':''}}" wx:for="{{navData}}" wx:key bindtap="tabSelect" data-id="{{index}}">
     {{navData[index].text}}
@@ -11,12 +11,13 @@
 <view class="page__hd">
         <view class="hh-title">收藏的表情</view>
         <view class="hh-text">您可以在本页面浏览已上传或者收藏的表情，也可点击上传按钮上传本地图片</view>
-        <view class="hh-text">点击预览，长按更多功能待你挖掘</view>
+        <view class="hh-text">点击预览，单击图片更多功能待你挖掘</view>
 </view>
 <view class="struct">
   <view wx:for="{{images_view_srcs}}" wx:key="index">      
     <view class="hh-avator">  
-      <image class="image {{delete_selected[index]?'image_selected':''}}" mode="aspectFill" data-index="{{index}}" data-src="{{item}}" data-srcs="{{images_view_srcs}}" src="{{item}}" bindtap="delete_or_previewImage" bindlongtap="more_information">
+      <image class="image {{delete_selected[index]?'image_selected':''}}" mode="aspectFill" data-index="{{index}}" data-src="{{item}}" data-srcs="{{images_view_srcs}}" src="{{item}}" bindtap="delete_or_previewImage" >
+     <!--bindlongtap="more_information"-->
       </image>
       <view class="{{((expression_view_comment[index]!=undifined)&&(expression_view_comment[index].length!=0))?'hh-notification':'empty'}}">
         {{expression_view_comment[index].length}}
@@ -29,7 +30,7 @@
   </block>
   <block wx:else>
     <navigator url="../load/index">
-          <image class='load_image_login' src="../../../images/timg.jpg"></image>
+          <image class='load_image_login' src="../../../images/timg.jpeg"></image>
 
       <!-- <image class='load_image_login' src="../../../images/team2/load_image_login.jpg"></image> -->
     </navigator>
