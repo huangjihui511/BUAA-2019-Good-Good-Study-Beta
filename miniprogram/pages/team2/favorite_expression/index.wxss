@@ -1,7 +1,7 @@
 /**index.wxss**/
 @import "../../../app.wxss";
 .hh-mult-nav {
-  background: var(--green);
+  background: var(--cyan);
   position: fixed;
   top: 0;
   left: 0;

@@ -27,12 +27,91 @@ Page({
     collection: [],
     have_shop_collection:[],
     no_shop_collection:[],
+    do_interest:"",
+    upload:0,
+    upload_name:"",
   },
-
+  interest_or_no(){
+    var _this=this
+    if(this.data.do_interest=="+关注"){
+      wx.cloud.callFunction({
+        name: "get_label",
+        data:{
+          id:app.globalData.open_id
+        },
+        success(res){
+          console.log(res)
+          console.log("999",res.result.data[0].expression_set)
+          wx.cloud.callFunction({
+            name: "change_interest",
+            data:{
+              id:app.globalData.open_id,
+              flag:true,
+              interest:_this.data.upload,
+              name:_this.data.upload_name,
+              expression_set:res.result.data[0].expression_set
+            },
+            success(res){ 
+              _this.setData({
+                do_interest:"取消关注"
+              })
+              console.log(res)
+            }
+          })
+        }
+      })
+    }
+    else{
+      wx.cloud.callFunction({
+        name: "change_interest",
+        data:{
+          id:app.globalData.open_id,
+          flag:false,
+          interest:_this.data.upload
+        },
+        success(res){
+          _this.setData({
+            do_interest:"+关注"
+          })
+          console.log(res)
+        }
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var _this=this
+    this.setData({
+      upload:options.upload
+    })
+    this.setData({
+      upload_name:options.name
+    })
+    wx.cloud.callFunction({
+      name: "get_label",
+      data:{
+        id:app.globalData.open_id
+      },
+      success(res){
+        console.log(res)
+        if(res.result.data[0].interest!=undefined){
+          var i
+          _this.setData({
+            do_interest:"+关注"
+          })
+          for(i=0;i<res.result.data[0].interest.length;i++){
+            if(res.result.data[0].interest[i].open_id==options.upload){
+              _this.setData({
+                do_interest:"取消关注"
+              })
+              break
+            }
+          }
+        }
+      }
+    })
     console.log(options)
     if (options.upload == ""){
       console.log("noUploader")

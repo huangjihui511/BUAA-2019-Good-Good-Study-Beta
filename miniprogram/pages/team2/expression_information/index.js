@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    like_number:0,
+    fover_number:0,
     info:"",
     tag_image:'',
     showPicList: [
@@ -18,7 +20,7 @@ Page({
       [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
     ],
     expression:'',
-    icon: [{ name: 'appreciate', isShow: true,chinese_name:"转发",bind:'forward'}, { name: 'check', isShow: true ,chinese_name:'保存到手机',bind:'save'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'编辑图片',bind:"edit"}, { name: 'emoji', isShow: true ,chinese_name:"修改标签",bind:"change_label"}, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'收藏到微信',bind:"collect"}],
+    icon: [{ name: 'appreciate', isShow: true,chinese_name:"转发",bind:'forward'}, { name: 'check', isShow: true ,chinese_name:'保存到手机',bind:'save'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'编辑图片',bind:"edit"}, { name: 'emoji', isShow: true ,chinese_name:"修改标签",bind:"change_label"}, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'收藏到微信',bind:"collect"},{ name: 'favor', isShow: true ,chinese_name:'',bind:"public_picture"},{ name: 'appreciate', isShow: true,chinese_name:"点赞",bind:'like'}],
     comment:[],
     my_comment:[],    
     motto: 'Hello World',
@@ -32,12 +34,129 @@ Page({
     my_name:"",
     time:""
   },
+  like(){
+    var _this=this
+    wx.showToast({
+      title: '点赞成功',
+      icon: 'success',
+      duration: 1000
+    })
+    wx.cloud.callFunction({
+      name: "add_like_or_favor",
+      data:{
+        src:_this.data.expression,
+        flag:"like"
+      },
+      success(res){
+        console.log(res)
+      }
+    })
+  },
+  public_picture(){
+    var _this=this
+    if(this.data.icon[7].chinese_name=="公开"){
+      wx.cloud.callFunction({
+        name: "add_exp",
+        data:{
+          id:app.globalData.open_id,
+          incNum:10
+        }
+      })
+      wx.cloud.callFunction({
+        name:'change_picture_public',
+        data: {
+          src:_this.data.expression,
+          do_public:true,
+          cur_name:"未公开",
+          change_name:"公开",
+          open_id:app.globalData.open_id
+        },
+        success(res){
+          let name="icon[7].chinese_name"
+          _this.setData({
+            [name]:"取消公开"
+          }) 
+          console.log(res)
+        }
+      })
+    }
+    else if(this.data.icon[7].chinese_name=="取消公开"){
+      wx.cloud.callFunction({
+        name: "add_exp",
+        data:{
+          id:app.globalData.open_id,
+          incNum:-10
+        }
+      })
+      wx.cloud.callFunction({
+        name:'change_picture_public',
+        data: {
+          src:_this.data.expression,
+          cur_name:"公开",
+          change_name:"未公开",
+          do_public:false,
+          open_id:app.globalData.open_id
+        },
+        success(res){
+          let name="icon[7].chinese_name"
+          _this.setData({
+            [name]:"公开"
+          }) 
+          console.log(res)
+        }
+      })
+    }
+  },
+  look_public(){
+    var _this=this
+    wx.cloud.callFunction({
+      name:'get_user_exp_tag',
+      data: {
+        data1:app.globalData.open_id,
+        data2:_this.data.expression
+      },
+      success(res){
+        var i
+        var temp
+        console.log("11111111",res)
+        for(i=0;i<res.result.data[0].expression_set.length;i++){
+          if(res.result.data[0].expression_set[i].file_id==_this.data.expression){
+            temp=res.result.data[0].expression_set[i]
+            break
+          }
+        }
+        console.log(temp)
+        if(temp.tags!=undefined){
+          let name="icon[7].chinese_name"
+          for(i=0;i<temp.tags.length;i++){
+            if(temp.tags[i].name=="商店"){
+              _this.setData({
+                [name]:"来源：商店"
+              })
+              break
+            }
+            else if(temp.tags[i].name=="未公开"){
+              _this.setData({
+                [name]:"公开"
+              })
+              break
+            }
+          }
+          if(i==temp.tags.length){
+            _this.setData({
+              [name]:"取消公开"
+            })
+          }
+        }
+      }
+    })
+  },
   jump2userpage:function(e) {
     var app = getApp()
     console.log(e.currentTarget.dataset.id.open_id)
     // app.globalData.data = {'imagepath':imagepath}
     wx.navigateTo({
-      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.id.open_id
+      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.id.open_id+'&name='+e.currentTarget.dataset.id.user_name
     })
   },
   getinput(e){
@@ -148,12 +267,33 @@ Page({
     this.setData({
       expression:this.options.expression
     })
+    _this.look_public()
     wx.cloud.callFunction({
       name:"get_expression",
       data:{
         data1:_this.options.expression
       },
       success(res){
+        if(res.result.data[0].like!=undefined){
+          _this.setData({
+            like_number:res.result.data[0].like
+          })
+        }
+        else{
+          _this.setData({
+            like_number:0
+          })
+        }
+        if(res.result.data[0].favor!=undefined){
+          _this.setData({
+            favor_number:res.result.data[0].favor
+          })
+        }
+        else{
+          _this.setData({
+            favor_number:0
+          })
+        }
         if(res.result.data[0].comment!=undefined){
           _this.setData({
             comment:res.result.data[0].comment
