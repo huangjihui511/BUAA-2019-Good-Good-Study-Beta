@@ -1,9 +1,11 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/userpage/userpage",
+    "pages/team2/interest/index",
+    "pages/team2/favorite_expression/index",
     "pages/team2/expression_information/index",
     "pages/team2/change_labels/index",
-    "pages/team2/favorite_expression/index",
     "pages/team2/friend/index",
     "pages/team2/load/index",
     "pages/team2/setting/index",
@@ -29,7 +31,6 @@
     "pages/mark_expression/mark_expression",
     "pages/fliter/fliter",
     "pages/aboutExp/aboutExp",
-    "pages/userpage/userpage",
     "pages/cropper/cropper_example",
     "pages/hotSearch/hotSearch"
   ],

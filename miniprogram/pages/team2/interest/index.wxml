@@ -1,0 +1,6 @@
+<!--pages/team2/interest/index.wxml-->
+<view class='kind-list-item' wx:for="{{list}}" wx:key="index">
+  <view class='list_hd' data-it='{{item}}' bindtap="look">
+      <view class='name'>{{item.name}}</view>
+  </view>
+</view>
