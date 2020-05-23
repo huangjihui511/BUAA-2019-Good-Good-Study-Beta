@@ -146,63 +146,101 @@ Page({
   },
 
   addText() {
-    this.setData({
-      text: !this.data.text,
-      paint: false,
-      filter: false,
-      joint: false,
-      save: false
-    })
-    wx.navigateTo({
-      url: '../wordCombine/wordCombine',
-    })
+    if (!this.data.choosed) {
+      wx.showToast({
+        title: '还未选择图片！',
+        icon: 'none'
+      })
+    } else {
+      this.setData({
+        text: !this.data.text,
+        paint: false,
+        filter: false,
+        joint: false,
+        save: false
+      })
+      wx.navigateTo({
+        url: '../wordCombine/wordCombine',
+      })
+    }
   },
 
   addLine() {
-    this.setData({
-      text: false,
-      paint: !this.data.paint,
-      filter: false,
-      joint: false,
-      save: false
-    })
-    wx.navigateTo({
-      url: '../paint/paint?image=' + this.data.curImage,
-    })
+    if (!this.data.choosed) {
+      wx.showToast({
+        title: '还未选择图片！',
+        icon: 'none'
+      })
+    } else {
+      this.setData({
+        text: false,
+        paint: !this.data.paint,
+        filter: false,
+        joint: false,
+        save: false
+      })
+      wx.navigateTo({
+        url: '../paint/paint?image=' + this.data.curImage,
+      })
+    }
+    
   },
 
   addFilter() {
-    this.setData({
-      text: false,
-      paint: false,
-      filter: !this.data.filter,
-      joint: false,
-      save:false
-    })
-    wx.navigateTo({
-      url: '../fliter/fliter',
-    })
+    if (!this.data.choosed) {
+      wx.showToast({
+        title: '还未选择图片！',
+        icon: 'none'
+      })
+    } else {
+      this.setData({
+        text: false,
+        paint: false,
+        filter: !this.data.filter,
+        joint: false,
+        save:false
+      })
+      wx.navigateTo({
+        url: '../fliter_new/fliter_new',
+      })
+    }
+    
   },
 
   addPhoto() {
-    this.setData({
-      text: false,
-      paint: false,
-      filter: false,
-      joint: !this.data.joint,
-      save: false
-    })
-    this.jointTap()
+    if (!this.data.choosed) {
+      wx.showToast({
+        title: '还未选择图片！',
+        icon: 'none'
+      })
+    } else {
+      this.setData({
+        text: false,
+        paint: false,
+        filter: false,
+        joint: !this.data.joint,
+        save: false
+      })
+      this.jointTap()
+    }
+    
   },
 
   savePhoto() {
-    this.setData({
-      text: false,
-      paint: false,
-      filter: false,
-      joint: false,
-      save: !this.data.save
-    })
+    if (!this.data.choosed) {
+      wx.showToast({
+        title: '还未选择图片！',
+        icon: 'none'
+      })
+    } else {
+      this.setData({
+        text: false,
+        paint: false,
+        filter: false,
+        joint: false,
+        save: !this.data.save
+      })
+    }
   },
 
   adjustScale(path) {
@@ -307,46 +345,59 @@ Page({
   },
 
   rotatePhoto:function() {
-    this.setData({
-      text: false,
-      paint: false,
-      filter: false,
-      joint: false,
-      save:false
-    })
-    var cWidth = this.data.cWidth;
-    var cHeight = this.data.cHeight;
-    var that = this;
-    let cxt = wx.createCanvasContext('edit');
-    cxt.translate(that.data.cWidth,0);
-    cxt.rotate(90 * Math.PI / 180);
-    cxt.drawImage(that.data.curImage, 0, 0, cHeight, cWidth);
-    cxt.draw(false,wx.canvasToTempFilePath({
-      canvasId: 'edit',
-      destWidth: 3*cWidth,
-      destHeight: 3*cHeight,
-      success: function(res) {
-        console.log("success!更新curImage")
-        console.log(res.tempFilePath);
-        that.setData({
-          curImage: res.tempFilePath
-        })
-      }
-    }));
-    
+    if (!this.data.choosed) {
+      wx.showToast({
+        title: '还未选择图片！',
+        icon: 'none'
+      })
+    } else {
+      this.setData({
+        text: false,
+        paint: false,
+        filter: false,
+        joint: false,
+        save:false
+      })
+      var cWidth = this.data.cWidth;
+      var cHeight = this.data.cHeight;
+      var that = this;
+      let cxt = wx.createCanvasContext('edit');
+      cxt.translate(that.data.cWidth,0);
+      cxt.rotate(90 * Math.PI / 180);
+      cxt.drawImage(that.data.curImage, 0, 0, cHeight, cWidth);
+      cxt.draw(false,wx.canvasToTempFilePath({
+        canvasId: 'edit',
+        destWidth: 3*cWidth,
+        destHeight: 3*cHeight,
+        success: function(res) {
+          console.log("success!更新curImage")
+          console.log(res.tempFilePath);
+          that.setData({
+            curImage: res.tempFilePath
+          })
+        }
+      }));
+    }
   },
 
   cutPhoto() {
-    this.setData({
-      text: false,
-      paint: false,
-      filter: false,
-      joint: false,
-      save:false
-    })
-    wx.navigateTo({
-      url: '../cropper/cropper-example',
-    })
+    if (!this.data.choosed) {
+      wx.showToast({
+        title: '还未选择图片！',
+        icon: 'none'
+      })
+    } else {
+      this.setData({
+        text: false,
+        paint: false,
+        filter: false,
+        joint: false,
+        save:false
+      })
+      wx.navigateTo({
+        url: '../cropper/cropper-example',
+      })
+    }
   },
 
 

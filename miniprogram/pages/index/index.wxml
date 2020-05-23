@@ -10,7 +10,7 @@
     </block>
   </view-->
   <view class="hh-grid-square-1">
-    <image class="hh-img"  src="{{imagePath}}"></image>
+    <image class="hh-img"  src="{{imagePath}}" bindtap="previewImage"></image>
   </view>
 
   <view class="hh-grid-3">

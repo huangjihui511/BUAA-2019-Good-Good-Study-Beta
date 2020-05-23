@@ -528,5 +528,6 @@ Page({
       hasUserInfo: true
     })
   }
+  
 })
 

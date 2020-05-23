@@ -7,6 +7,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    icons:[
+      "cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/55290b6e-875d-11ea-98cd-acde48001122.jpg",
+      "cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/552817fe-875d-11ea-98cd-acde48001122.jpg",
+      "cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/55281b50-875d-11ea-98cd-acde48001122.jpg",
+     
+      "cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/55281efc-875d-11ea-98cd-acde48001122.jpg",
+      "cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/55282398-875d-11ea-98cd-acde48001122.png",
+      "cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/552825d2-875d-11ea-98cd-acde48001122.jpg"
+    ],
     appName: "斗图神器",
     appDes: "小程序UI组件库是基于WeUI封装的组件库，是一套同微信原生视觉体验一致的组件库，由微信官方设计团队和小程序团队为微信小程序量身设计，令用户的使用感知更加统一。",
     infos : [ {
