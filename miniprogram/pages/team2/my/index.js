@@ -6,14 +6,14 @@ const db = wx.cloud.database()
 Page({
   data: {
     list:[
-      {url:"../coin/index",name:"我的剩余金币",logo_address:"../../../images/team2/coin_logo.jpg"},
+      /*{url:"../coin/index",name:"我的剩余金币",logo_address:"../../../images/team2/coin_logo.jpg"},
       {url:"../friend/index",name:"邀请好友",logo_address:"../../../images/team2/friend_logo.jpg"},
-      {url:"../setting/index",name:"设置",logo_address:"../../../images/team2/setting_logo.jpg"},
+      {url:"../setting/index",name:"设置",logo_address:"../../../images/team2/setting_logo.jpg"},*/
       {url:"../load/index",name:"上传图片",logo_address:"../../../images/team2/load_logo.jpg"},
-      {url:"../../mark_expression/mark_expression",name:"增加经验",logo_address:"../../../images/team2/favorite_logo.jpg"},
+      {url:"/pages/aboutExp/aboutExp",name:"增加经验",logo_address:"../../../images/team2/friend_logo.jpg"},
       {url:"../../feedback/feedback",name:"使用反馈",logo_address:"../../../images/team2/feedback_logo.jpg"},
       {url:"../../notify/notify",name:"通知信息",logo_address:"../../../images/notify.jpg"},
-      {url:"../recycle/index",name:"回收站",logo_address:"../../../images/notify.jpg"},
+      {url:"../recycle/index",name:"回收站",logo_address:"../../../images/team2/favorite_logo.jpg"},
     ],
     images: [
       /*{
@@ -528,6 +528,5 @@ Page({
       hasUserInfo: true
     })
   }
-  
 })
 
