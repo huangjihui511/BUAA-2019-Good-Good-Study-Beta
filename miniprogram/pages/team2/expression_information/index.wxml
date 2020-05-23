@@ -10,7 +10,7 @@
     <text>{{item.chinese_name}}</text>
   </view>
 </view>
-<view class="hh-title">推荐表情</view>
+
 <view class="hh-title">表情的评论</view>
 <view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
   <view class="hh-avator-round" data-id="{{item}}" bindtap="jump2userpage" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
@@ -31,3 +31,20 @@
     <text>发送</text>
   </view>
 </view>
+
+<view class="hh-title">推荐表情
+</view>
+<view class="picShowList">
+  <view class="hh-grid-square-3" wx:for="{{showPicList}}" wx:for-index="index">
+    <!--view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
+       wx:key style="background-image:url({{item.file_id}});"
+       bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
+       data-tag='{{item.tag}}'-->
+    <image class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
+       wx:key src="{{item.file_id}}"
+       bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
+       data-tag='{{item.tag}}'>
+    </image>
+  </view>
+</view>
+

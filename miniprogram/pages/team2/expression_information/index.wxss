@@ -1,5 +1,6 @@
 /* pages/team2/expression_information/index.wxss */
 @import "../../../app.wxss";
+
 .hh-round-card{
   min-height: 40rpx;
   height: 40rpx;
@@ -19,4 +20,12 @@
   width: 100rpx;
   align-items: center;
   justify-content: center;
+}
+
+.picShowList {
+  display: flex;
+  flex-direction: column;
+  padding:10rpx;
+  background-color: white;
+  max-height: fit-content;
 }

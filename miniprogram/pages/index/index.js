@@ -34,6 +34,13 @@ Page({
     info:""
   },
 
+  previewImage: function (e){
+    wx.previewImage({
+      current: this.data.imagePath, // 当前显示图片的https链接
+      urls: [this.data.imagePath], // 需要预览的图片https链接列表
+    })
+  },
+
   getinput(e){
     this.data.my_comment=e.detail.value
   },
