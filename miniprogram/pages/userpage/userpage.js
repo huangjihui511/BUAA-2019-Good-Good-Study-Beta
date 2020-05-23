@@ -42,6 +42,7 @@ Page({
         success(res){
           console.log(res)
           console.log("999",res.result.data[0].expression_set)
+          console.log("999",app.globalData.userInfo)
           wx.cloud.callFunction({
             name: "change_interest",
             data:{
@@ -49,6 +50,7 @@ Page({
               flag:true,
               interest:_this.data.upload,
               name:_this.data.upload_name,
+              my_name:app.globalData.userInfo.nickName,
               expression_set:res.result.data[0].expression_set
             },
             success(res){ 

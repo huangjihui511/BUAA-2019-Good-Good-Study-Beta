@@ -1,2 +1,7 @@
 /* miniprogram/pages/hotSearch/hotSearch.wxss */
-@import "../shop/shop.wxss"
+@import "../shop/shop.wxss";
+
+.hot_item {
+  display: flex;
+  flex-direction: row;
+}

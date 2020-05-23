@@ -1,12 +1,8 @@
 <!--pages/login/login.wxml-->
 <!-- <text>pages/login/login.wxml</text> -->
-<view class="hh-title">斗图神器</view>
-<view class="hh-text">强大的制作和管理</view>
-<view class="hh-text">丰富的图库资源</view>
-<view class="hh-grid-square-3">
-  <view class="hh-img" wx:for="{{6}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
-</view>
-<view class="hh-text">有趣的社交管理</view>
+<view class="hh-title">进入小程序</view>
+
+
 <view class="hh-grid-3">
 <button open-type="getUserInfo" bindgetuserinfo="login">
   <view class="hh-icon"  >
@@ -17,10 +13,51 @@
 <button>
   <view class="hh-icon" ontap="nolog">
     <text class="cuIcon-lock lg text-gray"></text>
-    <text>神秘</text>
+    <text>匿名</text>
   </view>
   </button>
 </view>
+
+<view class="hh-title">主要功能</view>
+
+<view class="hh-text">丰富的图库资源</view>
+<view class="hh-card">
+  <view class="hh-grid-square-3">
+    <!-- <view class="hh-img" wx:for="{{6}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view> -->
+    <image class="hh-img" wx:for="{{icons}}" wx:key="index" src="{{item}}"></image>
+  </view>
+</view>
+
+<view class="hh-text">强大的制作和管理</view>
+ <view class="hh-grid-3">
+    <view class="hh-icon">
+      <text class="cuIcon-edit lg text-gray"></text>
+      <text>编辑表情</text>
+    </view>
+    <view class="hh-icon">
+      <text class="cuIcon-sort lg text-gray"></text>
+      <text>管理表情</text>
+    </view>
+    <view class="hh-icon">
+      <text class="cuIcon-favor lg text-gray"></text>
+      <text>收藏表情</text>
+    </view>
+  </view>
+<view class="hh-text">有趣的社交管理</view>
+ <view class="hh-grid-3">
+    <view class="hh-icon">
+      <text class="cuIcon-share lg text-gray"></text>
+      <text>发布和分享</text>
+    </view>
+    <view class="hh-icon">
+      <text class="cuIcon-message lg text-gray"></text>
+      <text>留言互动</text>
+    </view>
+    <view class="hh-icon">
+      <text class="cuIcon-favor lg text-gray"></text>
+      <text>关注和被关注</text>
+    </view>
+  </view>
 
 <!-- <view class="page">
     <view class="page__hd">

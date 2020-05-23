@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const db = cloud.database()
   const request = event.request
-
+  console.log("request:",request)
   //查找推荐表情
   if (request == 1) {
     const countResult = await db.collection('expression_visit_times').count()
@@ -92,16 +92,19 @@ exports.main = async (event, context) => {
     const getAmount = 8
     
     const countResult = await db.collection('tag_search_times').count()
-    const total = countResult.total
-      // 计算需分几次取
-    var batchTimes = Math.ceil(total / 20)
+    var t = countResult.total
+      // 计算需分几次取  
+    if (t > 10) {
+      t = 10
+    }
+    var batchTimes = Math.ceil(t / 20)
     if (batchTimes == 0) {
       batchTimes = 1
     }
     var resultArray = []
     var resultLength = 0
     for (var i = 0;i < batchTimes;i++) {
-      var temp = await db.collection('tag_search_times').limit(32).
+      var temp = await db.collection('tag_search_times').limit(10).
         orderBy("times","desc").skip(i*batchTimes).get()
       console.log("取一次关键词记录:",temp)
       resultLength = resultLength + temp.data.length
@@ -114,6 +117,34 @@ exports.main = async (event, context) => {
     console.log("resultArray:",resultArray)
     return {
       data:resultArray
+    }
+  }
+
+  //对一个tag列表，查找一组表情，每个表情分别对应一个tag
+  else if(request == 4) {
+    const tagList = event.data1
+    var ids = []
+    console.log("tagList:",tagList)
+    for (var i = 0;i < tagList.length;i++) {
+      var tag = tagList[i].tag
+      console.log("tagToSearch:",tag)
+      var expression = await db.collection('tags').where({
+        name:tag
+      }).get()
+      //console.log("expressionOfTag:",expression)
+      //console.log("data:",expression.data)
+      var exps = expression.data[0]['expression_id']
+      console.log("exps:",exps)
+      //console.log("exps:",expression.data[0]['expression_id'].key)
+
+      for (var key in exps) {
+        ids.push(key)
+        break  
+      }
+      //ids.push(expression.data[0]['expression_id'][0])
+    }
+    return {
+      data:ids
     }
   }
 

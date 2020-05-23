@@ -291,20 +291,16 @@ Page({
                 }
                 if (runover == all_tags.length) {
                   // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
                   console.log("结束")
                 }
                 if ((runover == all_tags.length) && (globalPicIndex == 0)) {
                   // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
                 }
                 if ((runover == all_tags.length) && (globalPicIndex > 0)) {
                   // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
                 }
                 if (globalPicIndex >= 9) {
                   // 数据加载完成，隐藏弹窗
-                  wx.hideLoading()
                   break
                 }
               } 
@@ -316,7 +312,7 @@ Page({
   
   onLoad: function (option) {
     var app = getApp()
-    
+    var _this=this
     var tag = app.globalData.shopImageTag
     this.data.tag_image = tag
     console.log("tag_onload:",this.data.tag_image)
@@ -324,7 +320,7 @@ Page({
     //console.log("paths:",this.data.showListCache)
     console.log(option)
     this.setData({
-      imagePath : option.url
+      imagePath: option.url
     })
     this.data.expression = option.url
     if (app.globalData.userInfo) {
@@ -371,13 +367,13 @@ Page({
     wx.cloud.callFunction({
       name:"get_expression",
       data:{
-        data1:this.option.url
+        data1:option.url
       },
       success(res){
-        this.setData({
+        _this.setData({
           comment:res.result.data[0].comment
         })
-        console.log("1111",this.data.comment)
+        console.log("1111",_this.data.comment)
       }
     })
   },
@@ -391,7 +387,8 @@ Page({
   },
   //下载图片
   download(e) {
-    let fileUrl = e.currentTarget.dataset.fileid
+    let fileUrl = this.data.imagePath
+    console.log(fileUrl)
     wx.cloud.downloadFile({
       fileID: fileUrl,
       success: res => {
@@ -405,20 +402,52 @@ Page({
   },
   // 保存图片到相册
   saveImage(imgUrl){
-    wx.saveImageToPhotosAlbum({
-      filePath:imgUrl,
-      success(res) {
-        wx.showToast({                
-          title: '下载成功',                
-          icon: 'success',                
-          duration: 1500,                
-          mask: false,             
+        wx.saveImageToPhotosAlbum({
+          filePath: imgUrl,
+          success:function (data) {
+            console.log(data);
+          },
+          fail: function (err) {
+            if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+              // 这边微信做过调整，必须要在按钮中触发，因此需要在弹框回调中进行调用
+              wx.showModal({
+                title: '提示',
+                content: '需要您授权保存相册',
+                showCancel: false,
+                success:modalSuccess=>{
+                  wx.openSetting({
+                    success(settingdata) {
+                      console.log("settingdata", settingdata)
+                      if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                        wx.showModal({
+                          title: '提示',
+                          content: '获取权限成功,再次点击下载即可保存',
+                          showCancel: false,
+                        })
+                      } else {
+                        wx.showModal({
+                          title: '提示',
+                          content: '获取权限失败，将无法保存到相册哦~',
+                          showCancel: false,
+                        })
+                      }
+                    },
+                    fail(failData) {
+                      console.log("failData",failData)
+                    },
+                    complete(finishData) {
+                      console.log("finishData", finishData)
+                    }
+                  })
+                }
+              })
+            }
+          },
+
+
+
+          
         })
-      },
-      fail(res) {
-        console.log('保存失败', res)
-      }
-    })
   },
   //收藏图片
   storeImage(e){

@@ -20,7 +20,7 @@ Page({
       [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
     ],
     expression:'',
-    icon: [{ name: 'appreciate', isShow: true,chinese_name:"转发",bind:'forward'}, { name: 'check', isShow: true ,chinese_name:'保存到手机',bind:'save'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'编辑图片',bind:"edit"}, { name: 'emoji', isShow: true ,chinese_name:"修改标签",bind:"change_label"}, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'收藏到微信',bind:"collect"},{ name: 'favor', isShow: true ,chinese_name:'',bind:"public_picture"},{ name: 'appreciate', isShow: true,chinese_name:"点赞",bind:'like'}],
+    icon: [{ name: 'appreciate', isShow: true,chinese_name:"转发",bind:'forward'}, { name: 'check', isShow: true ,chinese_name:'保存到手机',bind:'save'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'编辑图片',bind:"edit"}, { name: 'emoji', isShow: true ,chinese_name:"修改标签",bind:"change_label"}, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'收藏到微信',bind:"collect"},{ name: 'favor', isShow: true ,chinese_name:'',bind:"public_picture"},{ name: 'appreciate', isShow: true,chinese_name:"点赞次",bind:'like'},{ name: 'favorfill', isShow: true,chinese_name:"收藏次"}],
     comment:[],
     my_comment:[],    
     motto: 'Hello World',
@@ -36,6 +36,13 @@ Page({
   },
   like(){
     var _this=this
+    let name="icon[8].chinese_name"
+    _this.setData({
+      like_number:_this.data.like_number+1
+    })
+    _this.setData({
+      [name]:"点赞"+_this.data.like_number+"次"
+    })
     wx.showToast({
       title: '点赞成功',
       icon: 'success',
@@ -258,6 +265,138 @@ Page({
       urls: [this.data.expression], // 需要预览的图片https链接列表
     })
   },
+
+  //搜索图片
+  searchOnload: function(tag) {
+
+    console.log("searchOnload")
+    var v = this.data.tag_image
+    //var v = tag
+    console.log("onload similar tag:",v)
+
+    let that = this
+    this.data.globalShowIndex = 0
+    this.data.showListCache = []
+
+    for (var i = 0;i < 5;i++) {
+      for (var j = 0;j < 3;j++) {
+        this.data.showPicList[i][j]['file_id'] = ''
+        this.setData({
+          showPicList:this.data.showPicList
+        })
+      }
+    }
+    //console.log("showPicList:",this.data.showPicList)
+
+    //暂存所有查找的图片路径
+    var tempPaths = []
+    
+    var labels=['label7']
+    labels[0] = v
+    var globalPicIndex = 0
+    wx.cloud.init()
+    //索引方式
+    var judge = 3
+    //for (var i = 0;i < labels.length;i++) {
+      //var label = labels[i]
+    for (var i = 0;i < 1;i++) {  
+      var label = labels[i]
+        if (judge == 3) {
+          db.collection("tag_names").get({
+            success:function(res) {
+              wx.showLoading({
+                title: '加载中',
+               })
+               setTimeout(function () {
+                wx.hideLoading()
+                if (globalPicIndex == 0){
+                  console.log("未找到：",globalPicIndex)
+                  wx.showToast({
+                  title: '抱歉，未找到您想要的表情，换个关键词试试^_^?', // 标题
+                  icon: 'none',  // 图标类型，none
+                  duration: 2500  // 提示窗停留时间，默认1500ms
+                })
+                }
+                }, 20000)
+              var all_tags = res.data[0].name
+              //console.log("all_tags:",all_tags)
+              for (var runover = 0;runover < all_tags.length;runover++) {
+                var judge = 0 
+                var inputString = String(label)
+                var tag = all_tags[runover]
+                var labelString = String(tag)
+                //console.log(inputString,"---",labelString,"是否匹配:",inputString.indexOf(labelString))
+                if (inputString.indexOf(labelString) >= 0) {
+                  judge = 1
+                }
+                if (judge == 1) {
+                  //console.log("匹配成功")
+                  var path
+                  db.collection("tags").where({
+                    name:tag
+                  }).get({
+                    success:function(res) {
+                      var datas = res.data
+                      for (var f = 0;f < datas.length;f++) {
+                        var ids = datas[f]['expression_id']
+                        //console.log("ids:",ids) 
+                        for (var key in ids) {
+                          var reflex1 = globalPicIndex%18
+                            var reflex2 =  parseInt(reflex1/3)
+                            var reflex3 = reflex1%3
+                          //  console.log("globalPicIndex:",globalPicIndex)
+                          //  console.log("key:",key)
+                          that.data.showListCache[globalPicIndex] = key
+                          if (globalPicIndex < 18) {
+                            that.data.showPicList[reflex2][reflex3]['file_id'] = key
+                            that.data.showPicList[reflex2][reflex3]['tag'] = tag
+                            that.setData({
+                              showPicList:that.data.showPicList
+                            }) 
+                          }
+                          globalPicIndex++
+                      }
+                    }
+                    var fill = globalPicIndex
+                    if (fill < 18) {
+                      for (;fill < 18;fill++) {
+                        that.data.showPicList[parseInt(fill/3)][fill%3]['file_id'] = ''
+                        that.setData({
+                          showPicList:that.data.showPicList
+                        })
+                      }
+                    }
+                    }
+                  })
+                  // 数据加载完成，隐藏弹窗
+                  wx.hideLoading()
+                  break;
+                }
+                if (runover == all_tags.length) {
+                  // 数据加载完成，隐藏弹窗
+                  wx.hideLoading()
+                  console.log("结束")
+                }
+                if ((runover == all_tags.length) && (globalPicIndex == 0)) {
+                  // 数据加载完成，隐藏弹窗
+                  wx.hideLoading()
+                }
+                if ((runover == all_tags.length) && (globalPicIndex > 0)) {
+                  // 数据加载完成，隐藏弹窗
+                  wx.hideLoading()
+                }
+                if (globalPicIndex >= 9) {
+                  // 数据加载完成，隐藏弹窗
+                  wx.hideLoading()
+                  break
+                }
+              } 
+            }
+          })
+        }
+      }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -274,24 +413,59 @@ Page({
         data1:_this.options.expression
       },
       success(res){
+        console.log("search_result:",res.result.data[0])
+        if (res.result.data[0] == undefined) {
+          setTimeout(function () {wx.showToast({
+            title: '您点击了一张老版本的图片，无法在数据库中找到路径',
+            icon: 'none',
+            duration: 2000
+          })},2000)
+        }
+        if(res.result.data[0].tags!=undefined) {
+          var tags = res.result.data[0].tags
+          console.log("tags:",tags)
+          var tag
+          for (var key in tags) {
+            console.log("key:",key)
+            tag = key
+            if (tag!=undefined) {
+              break
+            }
+          }
+          _this.data.tag_image = tag
+          if (tag == undefined) {
+            setTimeout(function () {wx.showToast({
+              title: '您点击了一张老版本的图片，这张图片没有标签',
+              icon: 'none',
+              duration: 3000
+            })},3000)
+          }
+          console.log("tag:",tag)
+          _this.searchOnload(tag)
+        }
         if(res.result.data[0].like!=undefined){
+          let name="icon[8].chinese_name"
           _this.setData({
+            [name]:"点赞"+res.result.data[0].like+"次",
             like_number:res.result.data[0].like
           })
         }
         else{
+          let name="icon[8].chinese_name"
           _this.setData({
-            like_number:0
+            [name]:"点赞0次"
           })
         }
         if(res.result.data[0].favor!=undefined){
+          let name="icon[9].chinese_name"
           _this.setData({
-            favor_number:res.result.data[0].favor
+            [name]:"收藏"+res.result.data[0].favor+"次"
           })
         }
         else{
+          let name="icon[9].chinese_name"
           _this.setData({
-            favor_number:0
+            [name]:"收藏0次"
           })
         }
         if(res.result.data[0].comment!=undefined){

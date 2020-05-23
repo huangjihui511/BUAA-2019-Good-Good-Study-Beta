@@ -9,6 +9,7 @@ Page({
   data: {
     view_labels:[],
     no_view_labels:[],
+    delete_labels:[],
     checkbox: [{
       value: 0,
       name: '10元',
@@ -94,11 +95,11 @@ Page({
   add(e){    
     var i
     var temp=[]
-    temp=this.data.view_labels;
+    temp=this.data.delete_labels;
     temp[temp.length]=this.data.no_view_labels[e.currentTarget.dataset.index]
     console.log(temp,temp.length,e)
     this.setData({
-      view_labels:temp
+      delete_labels:temp
     })
     temp=[]
     for(i=0;i<this.data.no_view_labels.length;i++){
@@ -110,7 +111,26 @@ Page({
       no_view_labels:temp
     })
   },
-
+  
+  de(e) {
+    var i
+    var temp=[]
+    temp=this.data.view_labels;
+    temp[temp.length]=this.data.delete_labels[e.currentTarget.dataset.index]
+    console.log(temp,temp.length,e)
+    this.setData({
+      view_labels:temp
+    })
+    temp=[]
+    for(i=0;i<this.data.delete_labels.length;i++){
+      if(e.currentTarget.dataset.index!=i){
+        temp[temp.length]=this.data.delete_labels[i]
+      }
+    }
+    this.setData({
+      delete_labels:temp
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
