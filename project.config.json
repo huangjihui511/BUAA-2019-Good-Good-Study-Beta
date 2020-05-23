@@ -27,7 +27,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.8.1",
 	"appid": "wxdad72fcb9a2a88ab",
-	"projectname": "beta3",
+	"projectname": "beta6",
 	"miniprogramRoot": "miniprogram/",
 	"cloudfunctionRoot": "cloudfunctions/",
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
