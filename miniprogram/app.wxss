@@ -123,6 +123,7 @@ Page{
   /* padding-bottom: calc((100% - 40rpx)); */
 	height: 700rpx;
 	width: calc((100%rpx));
+	margin: auto;
 }
 .hh-img {
   background-size: cover;
