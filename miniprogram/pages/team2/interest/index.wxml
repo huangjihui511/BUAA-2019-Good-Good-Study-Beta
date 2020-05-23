@@ -1,6 +1,15 @@
 <!--pages/team2/interest/index.wxml-->
-<view class='kind-list-item' wx:for="{{list}}" wx:key="index">
-  <view class='list_hd' data-it='{{item}}' bindtap="look">
+<view class="hh-title">关注列表</view>
+<view class='hh-menu-list' wx:for="{{list}}" wx:key="index">
+  <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
+      <image class="hh-menu-img" src="cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal1.png" mode="cover"></image>
+      <view class='name'>{{item.name}}</view>
+  </view>
+</view>
+<view class="hh-title">被关注列表</view>
+<view class='hh-menu-list' wx:for="{{be_list}}" wx:key="index">
+  <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
+      <image class="hh-menu-img" src="{{headImage[be_headImageNum[index]].url}}" mode="cover"></image>
       <view class='name'>{{item.name}}</view>
   </view>
 </view>
