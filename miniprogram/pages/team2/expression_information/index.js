@@ -20,7 +20,7 @@ Page({
       [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
     ],
     expression:'',
-    icon: [{ name: 'appreciate', isShow: true,chinese_name:"转发",bind:'forward'}, { name: 'check', isShow: true ,chinese_name:'保存到手机',bind:'save'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'编辑图片',bind:"edit"}, { name: 'emoji', isShow: true ,chinese_name:"修改标签",bind:"change_label"}, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'收藏到微信',bind:"collect"},{ name: 'favor', isShow: true ,chinese_name:'',bind:"public_picture"},{ name: 'appreciate', isShow: true,chinese_name:"点赞",bind:'like'}],
+    icon: [{ name: 'appreciate', isShow: true,chinese_name:"转发",bind:'forward'}, { name: 'check', isShow: true ,chinese_name:'保存到手机',bind:'save'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'编辑图片',bind:"edit"}, { name: 'emoji', isShow: true ,chinese_name:"修改标签",bind:"change_label"}, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'收藏到微信',bind:"collect"},{ name: 'favor', isShow: true ,chinese_name:'',bind:"public_picture"},{ name: 'appreciate', isShow: true,chinese_name:"点赞次",bind:'like'},{ name: 'favorfill', isShow: true,chinese_name:"收藏次"}],
     comment:[],
     my_comment:[],    
     motto: 'Hello World',
@@ -36,6 +36,13 @@ Page({
   },
   like(){
     var _this=this
+    let name="icon[8].chinese_name"
+    _this.setData({
+      like_number:_this.data.like_number+1
+    })
+    _this.setData({
+      [name]:"点赞"+_this.data.like_number+"次"
+    })
     wx.showToast({
       title: '点赞成功',
       icon: 'success',
@@ -408,11 +415,11 @@ Page({
       success(res){
         console.log("search_result:",res.result.data[0])
         if (res.result.data[0] == undefined) {
-          wx.showToast({
+          setTimeout(function () {wx.showToast({
             title: '您点击了一张老版本的图片，无法在数据库中找到路径',
             icon: 'none',
             duration: 2000
-          })
+          })},2000)
         }
         if(res.result.data[0].tags!=undefined) {
           var tags = res.result.data[0].tags
@@ -427,33 +434,38 @@ Page({
           }
           _this.data.tag_image = tag
           if (tag == undefined) {
-            wx.showToast({
+            setTimeout(function () {wx.showToast({
               title: '您点击了一张老版本的图片，这张图片没有标签',
               icon: 'none',
               duration: 3000
-            })
+            })},3000)
           }
           console.log("tag:",tag)
           _this.searchOnload(tag)
         }
         if(res.result.data[0].like!=undefined){
+          let name="icon[8].chinese_name"
           _this.setData({
+            [name]:"点赞"+res.result.data[0].like+"次",
             like_number:res.result.data[0].like
           })
         }
         else{
+          let name="icon[8].chinese_name"
           _this.setData({
-            like_number:0
+            [name]:"点赞0次"
           })
         }
         if(res.result.data[0].favor!=undefined){
+          let name="icon[9].chinese_name"
           _this.setData({
-            favor_number:res.result.data[0].favor
+            [name]:"收藏"+res.result.data[0].favor+"次"
           })
         }
         else{
+          let name="icon[9].chinese_name"
           _this.setData({
-            favor_number:0
+            [name]:"收藏0次"
           })
         }
         if(res.result.data[0].comment!=undefined){

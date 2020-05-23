@@ -1,43 +1,16 @@
 /**index.wxss**/
 @import "/lib/shared.wxss";
 @import "/lib/weui.wxss";
-page {
-  background:rgb(252, 251, 251);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+@import "../../../app.wxss";
+.page_hd{
+  margin-bottom: 50rpx;
 }
-.logo{
-  width: 100rpx;
-  height: 100rpx;
+.hh-user-profile{
+  width: 100%;
+  flex: none;
 }
-.name{
-  flex: 1;
-}
-.list{
-  background-color: white;
-}
-.list_hd{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 20rpx 0;
-  background-color: #FFFFFF;
-  border-radius: 4rpx;
-  overflow: hidden;
-}
-.arrow{
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid #999;
-  border-right: 2px solid #999;
-  position: absolute;
-  right: 20rpx;
-  transform: rotate(45deg);
-  margin-top:10rpx;
-  margin-right: 10px;
-  /* padding: 40px; */
-
+.hh-menu-list {
+  margin-top: 0rpx;
 }
 .no_login{
   display: flex;
@@ -56,71 +29,11 @@ page {
 .login_button{
   background-color: white;
 }
-
-.userinfo {
-  display:flex;
-  flex-direction:row;
-  flex: none;
-  padding: 40px 0 0;
-}
-
-.userHead {
-  width: 128rpx;
-  height: 128rpx;
-  border-radius: 50%;
-  margin-left: 20rpx;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  padding-left: 20rpx;
-  /**color: #aaa;**/
-  color: black;
-  font-size: medium;
-}
-
-.userNameDetail {
-  display:flex;
-  flex-direction: column;
-}
-
-.nameAndCoin {
-  display:flex;
-  flex-direction: column;
-}
-
-.userName {
-  margin-left: 20rpx;
-  margin-right: 10rpx;
-  font-size: 40rpx;
-
-}
-
 .Coin {
   display: flex;
   flex-direction: row;
   /*margin-top: 10rpx;*/
   /**padding: 20rpx;**/
-}
-
-.nameExp {
-  margin-left: 20rpx;
-  display: flex;
-  flex-direction: row;
-}
-
-.userRank {
-  color:rgb(164, 164, 236);
-  font-size: 40rpx;
-  margin-left: 10rpx;
-  margin-right: 10rpx;
-  margin-top: 7rpx;
 }
 
 .exp_bar {
@@ -168,15 +81,4 @@ page {
   color: rgb(164, 164, 236) ;
   margin-left: 10rpx;
   margin-top: 8rpx;
-}
-
-.page__hd {
-  padding: 0 30rpx 40rpx;
-}
-
-.kind-list-item {
-  margin: 5rpx 0;
-  background-color: #FFFFFF;
-  border-radius: 4rpx;
-  overflow: hidden;
 }
