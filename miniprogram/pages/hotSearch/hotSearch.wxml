@@ -1,17 +1,14 @@
 <!--miniprogram/pages/hotSearch/hotSearch.wxml-->
 
 
-  <view class="hotTagsList" style="height:100%">
-    <view class="hot_icon_title" style="height:50rpx">
+  <!--view class="hotTagsList" style="height:100%">
+    <-view class="hot_icon_title" style="height:50rpx">
       <image src="../../images/mirror_hotTags.png" style="height:40rpx;width:40rpx;margin:5rpx"></image>
       <text style="font-size:small;font-style:inherit;color:#0387FE;margin-bottom:5rpx">热搜标签</text>
     </view>
     <view class="line" style="margin-top:10rpx;margin-bottom:0"></view>
     <view class="hotTagsList_row" style="margin-bottom:30rpx;" wx:for='{{(hotTagsList.length+1)/2-1}}' wx:for-index="index">
       <view class="hotTagsList_cell">
-        <!--text class="hotTagsText" data-tag="{{hotTagsList[2*index].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top{{2*index+1}}.</text>{{hotTagsList[2*index].tag}}
-        </text-->
         <view class="hh-capsule-tag" data-tag="{{hotTagsList[2*index].tag}}" bindtap="hotTagJump">
           <view class="hh-capsule-tag-name">
             {{hotTagsList[2*index].tag}}
@@ -22,9 +19,6 @@
         </view>
       </view>
       <view class="hotTagsList_cell" wx:if="{{2*index+1<hotTagsList.length}}">
-        <!--text class="hotTagsText" data-tag="{{hotTagsList[2*index+1].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top{{2*index+2}}.</text>{{hotTagsList[2*index+1].tag}}
-        </text-->
         <view class="hh-capsule-tag" data-tag="{{hotTagsList[2*index+1].tag}}" bindtap="hotTagJump">
           <view class="hh-capsule-tag-name">
             {{hotTagsList[2*index+1].tag}}
@@ -36,4 +30,24 @@
       </view>
     </view>
     <view class="line" style="margin-top:25rpx"></view>
+  </view-->
+<view wx:for='{{hotTagsList.length}}' wx:for-index="index" wx:for-item="item">
+  <view class="hot_item">  
+    <view class="hh-text">Top{{index+1}}.</view>
+    <view class="hh-capsule-tag" data-tag="{{hotTagsList[index].tag}}" bindtap="hotTagJump">
+      <view class="hh-capsule-tag-name">
+      {{hotTagsList[index].tag}}
+      </view>
+      <view class="hh-capsule-tag-num">
+      点击次数：{{hotTagsList[index].times}}
+      </view>
+    </view>
   </view>
+  <!--image class="image_item" src="{{hotTagsImage[index]}}"></image-->
+  <view class="hh-grid-square-1">
+    <image class="hh-img" src="{{hotTagsImage[index]}}" mode="aspectFill"
+    bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{hotTagsImage[index]}}'
+    data-tag='{{hotTagsList[index].tag}}'
+    />
+  </view>
+</view>
