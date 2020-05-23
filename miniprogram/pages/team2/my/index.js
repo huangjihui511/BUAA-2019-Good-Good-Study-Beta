@@ -6,15 +6,14 @@ const db = wx.cloud.database()
 Page({
   data: {
     list:[
-      {url:"../coin/index",name:"我的剩余金币",logo_address:"../../../images/team2/coin_logo.jpg"},
+      /*{url:"../coin/index",name:"我的剩余金币",logo_address:"../../../images/team2/coin_logo.jpg"},
       {url:"../friend/index",name:"邀请好友",logo_address:"../../../images/team2/friend_logo.jpg"},
-      {url:"../setting/index",name:"设置",logo_address:"../../../images/team2/setting_logo.jpg"},
+      {url:"../setting/index",name:"设置",logo_address:"../../../images/team2/setting_logo.jpg"},*/
       {url:"../load/index",name:"上传图片",logo_address:"../../../images/team2/load_logo.jpg"},
-      {url:"../../mark_expression/mark_expression",name:"增加经验",logo_address:"../../../images/team2/favorite_logo.jpg"},
+      {url:"/pages/aboutExp/aboutExp",name:"增加经验",logo_address:"../../../images/team2/friend_logo.jpg"},
       {url:"../../feedback/feedback",name:"使用反馈",logo_address:"../../../images/team2/feedback_logo.jpg"},
       {url:"../../notify/notify",name:"通知信息",logo_address:"../../../images/notify.jpg"},
-      {url:"../recycle/index",name:"回收站",logo_address:"../../../images/notify.jpg"},
-      {url:"../interest/index",name:"我的关注",logo_address:"../../../images/notify.jpg"}
+      {url:"../recycle/index",name:"回收站",logo_address:"../../../images/team2/favorite_logo.jpg"},
     ],
     images: [
       /*{
@@ -63,7 +62,21 @@ Page({
     user_openid: '123',
     rankExp:[0,5,15,30,50,100,200,500,1000,2000,3000,6000,10000,18000,30000,60000,
       100000,300000],
-    user_exp_Upbound:25
+    user_exp_Upbound:25,
+    interest:0,
+    be_interested:0,
+    favor_number:0,
+    upload_word:"他/她还没有格言哦~",
+  },
+  interest_list(){
+    wx.navigateTo({
+      url: '../interest/index',
+    })
+  },
+  favor_list(){
+    wx.reLaunch({
+      url: '../favorite_expression/index',
+    })
   },
   jumpToExp:function(e) {
     wx.navigateTo({
@@ -368,7 +381,7 @@ Page({
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
-      url: '../logs/logs'
+      url: '../../logs/logs'
     })
   },
   calUserRank: function() {
@@ -402,7 +415,30 @@ Page({
     console.log("rank:"+this.data.user_rank+"expup:"+this.data.user_exp_Upbound)
   },
   onLoad: function () {
-    
+    var _this=this
+    wx.cloud.callFunction({
+      name: "get_label",
+      data:{
+        id:app.globalData.open_id
+      },
+      success(res){
+        if(res.result.data[0].interest!=undefined){
+          _this.setData({
+            interest:res.result.data[0].interest.length
+          })
+        }
+        if(res.result.data[0].be_interested!=undefined){
+          _this.setData({
+            be_interested:res.result.data[0].be_interested.length
+          })
+        }
+        if(res.result.data[0].expression_set!=undefined){
+          _this.setData({
+            favor_number:res.result.data[0].expression_set.length
+          })
+        }
+      }
+    })
     var that = this
     console.log("初始化推荐表情")
     db.collection('expression').where({
@@ -423,7 +459,6 @@ Page({
         }
       }
     })
-
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -447,6 +482,9 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
+          /*db.collection('user').where({
+            open_id: res.
+          })*/
         }
       })
     }
@@ -477,6 +515,14 @@ Page({
           that.setData({          
             user_exp: res.data[0].exp     
           })   
+          if (res.data[0].hasOwnProperty("aphorism")){
+            this.setData({
+              upload_word: res.data[0].aphorism
+            })
+          }
+          else {
+            console.log("no aphorism")
+          }
           that.calUserRank()
         })    
       },
@@ -485,6 +531,7 @@ Page({
    // this.calUserRank()
     console.log("用户经验：",this.data.user_exp)
   },
+
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -492,7 +539,32 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
-  
+  },
+
+  changeApho:function(){
+    wx.navigateTo({
+      url: '../../aphorism/aphorism?open_id='+this.data.user_openid
+    })
+  },
+
+  onShow: function () {
+    db.collection('user').where({
+      open_id: this.data.user_openid
+    }).get().then(res=>{   
+      console.log("111111",res)
+      this.setData({          
+        user_exp: res.data[0].exp     
+      })   
+      if (res.data[0].hasOwnProperty("aphorism")){
+        this.setData({
+          upload_word: res.data[0].aphorism
+        })
+      }
+      else {
+        console.log("no aphorism")
+      }
+      that.calUserRank()
+    })    
+  },
 })
 

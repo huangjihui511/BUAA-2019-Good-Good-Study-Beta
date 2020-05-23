@@ -1,36 +1,64 @@
 <!--index.wxml-->
-<view class="page__hd">
-  <view class="userinfo">
-  <view class="no_login" wx:if="{{!hasUserInfo && canIUse}}">
-    <image class="no_login_logo" src="../../../images/team2/no_login.jpg"></image>
+<view class='page_hd'>
+  <view class="hh-user-profile" wx:if="{{!hasUserInfo && canIUse}}">
+    <image class="hh-user-avator" src="../../../images/team2/no_login.png"></image>
     <button class="login_button" style="width:370rpx" open-type="getUserInfo" bindgetuserinfo="getUserInfo"><text class="no_login_text">点击登陆账户</text></button>
   </view>
-    <block wx:else>
-      <image class="userHead" bindtap="bindViewTap" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <view class="userNameDetail">
-        <view class="nameAndCoin">
-          <view class="nameExp">
-            <text class="userName">{{userInfo.nickName}}</text>
-            <text class="userRank">等级：{{user_rank}}</text>
-          </view>
-          <view class="Coin">
-            <view class="exp_bar" style="width:400rpx;height:30rpx" bindtap="jumpToExp">
-              <view class="expBar" style="width:{{(user_exp/user_exp_Upbound)*400}}rpx;height:30rpx"></view>
-              <view class="expBar_bg" style="width:{{(1-user_exp/user_exp_Upbound)*400}}rpx;height:30rpx"></view>
-              <text class="expFont">{{user_exp}}/{{user_exp_Upbound}}</text>
-            </view>
+  <block wx:else>
+  <view class="hh-user-profile">
+    <image class="hh-user-avator" bindtap="bindViewTap" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <text class="hh-user-name">{{userInfo.nickName}}</text>
+      <view class="hh-user-name" bindtap="changeApho">格言:{{upload_word}}</view>
+        <view class="Coin">
+          <view class="exp_bar" style="width:400rpx;height:30rpx" bindtap="jumpToExp">
+            <view class="expBar" style="width:{{(user_exp/user_exp_Upbound)*400}}rpx;height:30rpx"></view>
+            <view class="expBar_bg" style="width:{{(1-user_exp/user_exp_Upbound)*400}}rpx;height:30rpx"></view>
+            <text class="expFont">{{user_exp}}/{{user_exp_Upbound}}</text>
           </view>
         </view>
-      </view>
-    </block>
+
   </view>
-  
-<view class='kind-list-item' wx:for="{{list}}" wx:key="index">
-  <navigator url="{{item.url}}">
-    <view class='list_hd'>
-      <view class='name'>{{item.name}}</view>
-      <image class="logo" src="{{item.logo_address}}"></image>
+  <view class="hh-user-card">
+  <view class="hh-user-card-sub" bindtap="interest_list">
+    <view style="color:red;font-size:60rpx">
+    {{interest}}
     </view>
-  </navigator>
+    <view>
+    关注者
+    </view>
+  </view>
+  <view class="hh-user-card-sub" bindtap="interest_list">
+    <view style="color:orange;font-size:60rpx">
+    {{be_interested}}
+    </view>
+    <view>
+    被关注者
+    </view>
+  </view>
+  <view class="hh-user-card-sub" bindtap="jumpToExp">
+    <view style="color:green;font-size:60rpx">
+    {{user_rank}}
+    </view>
+    <view>
+    等级
+    </view>
+  </view>
+  <view class="hh-user-card-sub" bindtap="favor_list">
+    <view style="color:blue;font-size:60rpx">
+    {{favor_number}}
+    </view>
+    <view>
+    收藏
+    </view>
+  </view>
+  </view>
+</block>
 </view>
+<view class='hh-menu-list' wx:for="{{list}}" wx:key="index">
+  <view class='hh-menu-item'>
+    <navigator class="hh-menu-content" url="{{item.url}}">
+      <image class="hh-menu-img" mode="aspectFit" src="{{item.logo_address}}"></image>
+      <text>{{item.name}}</text>
+    </navigator>
+  </view>
 </view>

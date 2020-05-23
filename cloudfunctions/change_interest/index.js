@@ -11,7 +11,7 @@ const _ = db.command
 // 云函数入口函数
 exports.main = async (event, context) => {
 if(event.flag==true){
-  return await db.collection('user').where({
+  await db.collection('user').where({
     open_id:event.id
   })
   .update({
@@ -19,14 +19,30 @@ if(event.flag==true){
       interest:_.push([{open_id:event.interest,name:event.name,expression_set:event.expression_set}])
     }
   })
+  await db.collection('user').where({
+    open_id:event.interest
+  })
+  .update({
+    data: {
+      be_interested:_.push([{open_id:event.id,name:event.my_name,expression_set:event.expression_set}])
+    }
+  })
 }
 else{
-  return await db.collection('user').where({
+  await db.collection('user').where({
     open_id:event.id
   })
   .update({
     data: {
       interest:_.pull({open_id:event.interest})
+    }
+  })
+  await db.collection('user').where({
+    open_id:event.interest
+  })
+  .update({
+    data: {
+      be_interested:_.pull({open_id:event.id})
     }
   })
 }

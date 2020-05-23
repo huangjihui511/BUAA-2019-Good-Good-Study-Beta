@@ -312,7 +312,7 @@ Page({
   
   onLoad: function (option) {
     var app = getApp()
-    
+    var _this=this
     var tag = app.globalData.shopImageTag
     this.data.tag_image = tag
     console.log("tag_onload:",this.data.tag_image)
@@ -370,10 +370,10 @@ Page({
         data1:option.url
       },
       success(res){
-        this.setData({
+        _this.setData({
           comment:res.result.data[0].comment
         })
-        console.log("1111",this.data.comment)
+        console.log("1111",_this.data.comment)
       }
     })
   },

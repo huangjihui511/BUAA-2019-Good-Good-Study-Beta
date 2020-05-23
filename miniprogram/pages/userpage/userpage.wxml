@@ -3,11 +3,15 @@
   在这里你可以收获更多表情
 </view>
 
-
-<view class="userinfo">
-  <image class="userHead" src="cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal{{headImageNum}}.png" mode="cover"></image>
-  <view class='hh-text'>上传用户:{{uploaderName}}</view>
+<view class="hh-user-profile">
+  <image class="hh-user-avator" src="cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal{{headImageNum}}.png"></image>
+  <view class="hh-user-name">{{uploaderName}}</view>
+  <view class="hh-user-name">格言:{{upload_word}}</view>
 </view>
+
+
+
+
 
   <button bindtap="interest_or_no">{{do_interest}}</button> 
 <!--

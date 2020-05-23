@@ -591,7 +591,6 @@ overflow: hidden;
 	right: 30rpx;
 	bottom: 0;
 	display: block;
-	margin: auto;
 	width: 30rpx;
 	height: 30rpx;
 	color: var(--grey);

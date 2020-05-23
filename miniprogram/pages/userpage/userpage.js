@@ -30,6 +30,7 @@ Page({
     do_interest:"",
     upload:0,
     upload_name:"",
+    upload_word:"他/她还没有格言哦~",
   },
   interest_or_no(){
     var _this=this
@@ -42,6 +43,7 @@ Page({
         success(res){
           console.log(res)
           console.log("999",res.result.data[0].expression_set)
+          console.log("999",app.globalData.userInfo)
           wx.cloud.callFunction({
             name: "change_interest",
             data:{
@@ -49,6 +51,7 @@ Page({
               flag:true,
               interest:_this.data.upload,
               name:_this.data.upload_name,
+              my_name:app.globalData.userInfo.nickName,
               expression_set:res.result.data[0].expression_set
             },
             success(res){ 
