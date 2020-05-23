@@ -1,0 +1,27 @@
+<!--miniprogram/pages/fliter_new/fliter_new.wxml-->
+<view class="canvasView">
+  <canvas
+    canvas-id="fliter"
+    style="width: {{cWidth}}px; height: {{cHeight}}px;"
+  />
+</view>
+<view class="canvasView">
+  <canvas
+    canvas-id="fliterOut"
+    style="width: {{cWidth}}px; height: {{cHeight}}px;"
+  />
+</view>
+
+<view class='picker-wrap'>
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{arrayname}}">
+        <view class="picker">
+            当前选择：{{arrayname[index]}}
+        </view>
+    </picker>
+</view>
+
+<view class='btnView'>
+  <button class='addTextBtn' type='primary' disabled = '{{canAdd}}'  bindtap='onExport'>
+    保存编辑
+  </button>
+</view> 
