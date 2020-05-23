@@ -32,7 +32,8 @@
     "pages/fliter/fliter",
     "pages/aboutExp/aboutExp",
     "pages/cropper/cropper_example",
-    "pages/hotSearch/hotSearch"
+    "pages/hotSearch/hotSearch",
+    "pages/fliter_new/fliter_new"
   ],
   "window": {
     "backgroundTextStyle": "light",
