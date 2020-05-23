@@ -10,13 +10,13 @@
     </block>
   </view-->
   <view class="hh-grid-square-1">
-    <image class="hh-img"  src="{{imagePath}}" bindtap="previewImage"></image>
+    <image class="hh-img"  src="{{imagePath}}"></image>
   </view>
 
   <view class="hh-grid-3">
     <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}">
       <text class="cuIcon-{{item.name}} lg text-gray" bindtap='{{item.action}}'></text>
-      <text>{{item.text}}</text>
+      <text  bindtap='{{item.action}}'>{{item.text}}</text>
     </view>
   </view>
 
