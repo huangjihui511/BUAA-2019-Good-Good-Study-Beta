@@ -52,15 +52,15 @@
 <block wx:if="{{TabCur==1}}">
   <view class="hh-title">尝试使用以下功能</view>
   <view class="hh-grid-3">
-    <view class="hh-icon">
+    <view class="hh-icon" bindtap="help_edit">
       <text class="cuIcon-edit lg text-gray"></text>
       <text>编辑表情</text>
     </view>
-    <view class="hh-icon">
+    <view class="hh-icon" bindtap="help_pub">
       <text class="cuIcon-we lg text-gray"></text>
       <text>公开表情</text>
     </view>
-    <view class="hh-icon">
+    <view class="hh-icon" bindtap="help_share">
       <text class="cuIcon-share lg text-gray"></text>
       <text>分享小程序</text>
     </view>
@@ -85,7 +85,7 @@
   </view>
   <view class="hh-title">其他方式</view>
   <view class="hh-grid-3">
-    <navigator url="" class="hh-icon">
+    <navigator url="" class="hh-icon" bindtap="help_used">
       <text class="cuIcon-favor lg text-gray"></text>
       <text>表情被收藏下载</text>
     </navigator>
