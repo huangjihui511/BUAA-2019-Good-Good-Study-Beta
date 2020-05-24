@@ -16,7 +16,6 @@
             <text class="expFont">{{user_exp}}/{{user_exp_Upbound}}</text>
           </view>
         </view>
-
   </view>
   <view class="hh-user-card">
   <view class="hh-user-card-sub" bindtap="interest_list">
