@@ -12,9 +12,9 @@
   />
 </view>
 
-<view class='picker-wrap'>
+<view class='hh-menu-list'>
     <picker bindchange="bindPickerChange" value="{{index}}" range="{{arrayname}}">
-        <view class="picker">
+        <view class="hh-menu-item">
             当前选择：{{arrayname[index]}}
         </view>
     </picker>
