@@ -8,6 +8,7 @@
   <view class="hh-user-profile">
     <image class="hh-user-avator" bindtap="bindViewTap" src="{{userInfo.avatarUrl}}" mode="cover"></image>
     <text class="hh-user-name">{{userInfo.nickName}}</text>
+      <view class="hh-user-name" bindtap="changeApho">格言:{{upload_word}}</view>
         <view class="Coin">
           <view class="exp_bar" style="width:400rpx;height:30rpx" bindtap="jumpToExp">
             <view class="expBar" style="width:{{(user_exp/user_exp_Upbound)*400}}rpx;height:30rpx"></view>

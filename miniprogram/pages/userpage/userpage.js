@@ -30,6 +30,7 @@ Page({
     do_interest:"",
     upload:0,
     upload_name:"",
+    upload_word:"他/她还没有格言哦~",
   },
   interest_or_no(){
     var _this=this

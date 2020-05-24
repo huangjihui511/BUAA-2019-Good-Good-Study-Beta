@@ -65,7 +65,8 @@ Page({
     user_exp_Upbound:25,
     interest:0,
     be_interested:0,
-    favor_number:0
+    favor_number:0,
+    upload_word:"他/她还没有格言哦~",
   },
   interest_list(){
     wx.navigateTo({
@@ -458,7 +459,6 @@ Page({
         }
       }
     })
-
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -482,6 +482,9 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
+          /*db.collection('user').where({
+            open_id: res.
+          })*/
         }
       })
     }
@@ -512,6 +515,14 @@ Page({
           that.setData({          
             user_exp: res.data[0].exp     
           })   
+          if (res.data[0].hasOwnProperty("aphorism")){
+            this.setData({
+              upload_word: res.data[0].aphorism
+            })
+          }
+          else {
+            console.log("no aphorism")
+          }
           that.calUserRank()
         })    
       },
@@ -520,6 +531,7 @@ Page({
    // this.calUserRank()
     console.log("用户经验：",this.data.user_exp)
   },
+
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -527,6 +539,32 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
+
+  changeApho:function(){
+    wx.navigateTo({
+      url: '../../aphorism/aphorism?open_id='+this.data.user_openid
+    })
+  },
+
+  onShow: function () {
+    db.collection('user').where({
+      open_id: this.data.user_openid
+    }).get().then(res=>{   
+      console.log("111111",res)
+      this.setData({          
+        user_exp: res.data[0].exp     
+      })   
+      if (res.data[0].hasOwnProperty("aphorism")){
+        this.setData({
+          upload_word: res.data[0].aphorism
+        })
+      }
+      else {
+        console.log("no aphorism")
+      }
+      that.calUserRank()
+    })    
+  },
 })
 
