@@ -1,0 +1,3 @@
+/* miniprogram/pages/aphorism/aphorism.wxss */
+
+@import "../../app.wxss";

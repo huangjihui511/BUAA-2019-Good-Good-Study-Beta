@@ -1,0 +1,8 @@
+<!--miniprogram/pages/aphorism/aphorism.wxml-->
+
+ <view class = "hh-round-card">
+    <textarea type="text" value="{{info}}" placeholder="输入新的格言" bindinput="getinput"></textarea>
+  </view>
+  <view class="hh-icon1">
+    <button bindtap="finish">完成编辑</button> 
+  </view>
