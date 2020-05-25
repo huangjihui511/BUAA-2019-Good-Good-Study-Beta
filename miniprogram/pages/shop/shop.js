@@ -555,6 +555,7 @@ Page({
     })
    // this.calUserRank()
     console.log("用户经验：",this.data.user_exp)
+
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -615,4 +616,20 @@ handleTouchMove: function (e) {
     })
   }
   },
+
+  setSkinNormalTitle: function () {
+    wx.setNavigationBarColor({
+        frontColor: '#000000',
+        backgroundColor: '#0387FE',
+    })
+  }, 
+
+  onShow:function(){
+    var that = this
+    if (app.globalData.skin == "normal") {
+        that.setSkinNormalTitle()
+    } else {
+        app.setSkinPinkTitle()
+    }
+  }
 })

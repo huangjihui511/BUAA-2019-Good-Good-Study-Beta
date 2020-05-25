@@ -128,6 +128,14 @@ Page({
       db.collection('user').where({
         open_id: options.upload
       }).get().then(res=>{
+        if (res.data.length == 0) {
+          wx.showToast({
+            title: '此表情由开发者上传',
+            icon: 'none',
+            duration: 3000//持续的时间
+          })
+        }
+        else {
         console.log(res)
         var temp=res.data[0].expression_set
         var no_shop_public_expressions=[]
@@ -165,6 +173,7 @@ Page({
         console.log(this.data.collection)
         console.log(this.data.have_shop_collection)
         console.log(this.data.no_shop_collection)
+        }
       })
     }
     this.setData({

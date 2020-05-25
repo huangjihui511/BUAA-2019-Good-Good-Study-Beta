@@ -61,3 +61,12 @@
     </navigator>
   </view>
 </view>
+<view class='hh-menu-list'>
+  <view class='hh-switch-item'>
+    <view class="hh-menu-content">
+      <view class="hh-menu-img" mode="aspectFit" style="color:#FFE4C4;"></view>
+      <text>可爱粉色</text>
+    </view>
+    <switch bindchange="switchChange" color ="#FFE4C4" class="switch" checked='{{skinSwitch}}'/>
+  </view>
+</view>
