@@ -548,8 +548,9 @@ Page({
   },
 
   onShow: function () {
+    var that=this
     db.collection('user').where({
-      open_id: this.data.user_openid
+      open_id: app.globalData.open_id
     }).get().then(res=>{   
       console.log("111111",res)
       this.setData({          

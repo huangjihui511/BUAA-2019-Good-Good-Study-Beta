@@ -50,8 +50,7 @@
 <view wx:if="{{ifLoadSimilar==2}}" class="hh-title">评价这张壁纸</view>
 <view wx:else class="hh-title">表情的评论</view>
 <view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
-  <view class="hh-avator-round" data-id="{{item}}" bindtap="jump2userpage"
-   style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+  <image class="hh-avator-round" data-id="{{item}}" bindtap="jump2userpage" src="{{headImage[headImage_index[index]].url}}"></image>
   <view class="hh-conment-content">
     <view class="hh-avator-conmment-name">{{comment[index].user_name}}</view>
     <view class="hh-avator-conmment-content">

@@ -8,6 +8,9 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
+.hh-mult-nav{
+  margin-bottom: 60rpx;
+}
 .searchInputConfirm {
   display: flex;
   flex-direction: row;
