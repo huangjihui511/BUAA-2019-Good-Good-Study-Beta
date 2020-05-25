@@ -185,7 +185,8 @@ submitted: function submitted(e) {
             request:"add_expression",
             data1:app.globalData.open_id,
             data2:that.data.image_src,
-            data3:temp
+            data3:temp,
+            data4:new Date()
             //data3:this.data.labels
             //data2:["fun", "wdnmd"]
           },
