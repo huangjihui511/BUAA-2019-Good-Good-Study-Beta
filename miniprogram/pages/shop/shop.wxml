@@ -1,46 +1,47 @@
 <!--index.wxml-->
-<swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" 
+<scroll-view scroll-x class="hh-nav">
+  <view class="hh-nav-item{{0==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="0">
+     搜索表情
+  </view>
+  <view class="hh-nav-item{{1==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="1">
+     自制表情推荐
+  </view>
+</scroll-view>
+<view wx:if="{{TabCur==1}}" class="hh-title">
+  自制表情推荐
+</view>
+<view wx:if="{{TabCur==1}}" wx:for='{{userUploadList}}' wx:for-index="index" wx:for-item="item">
+  <!--view class="hot_item">  
+    <view class="hh-text">Top{{index+1}}.</view>
+    <view class="hh-capsule-tag" data-tag="{{userUploadList[index].tag}}" bindtap="hotTagJump">
+      <view class="hh-capsule-tag-name">
+      {{hotTagsList[index].tag}}
+      </view>
+      <view class="hh-capsule-tag-num">
+      点击次数：{{hotTagsList[index].times}}
+      </view>
+    </view>
+  </view-->
+  <!--image class="image_item" src="{{hotTagsImage[index]}}"></image-->
+  <view class="card">
+    <view class="hh-text" style="color:#0387FE">用户 {{userUploadList[index]['userName']}} 上传:</view>
+    <view class="hh-grid-square-1">
+      <image class="hh-img" src="{{userUploadList[index]['path']}}" mode="aspectFill"
+      bindtap="shop_image_pagejump" data-judge="1" data-image="{{item}}" data-fileid="{{userUploadList[index]['path']}}"
+      />
+    </view>
+  </view>
+</view>
+<swiper wx:if="{{TabCur==0}}" class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" 
 bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
   <swiper-item wx:for="{{swiperList}}" wx:key class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
-    <view class="hh-swiper-item">
+    <view class="hh-swiper-item" bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.url}}' data-tag='{{item.tag}}' data-judge="2">
       <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
       <!-- <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video> -->
     </view>
   </swiper-item>
 </swiper>
-<view>
-  <!--movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="350" y="500" animation="false"
-    direction="all" bindtap="reFreshR">
-    <image src="../../images/toRight.png" style="height:80rpx;width:80rpx;"></image>
-  </movable-view>
-  <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="280" y="500" animation="false"
-    direction="all" bindtap="reFreshL">
-    <image src="../../images/toLeft.png" style="height:80rpx;width:80rpx;"></image>
-  </movable-view-->
-  <!--view class="search">
-    <view class="searchInputConfirm">
-      <input class="input" bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"
-         placeholder="请输入搜索关键字">
-      </input>
-      <button class="button_confirm" style="width:150rpx" bindtap="confirm" >
-        <text class="confirmText" style="font-size:medium">确认</text>
-      </button>
-    </view>
-  </view-->
-  <!--view class="hh-search-around">
-    <text class="cuIcon-search"></text>
-    <input type="text" placeholder="请输入搜索关键字" confirm-type="search"
-      bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"></input>
-  </view-->
-  <!--swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true"
-   interval="5000" duration="500" 
-   indicator-color="#8799a3" indicator-active-color="#0081ff">
-  <swiper-item wx:for="{{swiperList}}" wx:key class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
-    <view class="hh-swiper-item">
-      <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-    </view>
-  </swiper-item>
-  </swiper-->
+<view wx:if="{{TabCur==0}}">
   <view class="search">
     <view class="searchInputConfirm">
       <view class="hh-search-around">
@@ -53,13 +54,23 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
       </view>
     </view>
   </view>
-
+  <view class="line"></view>
   <!--热搜关键词-->
+  <view class="wordsAbovePics">
+    <view class="hh-text" style="color:black">
+      热搜标签
+    </view>
+    <view class="refresh" bindtap="hotTagMore">
+      更多热搜
+    </view>
+  </view>
+  <view class="line"></view>
+  <view class="card">
   <view class="hotTagsList">
-    <view class="hot_icon_title" style="height:40rpx">
+    <!--view class="hot_icon_title" style="height:40rpx">
       <image src="../../images/mirror_hotTags.png" style="height:40rpx;width:40rpx;margin:5rpx"></image>
       <text style="font-size:small;font-style:inherit;color:#0387FE;margin-bottom:5rpx">热搜标签</text>
-    </view>
+    </view-->
     <view class="hotTagsList_row">
       <view class="hotTagsList_cell" wx:for="{{3}}" wx:for-index="index">
         <!--text class="hotTagsText" data-tag="{{hotTags[0].tag}}" bindtap="hotTagJump">
@@ -75,46 +86,44 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
         </view>
       </view>
     </view>
-    <!--view class="hotTagsList_row" wx:if="{{hotTags.length>4}}">
-      <view class="hotTagsList_cell">
-        <text class="hotTagsText" data-tag="{{hotTags[4].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top5.</text>{{hotTags[4].tag}}
-        </text>
-      </view>
-      <view class="hotTagsList_cell" wx:if="{{hotTags.length>5}}">
-        <text class="hotTagsText" data-tag="{{hotTags[5].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top6.</text>{{hotTags[5].tag}}
-        </text>
+    <view class="hotTagsList_row">
+      <view class="hotTagsList_cell" wx:for="{{3}}" wx:for-index="index">
+        <!--text class="hotTagsText" data-tag="{{hotTags[0].tag}}" bindtap="hotTagJump">
+          <text style="font-size:small;font-style:oblique;">Top1.</text>{{hotTags[0].tag}}
+        </text-->
+        <view class="hh-capsule-tag" data-tag="{{hotTags[index+3].tag}}" bindtap="hotTagJump">
+          <view class="hh-capsule-tag-name">
+            {{hotTags[index+3].tag}}
+          </view>
+          <view class="hh-capsule-tag-num">
+            Top{{index+4}}.
+          </view>
+        </view>
       </view>
     </view>
-    <view class="hotTagsList_row" wx:if="{{hotTags.length>6}}">
-      <view class="hotTagsList_cell">
-        <text class="hotTagsText" data-tag="{{hotTags[6].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top7.</text>{{hotTags[6].tag}}
-        </text>
-      </view>
-      <view class="hotTagsList_cell" wx:if="{{hotTags.length>7}}">
-        <text class="hotTagsText" data-tag="{{hotTags[7].tag}}" bindtap="hotTagJump">
-          <text style="font-size:small;font-style:oblique;">Top8.</text>{{hotTags[7].tag}}
-        </text>
-      </view>
-    </view-->
-    <view style="height:50rpx" 
-      style="display:flex;justify-content:center;font-size:small;color:#0387FE;margin-top:60rpx"
+    <!--view style="height:50rpx" 
+      style="display:flex;justify-content:center;font-size:15rpx;color:#0387FE;margin-top:60rpx"
       bindtap="hotTagMore">
       更多热搜内容 >
-    </view>
+    </view-->
+    <!--view class="refresh">更多热搜</view--> 
   </view>
-
+  </view>
+  <view class="line"></view>
   <view class="wordsAbovePics">
-    <view class="showWhatToSearch">
+    <!--view class="showWhatToSearch">
       <image src="../../images/heart1.png" style="width:40rpx;height:40rpx"></image>为你推荐
-    </view>
+    </view-->
+    <view class="hh-text" style="color:black">为你推荐</view>
+    <!--view class="refresh" bindtap="jump_to_search" data-kind="为你推荐">
+      查看更多
+    </view-->
     <view class="refresh" bindtap="jump_to_search" data-kind="为你推荐">
       查看更多
     </view>
   </view>
   <view class="line"></view>
+  <view class="card">
   <view class="picShowList">
     <!--view class="hh-grid-square-3" wx:for="{{showPicList}}" wx:for-index="index">
       <view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
@@ -130,16 +139,24 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
         </image>
     </view> 
   </view>
+  </view>
   <view class="line"></view>
   <view class="wordsAbovePics">
-    <view class="showWhatToSearch">
+    <!--view class="showWhatToSearch">
       <image src="../../images/heart1.png" style="width:40rpx;height:40rpx"></image>黑人抬棺
+    </view>
+    <view class="refresh" bindtap="jump_to_search" data-kind="黑人抬棺">
+      查看更多
+    </view-->
+    <view class="hh-text" style="color:black">
+      黑人抬棺
     </view>
     <view class="refresh" bindtap="jump_to_search" data-kind="黑人抬棺">
       查看更多
     </view>
   </view>
   <view class="line"></view>
+  <view class="card">
   <view class="picShowList">
     <view class="picShowRow" wx:for="{{showStaticPics1}}" wx:for-index="index">
         <image class="buttonImage" wx:for="{{showStaticPics1[index]}}" wx:for-item="item" wx:key="*this"
@@ -155,6 +172,8 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
     </image>
     </view-->
   </view>
+  </view>
+</view>
   <!--view class="line"></view-->
 
   <!--button class="uploadimage" bindtap="uploadimage">
@@ -179,4 +198,3 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
     </view>
     
 </view-->
-</view>

@@ -31,7 +31,15 @@ Page({
     my_name:"",
     time:"",
     expression:"",
-    info:""
+    info:"",
+    ifLoadSimilar:1
+  },
+  
+  preview:function(e) {
+    wx.previewImage({
+      current: this.data.expression, // 当前显示图片的https链接
+      urls: [this.data.expression], // 需要预览的图片https链接列表
+    })
   },
 
   getinput(e){
@@ -315,9 +323,16 @@ Page({
     var _this=this
     var tag = app.globalData.shopImageTag
     this.data.tag_image = tag
-    console.log("tag_onload:",this.data.tag_image)
-    this.searchOnload()
+    console.log("tag_onload:",this.data.tag_image) 
     //console.log("paths:",this.data.showListCache)
+    this.data.ifLoadSimilar = app.globalData.similarExpression
+    console.log("ifLoadSimilar:",this.data.ifLoadSimilar)
+    this.setData({
+      ifLoadSimilar:this.data.ifLoadSimilar
+    })
+    if (this.data.ifLoadSimilar == 1) {
+      this.searchOnload()
+    }
     console.log(option)
     this.setData({
       imagePath: option.url
