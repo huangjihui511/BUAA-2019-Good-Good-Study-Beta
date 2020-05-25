@@ -16,11 +16,12 @@
   </view>
   
 </view>
-<view class="canvasView" bindlongtap="addImg" wx:if="{{choosed}}" style="--height--: {{CVH}}px">
+<view class="canvasView" bindlongtap="addImg" wx:if="{{choosed}}" style="min-height: 230px">
   <image class="hh-img" src='{{curImage}}' style='width: {{cWidth}}px; height: {{cHeight}}px'></image>
 </view>
 
 <!-- <view class="bottom">
+  --height--: {{CVH}}px;
   <block wx:for="{{btnInfo}}" wx:key="index">
     <view class="list-item" data-type="{{item.type}}" style="background: {{item.background}}" bindtap="tapBtn"></view>
   </block>
@@ -29,7 +30,7 @@
 <view class="hh-grid-3">
   <view class="hh-icon" bindtap="addImg">
     <image src="../../images/album.png" class="hh-img-icon"></image>
-    <text>从相册选择</text>
+    <text>从本地选择</text>
   </view>
   <view class="hh-icon" bindtap="addImg2">
     <image src="../../images/collection.png" class="hh-img-icon"></image>
@@ -51,10 +52,6 @@
     <image src="../../images/joint.png" class="hh-img-icon"></image>
     <text>图片拼接</text>
   </view>
-  <view class="hh-icon" bindtap="savePhoto">
-    <image src="../../images/save.png" class="hh-img-icon"></image>
-    <text>保存图片</text>
-  </view>
   <view class="hh-icon" bindtap="rotatePhoto">
     <image src="../../images/rotate.png" class="hh-img-icon"></image>
     <text>双击旋转</text>
@@ -63,7 +60,10 @@
     <image src="../../images/crop.png" class="hh-img-icon"></image>
     <text>裁切图片</text>
   </view>
-  
+  <view class="hh-icon" bindtap="savePhoto">
+    <image src="../../images/save.png" class="hh-img-icon"></image>
+    <text>保存图片</text>
+  </view>
 </view>
 
 <view class="{{save ? 'weui-show' :'weui-hidden'}}">

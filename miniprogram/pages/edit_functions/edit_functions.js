@@ -9,7 +9,7 @@ Page({
    */
   data: {
     CVW: wx.getSystemInfoSync().windowWidth,
-    CVH: Math.trunc(wx.getSystemInfoSync().windowHeight - 200),
+    CVH: Math.trunc(wx.getSystemInfoSync().windowHeight - 250),
     cWidth: 0,
     cHeight: 0, // canvas的完整高度
     curImage: '',
@@ -360,15 +360,15 @@ Page({
       })
       var cWidth = this.data.cWidth;
       var cHeight = this.data.cHeight;
-      var that = this;
+      let that = this;
       let cxt = wx.createCanvasContext('edit');
       cxt.translate(that.data.cWidth,0);
       cxt.rotate(90 * Math.PI / 180);
       cxt.drawImage(that.data.curImage, 0, 0, cHeight, cWidth);
       cxt.draw(false,wx.canvasToTempFilePath({
         canvasId: 'edit',
-        destWidth: 3*cWidth,
-        destHeight: 3*cHeight,
+        //destWidth: 3*cWidth,
+        //destHeight: 3*cHeight,
         success: function(res) {
           console.log("success!更新curImage")
           console.log(res.tempFilePath);
@@ -377,6 +377,8 @@ Page({
           })
         }
       }));
+      //setInterval(function(){},1000);
+      
     }
   },
 
@@ -395,7 +397,7 @@ Page({
         save:false
       })
       wx.navigateTo({
-        url: '../cropper/cropper-example',
+        url: '../cropper/cropper_example',
       })
     }
   },
