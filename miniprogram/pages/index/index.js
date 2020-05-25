@@ -346,9 +346,16 @@ Page({
     var _this=this
     var tag = app.globalData.shopImageTag
     this.data.tag_image = tag
-    console.log("tag_onload:",this.data.tag_image)
-    this.searchOnload()
+    console.log("tag_onload:",this.data.tag_image) 
     //console.log("paths:",this.data.showListCache)
+    this.data.ifLoadSimilar = app.globalData.similarExpression
+    console.log("ifLoadSimilar:",this.data.ifLoadSimilar)
+    this.setData({
+      ifLoadSimilar:this.data.ifLoadSimilar
+    })
+    if (this.data.ifLoadSimilar == 1) {
+      this.searchOnload()
+    }
     console.log(option)
     this.setData({
       imagePath: option.url

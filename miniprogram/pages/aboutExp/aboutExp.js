@@ -17,6 +17,38 @@ Page({
     user_exp_Upbound:25
 
   },
+  help_edit(e) {
+    wx.showModal({
+      title: 'tips',
+      content: '使用我们的编辑功能可以增加经验',
+      showCancel: false,
+      confirmText: '确定',
+    })
+  },
+  help_pub(e) {
+    wx.showModal({
+      title: 'tips',
+      content: '在表情详情页面公开表情可以获取经验',
+      showCancel: false,
+      confirmText: '确定',
+    })
+  },
+  help_share(e) {
+    wx.showModal({
+      title: 'tips',
+      content: '把小程序分享给其他伙伴可以增加经验',
+      showCancel: false,
+      confirmText: '确定',
+    })
+  },
+  help_used(e) {
+    wx.showModal({
+      title: 'tips',
+      content: '如果你的小程序被其他人收藏，点赞或者下载可以增加',
+      showCancel: false,
+      confirmText: '确定',
+    })
+  },
   tabSelect(e) {
     this.setData({
       TabCur: e.currentTarget.dataset.id,

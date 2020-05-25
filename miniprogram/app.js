@@ -31,7 +31,9 @@ App({
     shopImageTag:'',
     notification_num:0,
     //热搜标签
-    hotTagsGlobal:[]
+    hotTagsGlobal:[],
+    //是否推荐相似表情
+    similarExpression:1
   },
   
   //app 全局属性监听

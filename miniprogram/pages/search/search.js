@@ -79,7 +79,7 @@ Page(
       }).then(res=>{
         console.log("call_cloud_success")
       })
-
+      app.globalData.similarExpression = 1
       // app.globalData.data = {'imagepath':imagepath}
       wx.navigateTo({
         url: '/pages/index/index?url='+ e.currentTarget.dataset.fileid

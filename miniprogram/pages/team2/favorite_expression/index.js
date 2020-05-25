@@ -163,6 +163,7 @@ Page({
     } else {
         app.setSkinPinkTitle()
     }
+    app.globalData.similarExpression = 1
     var _this=this
     console.log("1111",app.globalData.open_id)
     var res =await wx.cloud.callFunction({
