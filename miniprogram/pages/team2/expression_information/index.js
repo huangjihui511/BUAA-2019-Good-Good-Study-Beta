@@ -8,7 +8,7 @@ Page({
    */
   data: {
     like_number:0,
-    fover_number:0,
+    favor_number:0,
     info:"",
     tag_image:'',
     showPicList: [
@@ -19,8 +19,22 @@ Page({
       [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
       [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
     ],
+    headImage_index:[],
+    headImage: [
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal1.png',
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal2.png'
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal3.png'
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal4.png'
+      }],
     expression:'',
-    icon: [{ name: 'appreciate', isShow: true,chinese_name:"转发",bind:'forward'}, { name: 'check', isShow: true ,chinese_name:'保存到手机',bind:'save'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'编辑图片',bind:"edit"}, { name: 'emoji', isShow: true ,chinese_name:"修改标签",bind:"change_label"}, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'收藏到微信',bind:"collect"},{ name: 'favor', isShow: true ,chinese_name:'',bind:"public_picture"},{ name: 'appreciate', isShow: true,chinese_name:"点赞次",bind:'like'},{ name: 'favorfill', isShow: true,chinese_name:"收藏次"}],
+    icon: [{ name: 'appreciate', isShow: true,chinese_name:"转发",bind:'forward'}, { name: 'check', isShow: true ,chinese_name:'保存到手机',bind:'save'}, { name: 'close', isShow: false }, { name: 'edit', isShow: true ,chinese_name:'编辑图片',bind:"edit"}, { name: 'emoji', isShow: true ,chinese_name:"修改标签",bind:"change_label"}, { name: 'favorfill', isShow: false }, { name: 'favor', isShow: true ,chinese_name:'收藏到微信',bind:"collect"},{ name: 'favor', isShow: true ,chinese_name:'',bind:"public_picture"},{ name: 'appreciate', isShow: true,chinese_name:"点赞",bind:'like'},{ name: 'favorfill', isShow: true,chinese_name:"已收藏"}],
     comment:[],
     my_comment:[],    
     motto: 'Hello World',
@@ -34,14 +48,34 @@ Page({
     my_name:"",
     time:""
   },
+  shop_image_pagejump:function(e) {
+    var app = getApp()
+    console.log(e)
+    var fileid = e.currentTarget.dataset.fileid
+    var tag = e.currentTarget.dataset.tag
+    app.globalData.shopImageTag = tag
+    console.log("tag:",app.globalData.shopImageTag)
+    console.log("test_cloud")
+    wx.cloud.callFunction({
+      name:'image_visit_times',
+      data:{
+       id:fileid,
+       tag:tag
+      }
+    }).then(res=>{
+      console.log("call_cloud_success")
+    })
+
+    // app.globalData.data = {'imagepath':imagepath}
+    wx.navigateTo({
+      url: '/pages/index/index?url='+ e.currentTarget.dataset.fileid
+    })
+  },
   like(){
     var _this=this
     let name="icon[8].chinese_name"
     _this.setData({
       like_number:_this.data.like_number+1
-    })
-    _this.setData({
-      [name]:"点赞"+_this.data.like_number+"次"
     })
     wx.showToast({
       title: '点赞成功',
@@ -62,6 +96,11 @@ Page({
   public_picture(){
     var _this=this
     if(this.data.icon[7].chinese_name=="公开"){
+      setTimeout(function () {wx.showToast({
+        title: '已加经验',
+        icon: 'success',
+        duration: 1000
+      })},1000)
       wx.cloud.callFunction({
         name: "add_exp",
         data:{
@@ -190,7 +229,15 @@ Page({
         _this.setData({
           my_name:res.result.data[0].user_name
         })
-        var temp=new Date().toString()
+        var temp
+        var myDate=new Date()
+        let fullYear = (myDate.getFullYear()).toString();
+        let month = (myDate.getMonth()+1).toString();
+        let day = (myDate.getDate()).toString();
+        let hour = (myDate.getHours()).toString();
+        let minute = (myDate.getMinutes()).toString();
+        let second = (myDate.getSeconds()).toString();
+        temp=fullYear+"-"+month+"-"+day+" "+hour+":"+minute+":"+second
         _this.setData({
           time:temp
         })
@@ -203,7 +250,10 @@ Page({
           },
           success(res){
             console.log(res)
-            
+            let temp="headImage_index["+_this.data.headImage_index.length+"]"
+            _this.setData({
+              [temp]: Math.floor(Math.random()*3) + 1
+            })
         wx.showToast({
           title: '评论成功',
           icon: 'success',
@@ -444,34 +494,27 @@ Page({
           _this.searchOnload(tag)
         }
         if(res.result.data[0].like!=undefined){
-          let name="icon[8].chinese_name"
           _this.setData({
-            [name]:"点赞"+res.result.data[0].like+"次",
             like_number:res.result.data[0].like
           })
         }
-        else{
-          let name="icon[8].chinese_name"
-          _this.setData({
-            [name]:"点赞0次"
-          })
-        }
         if(res.result.data[0].favor!=undefined){
-          let name="icon[9].chinese_name"
           _this.setData({
-            [name]:"收藏"+res.result.data[0].favor+"次"
-          })
-        }
-        else{
-          let name="icon[9].chinese_name"
-          _this.setData({
-            [name]:"收藏0次"
+            favor_number:res.result.data[0].favor
           })
         }
         if(res.result.data[0].comment!=undefined){
           _this.setData({
             comment:res.result.data[0].comment
           })
+          var k
+          for(k=0;k<res.result.data[0].comment.length;k++){
+            let temp="headImage_index["+k+"]"
+            _this.setData({
+              [temp]: Math.floor(Math.random()*3) + 1
+            })
+          }
+          console.log(_this.data.headImage_index)
         }
         else{
           _this.setData({

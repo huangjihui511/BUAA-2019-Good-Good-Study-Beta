@@ -9,13 +9,14 @@ Page({
     user_rank: 0,
     rankExp:[0,5,15,30,50,100,200,500,1000,2000,3000,6000,10000,18000,30000,60000,
       100000,300000],
-    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2userpage'},],
+    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2my_userpage'},],
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     imagePath: '',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     uploaduser: '',
+    uploaduser_name:"",
     //gzh similar expressions
     showPicList: [
       [{file_id:'',tag:''},{file_id:'',tag:''},{file_id:'',tag:''}],
@@ -37,6 +38,20 @@ Page({
     expression:"",
     info:"",
     download_times: 0,
+    headImage_index:[],
+    headImage: [
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal1.png',
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal2.png'
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal3.png'
+      },
+      {
+        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal4.png'
+      }],
   },
 
   like(){
@@ -97,7 +112,15 @@ Page({
         _this.setData({
           my_name:res.result.data[0].user_name
         })
-        var temp=new Date().toString()
+        var temp
+        var myDate=new Date()
+        let fullYear = (myDate.getFullYear()).toString();
+        let month = (myDate.getMonth()+1).toString();
+        let day = (myDate.getDate()).toString();
+        let hour = (myDate.getHours()).toString();
+        let minute = (myDate.getMinutes()).toString();
+        let second = (myDate.getSeconds()).toString();
+        temp=fullYear+"-"+month+"-"+day+" "+hour+":"+minute+":"+second
         _this.setData({
           time:temp
         })
@@ -111,12 +134,22 @@ Page({
           success(res){
             console.log(res)
             
+            let temp="headImage_index["+_this.data.headImage_index.length+"]"
+            _this.setData({
+              [temp]: Math.floor(Math.random()*3) + 1
+            })
         wx.showToast({
           title: '评论成功',
           icon: 'success',
           duration: 1000,
           success(res){
-            let temp="comment["+_this.data.comment.length+"]"
+            let temp
+            if(_this.data.comment==undefined){
+              temp="comment[0]"
+            }
+            else{
+              temp="comment["+_this.data.comment.length+"]"
+            }
             _this.setData({
               [temp]:{"open_id":app.globalData.open_id,"user_name":_this.data.my_name,"comment":_this.data.my_comment,"time":_this.data.time}
             })
@@ -398,6 +431,25 @@ Page({
         this.setData({
           uploaduser: res.data[0].open_id
         })
+        wx.cloud.callFunction({
+          name:"get_label",
+          data:{
+            id:res.data[0].open_id,
+          },
+          success(res){
+            console.log("4855",res)
+            if((res.result.data[0]==undefined)||(res.result.data[0].user_name==undefined)){
+              _this.setData({
+                uploaduser_name:""
+              })
+            }
+            else{
+              _this.setData({
+                uploaduser_name:res.result.data[0].user_name
+              })
+            }
+          }
+        })
       }
       console.log(this.data.uploaduser)
     })
@@ -408,9 +460,24 @@ Page({
         data1:option.url
       },
       success(res){
-        _this.setData({
-          comment:res.result.data[0].comment
-        })
+        if(res.result.data[0].comment!=undefined){
+          _this.setData({
+            comment:res.result.data[0].comment
+          })
+          var k
+          for(k=0;k<res.result.data[0].comment.length;k++){
+            let temp="headImage_index["+k+"]"
+            _this.setData({
+              [temp]: Math.floor(Math.random()*3) + 1
+            })
+          }
+          console.log(_this.data.headImage_index)
+        }
+        else{
+          _this.setData({
+            comment:[]
+          })
+        }
         console.log("1111",_this.data.comment)
         if(res.result.data[0].like!=undefined){
           let name="icon[2].text"
@@ -607,12 +674,20 @@ Page({
       }
     })
   },
+  jump2my_userpage:function(e) {
+    var app = getApp()
+    console.log(e)
+    // app.globalData.data = {'imagepath':imagepath}
+    wx.navigateTo({
+      url: '/pages/userpage/userpage?upload='+this.data.uploaduser+'&name='+this.data.uploaduser_name
+    })
+  },
   jump2userpage:function(e) {
     var app = getApp()
     console.log(e)
     // app.globalData.data = {'imagepath':imagepath}
     wx.navigateTo({
-      url: '/pages/userpage/userpage?upload='+this.data.uploaduser
+      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.id.open_id+'&name='+e.currentTarget.dataset.id.user_name
     })
   },
 })

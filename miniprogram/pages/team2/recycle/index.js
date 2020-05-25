@@ -276,7 +276,7 @@ Page({
                       duration: 1000,
                       success(data) {
                         setTimeout(function () {
-                          wx.reLaunch({url: './index'})
+                          wx.navigateTo({url: './index'})
                         }, 1000) //延迟时间
                       }
                     })
@@ -317,7 +317,7 @@ Page({
       duration: 1000,
       success(data) {
         setTimeout(function () {
-          wx.reLaunch({url: './index'})
+          wx.navigateTo({url: './index'})
         }, 1000) //延迟时间
       }
     })

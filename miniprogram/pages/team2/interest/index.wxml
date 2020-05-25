@@ -1,15 +1,46 @@
 <!--pages/team2/interest/index.wxml-->
-<view class="hh-title">关注列表</view>
-<view class='hh-menu-list' wx:for="{{list}}" wx:key="index">
+<scroll-view scroll-x class="hh-mult-nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+  <view class="hh-nav-item{{index==TabCur?'-choosed':''}}" wx:for="{{tab}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+    {{tab[index]}}
+  </view>
+</scroll-view>
+<view class='hh-menu-list' wx:if="{{TabCur==0}}" wx:for="{{list}}" wx:key="index">
   <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
-      <image class="hh-menu-img" src="cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal1.png" mode="cover"></image>
+      <image class="hh-menu-img" src="{{headImage[headImageNum[index]].url}}" mode="cover"></image>
       <view class='name'>{{item.name}}</view>
   </view>
 </view>
-<view class="hh-title">被关注列表</view>
-<view class='hh-menu-list' wx:for="{{be_list}}" wx:key="index">
+<view class='hh-menu-list' wx:if="{{TabCur==1}}" wx:for="{{be_list}}" wx:key="index">
   <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
       <image class="hh-menu-img" src="{{headImage[be_headImageNum[index]].url}}" mode="cover"></image>
       <view class='name'>{{item.name}}</view>
   </view>
 </view>
+
+  <view class="search" wx:if="{{TabCur==2}}">
+    <view class="searchInputConfirm">
+      <view class="hh-search-around">
+        <text class="cuIcon-search"></text>
+        <input type="text" placeholder="请输入搜索关键字" confirm-type="search"
+          bindinput="bindConfirmClick" bindconfirm="confirm" data-input="input"></input>
+      </view>
+      <view class="button_confirm" style="width:150rpx;height:50rpx" bindtap="confirm" >
+        <text class="confirmText" style="font-size:medium">确认</text>
+      </view>
+    </view>
+    <view class='hh-menu-list' wx:for="{{search_list}}" wx:key="index">
+      <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
+        <image class="hh-menu-img" src="{{headImage[search_imageNum[index]].url}}" mode="cover"></image>
+        <view class='name'>{{item.user_name}}</view>
+      </view>
+    </view>
+    <view class="hh-text">抱歉，没有更多了</view>
+  </view>
+<view class='hh-menu-list' wx:if="{{TabCur==3}}" wx:for="{{recommend_list}}" wx:key="index">
+  <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
+      <image class="hh-menu-img" src="{{headImage[recommend_imageNum[index]].url}}" mode="cover"></image>
+      <view class='name'>{{item.user_name}}</view>
+  </view>
+</view>
+<view class="hh-text" wx:if="{{TabCur==3}}">抱歉，没有更多了</view>
+  
