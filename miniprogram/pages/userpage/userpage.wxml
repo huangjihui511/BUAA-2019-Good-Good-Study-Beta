@@ -1,8 +1,4 @@
 <!--miniprogram/pages/userpage/userpage.wxml-->
-<view class='invite'>
-  在这里你可以收获更多表情
-</view>
-
 <view class="hh-user-profile">
   <image class="hh-user-avator" src="cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal{{headImageNum}}.png"></image>
   <view class="hh-user-name">{{uploaderName}}</view>

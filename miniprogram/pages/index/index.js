@@ -537,7 +537,7 @@ Page({
   //下载图片
   download(e) {
     console.log(app.globalData.user_rank)
-    if (app.globalData.user_rank >= app.globalData.user_download){
+    if (app.globalData.user_rank > app.globalData.user_download){
       app.globalData.user_download += 1
       console.log("you can download!")
       let fileUrl = this.data.imagePath
@@ -570,6 +570,11 @@ Page({
           filePath: imgUrl,
           success:function (data) {
             console.log(data);
+            wx.showToast({
+              title: '下载成功',
+              icon: 'success',
+              duration: 3000
+            })
           },
           fail: function (err) {
             if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
