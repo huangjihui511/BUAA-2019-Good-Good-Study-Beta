@@ -2,6 +2,31 @@
 @import "/lib/shared.wxss";
 @import "/lib/weui.wxss";
 @import "../../../app.wxss";
+
+.hh-switch-item {
+  position: relative;
+  display: flex;
+  padding: 0 30rpx;
+  min-height: 100rpx;
+  background-color: var(--white);
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.2rpx solid lightgray ;
+}
+
+.hh-switch-item::after{
+  top: 0;
+right: 30rpx;
+bottom: 0;
+display: block;
+width: 30rpx;
+height: 30rpx;
+font-size: 34rpx;
+font-family: "cuIcon";
+line-height: 30rpx;
+}
+
+
 .page_hd{
   margin-bottom: 50rpx;
 }

@@ -34,7 +34,8 @@ data: {
   time:"",
   add_label_list:[],
   add_label_text:[],
-  have_add_labels:[]
+  have_add_labels:[],
+  flag:true
 },
 getinput(e){
   var _this=this
@@ -162,7 +163,7 @@ submitted: function submitted(e) {
       }
     }
     console.log("88888",public1)
-    if(public1==true){
+    if((public1==true)&&(that.data.flag==false)){
       wx.cloud.callFunction({
         name: "add_exp",
         data:{
@@ -170,6 +171,11 @@ submitted: function submitted(e) {
           incNum:10
         }
       })
+      setTimeout(function () {wx.showToast({
+        title: '已加经验',
+        icon: 'success',
+        duration: 1000
+      })},1000)
     }
     else{
       wx.cloud.callFunction({
@@ -297,6 +303,7 @@ submitted: function submitted(e) {
         if((temp.tags!=undefined)){
           for(i=0;i<temp.tags.length;i++){
             if(temp.tags[i].name=="未公开"){
+              _this.data.flag=false
               continue
             }
             for(j=0;j<_this.data.label_list.length;j++){

@@ -1,6 +1,6 @@
 {
   "usingComponents": {},
   "navigationBarBackgroundColor": "#F4A460",
-  "navigationBarTitleText": "本地",
+   "navigationBarTitleText": "格言编辑",
   "navigationBarTextStyle":"white"
 }

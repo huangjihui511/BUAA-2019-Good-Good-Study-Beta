@@ -1,12 +1,9 @@
 <!--index.wxml-->
 
 <text>\n\n</text>
-<view class="page__hd">
-        <view class="page__title">回收站</view>
-        <view class="page__desc">您可以在本页面彻底删除表情包或者长按表情包还原</view>
-</view>
+        <view class="hh-title">回收站</view>
+        <view class="hh-text">您可以在本页面彻底删除表情包或者长按表情包还原</view>
 <view class="struct">
-  
 
   <view wx:for="{{images_view_srcs}}" wx:key="index">
     <view class="image_struct">

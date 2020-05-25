@@ -8,6 +8,43 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
+.hh-mult-nav{
+  margin-bottom: 60rpx;
+}
+.searchInputConfirm {
+  display: flex;
+  flex-direction: row;
+  margin:20rpx;
+}
+.hh-search-around {
+  background-color:lightgray;
+  line-height: 64rpx;
+  height: 64rpx;
+  font-size: 24rpx;
+  color: var(--black);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0 30rpx;
+  border-radius: 5000rpx;
+  box-sizing: border-box;
+  padding: 30rpx;
+  width: 500rpx;
+}
+.button_confirm{
+  background-color: #0387FE;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  color: white;
+  border-radius: 50rpx;
+  margin-top: 10rpx;
+}
+.confirmText {
+  position: absolute;
+  justify-self: center;
+  /*left: 45rpx;*/
+}
 .hh-menu-list {
 margin-top: 0rpx;
 }

@@ -567,8 +567,6 @@ overflow: hidden;
 	margin-top: 50rpx;
 	border-radius: 20rpx;
 	--ShadowSize: 0rpx 40rpx 100rpx 0rpx;
-	
-	
 	}
 	
 	.hh-menu-item {

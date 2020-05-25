@@ -288,13 +288,6 @@ submitted: function submitted(e) {
         }
       })
     }
-    wx.cloud.callFunction({
-      name: "add_exp",
-      data:{
-        id:app.globalData.open_id,
-        incNum:10
-      }
-    })
     
     //传回参数
     console.log(this.data.image_src)
@@ -314,6 +307,20 @@ submitted: function submitted(e) {
       if(this.data.labels[j]=="公开"){
         public1=true
       }
+    }
+    if(public1==true){
+      wx.cloud.callFunction({
+        name: "add_exp",
+        data:{
+          id:app.globalData.open_id,
+          incNum:10
+        }
+      })
+      setTimeout(function () {wx.showToast({
+        title: '已加经验',
+        icon: 'success',
+        duration: 1000
+      })},1000)
     }
     console.log(app.globalData.open_id)
     wx.cloud.callFunction({

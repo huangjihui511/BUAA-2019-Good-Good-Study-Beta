@@ -9,8 +9,12 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view-->
+  <view wx:if="{{ifLoadSimilar==2}}">
+    <view class="hh-title">高清壁纸，点击预览</view>
+  </view>
+
   <view class="hh-grid-square-1">
-    <image class="hh-img"  src="{{imagePath}}"></image>
+    <image class="hh-img"  src="{{imagePath}}" bindtap="preview"></image>
   </view>
 
   <view class="hh-grid-3">
@@ -43,11 +47,10 @@
     <text>发送</text>
   </view>
 </view-->
-
-<view class="hh-title">表情的评论</view>
+<view wx:if="{{ifLoadSimilar==2}}" class="hh-title">评价这张壁纸</view>
+<view wx:else class="hh-title">表情的评论</view>
 <view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
-  <view class="hh-avator-round" data-id="{{item}}" bindtap="jump2userpage"
-   style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+  <image class="hh-avator-round" data-id="{{item}}" bindtap="jump2userpage" src="{{headImage[headImage_index[index]].url}}"></image>
   <view class="hh-conment-content">
     <view class="hh-avator-conmment-name">{{comment[index].user_name}}</view>
     <view class="hh-avator-conmment-content">
@@ -68,7 +71,7 @@
 
 <view class="divLine"></view>
   
-  <view class="wordsAbovePics">
+  <view class="wordsAbovePics" wx:if="{{ifLoadSimilar==1}}">
     <view class="showWhatToSearch">
       <view class="hh-text">相似表情</view>
       
@@ -82,14 +85,14 @@
         </image>
     </view>
   </view-->
-  <view class="picShowList">
+  <view class="picShowList" wx:if="{{ifLoadSimilar==1}}">
   <view class="hh-grid-square-3" wx:for="{{showPicList}}" wx:for-index="index">
     <!--view class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
        wx:key style="background-image:url({{item.file_id}});"
        bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
        data-tag='{{item.tag}}'-->
     <image class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
-       wx:key src="{{item.file_id}}"
+       wx:key src="{{item.file_id}}" wx:if = "{{item.file_id!=''}}"
        bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
        data-tag='{{item.tag}}'>
     </image>

@@ -5,6 +5,8 @@ const db = wx.cloud.database()
 
 Page({
   data: {
+    skinStyle: '',
+    skinSwitch: '',
     list:[
       /*{url:"../coin/index",name:"我的剩余金币",logo_address:"../../../images/team2/coin_logo.jpg"},
       {url:"../friend/index",name:"邀请好友",logo_address:"../../../images/team2/friend_logo.jpg"},
@@ -65,7 +67,8 @@ Page({
     user_exp_Upbound:25,
     interest:0,
     be_interested:0,
-    favor_number:0
+    favor_number:0,
+    upload_word:"他/她还没有格言哦~",
   },
   interest_list(){
     wx.navigateTo({
@@ -458,7 +461,6 @@ Page({
         }
       }
     })
-
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -482,6 +484,9 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
+          /*db.collection('user').where({
+            open_id: res.
+          })*/
         }
       })
     }
@@ -512,6 +517,14 @@ Page({
           that.setData({          
             user_exp: res.data[0].exp     
           })   
+          if (res.data[0].hasOwnProperty("aphorism")){
+            this.setData({
+              upload_word: res.data[0].aphorism
+            })
+          }
+          else {
+            console.log("no aphorism")
+          }
           that.calUserRank()
         })    
       },
@@ -519,7 +532,15 @@ Page({
     })
    // this.calUserRank()
     console.log("用户经验：",this.data.user_exp)
+
+    app.setNavBarBg();//设置标题栏背景色
+    var that = this 　　　　
+    that.setData({
+      skinStyle: app.globalData.skin,
+      skinSwitch: app.globalData.skinSwitch
+    }) 
   },
+
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -527,6 +548,79 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
+
+  changeApho:function(){
+    wx.navigateTo({
+      url: '../../aphorism/aphorism?open_id='+this.data.user_openid
+    })
+  },
+
+  onShow: function () {
+    var that=this
+    db.collection('user').where({
+      open_id: app.globalData.open_id
+    }).get().then(res=>{   
+      console.log("111111",res)
+      this.setData({          
+        user_exp: res.data[0].exp     
+      })   
+      if (res.data[0].hasOwnProperty("aphorism")){
+        this.setData({
+          upload_word: res.data[0].aphorism
+        })
+      }
+      else {
+        console.log("no aphorism")
+      }
+      this.calUserRank()
+    })    
+
+    var that = this
+    if (app.globalData.skin == "normal") {
+        that.setSkinNormalTitle()
+    } else {
+        app.setSkinPinkTitle()
+    }
+  },
+
+
+  switchChange: function (e) {
+    var that = this;
+    //开启
+    if (e.detail.value == true) {
+      app.globalData.skin = "black"
+      app.setSkinPinkTitle(); //设置标题栏
+      app.globalData.skinSwitch = true; 
+    } else {
+      app.globalData.skin = 'normal'
+      this.setSkinNormalTitle() 
+      app.globalData.skinSwitch = false;
+    }
+    that.setData({
+      skinStyle: app.globalData.skin
+    })
+    //保存到本地
+    wx.setStorage({
+      key: "skin",
+      data: app.globalData.skin
+    })
+    wx.setStorage({
+      key: "skinSwitch",
+      data: app.globalData.skinSwitch
+    })
+
+
+    
+},
+
+setSkinNormalTitle: function () {
+  wx.setNavigationBarColor({
+      frontColor: '#000000',
+      backgroundColor: '#F4A460',
+  })
+}, 
+
+
 })
 

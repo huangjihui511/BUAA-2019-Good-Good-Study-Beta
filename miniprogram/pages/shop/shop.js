@@ -51,7 +51,7 @@ Page({
       100000,300000],
     user_exp_Upbound:25,
     //轮播
-    swiperList: [{
+    /*swiperList: [{
       id: 0,
       type: 'image',
       url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
@@ -79,29 +79,83 @@ Page({
       id: 6,
       type: 'image',
       url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-    }],
-    /*swiperList: [{
+    }],*/
+    
+    swiperList: [{
       id: 0,
-      tag:'英雄联盟',
       type: 'image',
-      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/yasuo1.jfif'
+      tag:'鬼刀',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/guidao1.jpg'
     }, {
       id: 1,
-      tag:'英雄联盟',
-        type: 'image',
-        url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/yasuo2.jfif',
+      type: 'image',
+      tag:'鬼刀',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/guidao2.jpg',
     }, {
       id: 2,
-      tag:'英雄联盟',
       type: 'image',
-      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/mf1.jpg'
+      tag:'鬼刀',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/guidao3.jpg'
     }, {
       id: 3,
-      tag:'英雄联盟',
       type: 'image',
-      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/jinx1.jpg'
-    }],*/
+      tag:'鬼刀',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/guidao4.jpg'
+    }],
     cardCur: 0,
+    TabCur: 0,
+    scrollLeft:0,
+    //自制表情记录列表
+    userUploadList:[]
+  },
+
+  tabSelect(e) {
+    var that = this
+    this.TabCur = e.currentTarget.dataset.id
+    this.setData({
+      TabCur: e.currentTarget.dataset.id,
+      scrollLeft: (e.currentTarget.dataset.id-1)*60
+    })
+    //首先 更新自制推荐表情
+    wx.cloud.callFunction({
+      name:'image_visit_times',
+      data:{
+        request:5
+      },
+      success:function(res) {
+        that.data.userUploadList = []
+        that.setData({
+          userUploadList:that.data.userUploadList
+        })
+        console.log("查找用户上传记录成功")
+        var datas = res.result.data.data
+        console.log("data:",datas)
+        for (var i = 0;i < datas.length;i++) {
+          var item = datas[i]
+          console.log("item:",item)
+          var tags = item.tags
+          var userName = item.user_name
+          var path = item.file_id
+          var judgeOpen = 0
+          for (var j = 0;j < tags.length;j++) {
+            var tag = tags[j]
+            console.log("tagName:",tag['name'])
+            if (tag['name'] == '公开') {
+              judgeOpen = 1
+              break
+            }
+          }
+          if (judgeOpen == 1) {
+            console.log("公开")
+            var single = {path:path,userName:userName}
+            that.data.userUploadList.push(single)
+            that.setData({
+              userUploadList:that.data.userUploadList
+            })
+          }
+        }
+      }
+    })
   },
 
   cardSwiper(e) {
@@ -153,6 +207,7 @@ Page({
     console.log(e)
     var fileid = e.currentTarget.dataset.fileid
     var tag = e.currentTarget.dataset.tag
+    var ifNoSimilar = e.currentTarget.dataset.judge
     app.globalData.shopImageTag = tag
     console.log("app shopTag:",app.globalData.shopImageTag)
     console.log("tag:",tag)
@@ -207,7 +262,7 @@ Page({
         }
     })
   }
-  else if (judge == 1) {
+  else if ((judge == 1) && (ifNoSimilar != 1)) {
     console.log("test_cloud")
     wx.cloud.callFunction({
       name:'image_visit_times',
@@ -220,6 +275,16 @@ Page({
     })
   }
     // app.globalData.data = {'imagepath':imagepath}
+    if (ifNoSimilar == 1) {
+      app.globalData.similarExpression = 0
+      console.log("不显示相似表情:",app.globalData.similarExpression)
+    }
+    else if (ifNoSimilar == 2){
+      app.globalData.similarExpression = 2
+    }
+    else {
+      app.globalData.similarExpression = 1
+    }
     wx.navigateTo({
       url: '/pages/index/index?url='+ e.currentTarget.dataset.fileid
     })
@@ -409,24 +474,35 @@ Page({
     })
     var that = this
     console.log("初始化推荐表情")
-    db.collection('expression_visit_times').limit(12).get({
+    db.collection('expression_visit_times').count({
       success:function(res) {
-        var paths = res.data
-        console.log("初始推荐表情:",paths)
-        console.log(paths.length)
-        for (var i = 0;i < paths.length;i++) {
-          var path = paths[i]['id']
-          var tag = paths[i]['tag']
-          //console.log(paths[i])
-          //console.log("init path:",path)
-          that.data.showPicList[parseInt(i/3)][i%3]['file_id'] = path
-          that.data.showPicList[parseInt(i/3)][i%3]['tag'] = tag
-          that.setData({
-            showPicList:that.data.showPicList
-          }) 
+        var lengthAll = res.total
+        var skip = 0
+        console.log("推荐表情长度：",lengthAll)
+        if (lengthAll > 12) {
+          skip = lengthAll - 12
         }
+        db.collection('expression_visit_times').limit(12).skip(skip).get({
+          success:function(res) {
+            var paths = res.data
+            console.log("初始推荐表情:",paths)
+            console.log(paths.length)
+            for (var i = 0;i < paths.length;i++) {
+              var path = paths[i]['id']
+              var tag = paths[i]['tag']
+              //console.log(paths[i])
+              //console.log("init path:",path)
+              that.data.showPicList[parseInt(i/3)][i%3]['file_id'] = path
+              that.data.showPicList[parseInt(i/3)][i%3]['tag'] = tag
+              that.setData({
+                showPicList:that.data.showPicList
+              }) 
+            }
+          }
+        })
       }
     })
+    
 
     if (app.globalData.userInfo) {
       this.setData({
@@ -479,6 +555,7 @@ Page({
     })
    // this.calUserRank()
     console.log("用户经验：",this.data.user_exp)
+
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -539,4 +616,20 @@ handleTouchMove: function (e) {
     })
   }
   },
+
+  setSkinNormalTitle: function () {
+    wx.setNavigationBarColor({
+        frontColor: '#000000',
+        backgroundColor: '#0387FE',
+    })
+  }, 
+
+  onShow:function(){
+    var that = this
+    if (app.globalData.skin == "normal") {
+        that.setSkinNormalTitle()
+    } else {
+        app.setSkinPinkTitle()
+    }
+  }
 })

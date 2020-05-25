@@ -10,7 +10,12 @@ App({
     open_id:"o9dmv4kmf37Td4utR9HzSSOhs2yw",
     user_id:"123",
     max_exp:5,
+    user_rank:0,
+    user_download:0,
     recordPoints: [],
+
+    skin: 'normal',
+    skinSwitch: '',
 
     //搜索内容，页面间共享变量
     toSearch:'',
@@ -26,7 +31,9 @@ App({
     shopImageTag:'',
     notification_num:0,
     //热搜标签
-    hotTagsGlobal:[]
+    hotTagsGlobal:[],
+    //是否推荐相似表情
+    similarExpression:1
   },
   
   //app 全局属性监听
@@ -101,7 +108,54 @@ App({
         }
       }
     })
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']){
+          wx.authorize({
+          scope:'scope.writePhotosAlbum',
+          success() {
+            console.log('授权成功')}
+          })
+        }
+      }
+    })
+    this.getSkin()
   },
+
+  getSkin: function () {
+    var that = this
+    wx.getStorage({
+        key: 'skin',
+        success: function (res) {
+            that.globalData.skin = res.data
+            if (that.globalData.skin == 'normal') {
+                that.globalData.skinSwitch = false
+                that.setSkinNormalTitle()
+            } else {
+                that.globalData.skinSwitch = true
+                that.setSkinPinkTitle()
+            }
+        }
+    })
+},
+
+setSkinPinkTitle: function () {
+  wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#FFE4C4',
+  })
+},
+
+setNavBarBg: function () {
+  var that = this
+  if (that.globalData.skin == "normal") {
+      that.setSkinNormalTitle()
+  } else {
+      that.setSkinPinkTitle()
+  }
+},
+  
+
 })
 //imagePath:'',
 //module.exports.imagePath = this.imagePath;

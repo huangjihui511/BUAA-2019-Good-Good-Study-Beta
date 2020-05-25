@@ -426,18 +426,21 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    
-    /*wx.cloud.callFunction({
-      name:"add_expression",
-      data:{
-        request:"sub_expression",
-        data1:app.globalData.open_id,
-        data2:this.options.src
-      }
-    })
-    */
+  onShow:function(){
+    var that = this
+    if (app.globalData.skin == "normal") {
+        that.setSkinNormalTitle()
+    } else {
+        app.setSkinPinkTitle()
+    }
   },
+
+  setSkinNormalTitle: function () {
+    wx.setNavigationBarColor({
+        frontColor: '#000000',
+        backgroundColor: '#F08080',
+    })
+  }, 
 
   /**
    * 生命周期函数--监听页面隐藏

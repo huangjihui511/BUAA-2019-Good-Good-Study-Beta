@@ -1,5 +1,5 @@
 /**index.wxss**/
-
+@import "../../../app.wxss";
 page {
   background:white;
   display: flex;
@@ -25,6 +25,8 @@ page {
 .image{
   height: 160rpx;
   width: 160rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
 }
 .load_image_login{
   height: 160rpx;
