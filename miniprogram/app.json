@@ -33,7 +33,8 @@
     "pages/aboutExp/aboutExp",
     "pages/cropper/cropper_example",
     "pages/hotSearch/hotSearch",
-    "pages/fliter_new/fliter_new"
+    "pages/fliter_new/fliter_new",
+    "pages/aphorism/aphorism"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -5,7 +5,11 @@ const db = wx.cloud.database()
 //var path = require('app.js')
 Page({
   data: {
-    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞', action: 'appreciate'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2userpage'}],
+    like_number: 0,
+    user_rank: 0,
+    rankExp:[0,5,15,30,50,100,200,500,1000,2000,3000,6000,10000,18000,30000,60000,
+      100000,300000],
+    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2userpage'},],
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -32,13 +36,32 @@ Page({
     time:"",
     expression:"",
     info:"",
-    ifLoadSimilar:1
+    download_times: 0,
   },
-  
-  preview:function(e) {
-    wx.previewImage({
-      current: this.data.expression, // 当前显示图片的https链接
-      urls: [this.data.expression], // 需要预览的图片https链接列表
+
+  like(){
+    var _this=this
+    let name="icon[2].text"
+    _this.setData({
+      like_number:_this.data.like_number+1
+    })
+    _this.setData({
+      [name]:"点赞"+_this.data.like_number+"次"
+    })
+    wx.showToast({
+      title: '点赞成功',
+      icon: 'success',
+      duration: 1000
+    })
+    wx.cloud.callFunction({
+      name: "add_like_or_favor",
+      data:{
+        src:_this.data.expression,
+        flag:"like"
+      },
+      success(res){
+        console.log(res)
+      }
     })
   },
 
@@ -389,9 +412,53 @@ Page({
           comment:res.result.data[0].comment
         })
         console.log("1111",_this.data.comment)
+        if(res.result.data[0].like!=undefined){
+          let name="icon[2].text"
+          _this.setData({
+            [name]:"点赞"+res.result.data[0].like+"次",
+            like_number:res.result.data[0].like
+          })
+        }
       }
     })
+    console.log(app.globalData.open_id)
+    db.collection('user').where({
+      open_id: app.globalData.open_id,
+    }).get({
+      success: function(res){
+        console.log(res)
+        _this.getUserRank(res.data[0].exp)
+      },
+      fail:console.error
+    })
   },
+
+  getUserRank(exp) {
+    console.log(exp)
+    
+    var expList = this.data.rankExp
+    var upbound
+    var i = 0
+    for (;i < 17;i++) {
+      if ((exp >= expList[i]) && (exp < expList[i+1])) {
+        upbound = expList[i+1]
+        break
+      }
+    }
+    if (i == 17) {
+      upbound = expList[17]
+    }
+    this.setData({
+      user_rank: i+1,
+      user_exp_Upbound: upbound
+    })
+    console.log("rank:"+this.data.user_rank)
+    if(this.data.user_rank != app.globalData.user_rank){
+      app.globalData.user_rank = this.data.user_rank
+    }
+  },
+
+
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -402,18 +469,33 @@ Page({
   },
   //下载图片
   download(e) {
-    let fileUrl = this.data.imagePath
-    console.log(fileUrl)
-    wx.cloud.downloadFile({
-      fileID: fileUrl,
-      success: res => {
-        console.log('下载成功', res)
-        this.saveImage(res.tempFilePath)
-      },
-      fail: res => {
-        console.log('下载失败', res)
-      }
-    })
+    console.log(app.globalData.user_rank)
+    if (app.globalData.user_rank >= app.globalData.user_download){
+      app.globalData.user_download += 1
+      console.log("you can download!")
+      let fileUrl = this.data.imagePath
+      console.log(fileUrl)
+      wx.cloud.downloadFile({
+        fileID: fileUrl,
+        success: res => {
+          console.log('下载成功', res)
+          this.saveImage(res.tempFilePath)
+          this.setData({
+            download_times: this.data.download_times+1,
+          })
+        },
+        fail: res => {
+          console.log('下载失败', res)
+        }
+      })
+      console.log(app.globalData.user_download)
+    }
+    else {
+      wx.showModal({
+        title: '提示',
+        content: '您已达到该等级后今日下载上限。'
+      })
+    }
   },
   // 保存图片到相册
   saveImage(imgUrl){
