@@ -10,6 +10,8 @@ App({
     open_id:"o9dmv4kmf37Td4utR9HzSSOhs2yw",
     user_id:"123",
     max_exp:5,
+    user_rank:0,
+    user_download:0,
     recordPoints: [],
 
     //搜索内容，页面间共享变量
@@ -26,7 +28,9 @@ App({
     shopImageTag:'',
     notification_num:0,
     //热搜标签
-    hotTagsGlobal:[]
+    hotTagsGlobal:[],
+    //是否推荐相似表情
+    similarExpression:1
   },
   
   //app 全局属性监听

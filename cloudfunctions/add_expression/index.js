@@ -104,6 +104,26 @@ exports.main = async (event, context) => {
     var id = event.data1
     var file_id = event.data2
     var tags1 = event.data3
+    var time = event.data4
+    //gzh 对于用户上传表情，新加了一个集合user_upload，
+    //单独存储用户上传表情信息
+    if (time != undefined) {
+      var user = await db.collection('user').where({
+        open_id:id
+      }).get()
+      console.log("user:",user.data[0])
+      var name = user.data[0]['user_name']
+      await db.collection('user_upload').add({
+        data:{
+          open_id:id,
+          user_name:name,
+          file_id:file_id,
+          tags:tags1,
+          time:time
+        }
+      })
+    }
+
     try {
     return await db.collection('user').where({
       open_id:id

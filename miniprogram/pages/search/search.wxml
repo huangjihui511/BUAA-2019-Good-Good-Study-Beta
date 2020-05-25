@@ -1,5 +1,5 @@
 <!--navbar page-name="你当前页面的名字"></navbar-->
-<view class="container">
+<view>
 <movable-area style="height: 100%; width: 100%;">
   <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="350" y="500" animation="false"
     direction="all" bindtap="reFreshR">
@@ -31,8 +31,9 @@
       </view>
     </view>
   </view>
+  <view class="line"></view>
   <view class="wordsAbovePics">
-    <view class="showWhatToSearch">
+    <view class="hh-text">
       猜你想要
     </view>
     <view class="refresh" bindtap="reFresh">
