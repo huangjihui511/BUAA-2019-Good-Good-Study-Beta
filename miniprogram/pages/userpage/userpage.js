@@ -162,12 +162,13 @@ Page({
             }
           }
         }
+        console.log(res)
         this.setData({
           uploader: res.data,
           collection: public_expressions,
           have_shop_collection:public_expressions,
           no_shop_collection:no_shop_public_expressions,
-          uploaderName: res.data[0].name
+          uploaderName: res.data[0].user_name
         })
         console.log(this.data.uploader)
         console.log(this.data.collection)
