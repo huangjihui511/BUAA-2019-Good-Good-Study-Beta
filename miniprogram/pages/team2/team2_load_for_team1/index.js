@@ -166,6 +166,20 @@ submitted: function submitted(e) {
         public1=true
       }
     }
+    if(public1==true){
+      wx.cloud.callFunction({
+        name: "add_exp",
+        data:{
+          id:app.globalData.open_id,
+          incNum:10
+        }
+      })
+      setTimeout(function () {wx.showToast({
+        title: '已加经验',
+        icon: 'success',
+        duration: 1000
+      })},1000)
+    }
     console.log(temp)
     wx.cloud.callFunction({
       name:"add_expression",

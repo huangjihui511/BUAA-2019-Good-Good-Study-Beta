@@ -66,7 +66,15 @@ Page({
         _this.setData({
           my_name:res.result.data[0].user_name
         })
-        var temp=new Date().toString()
+        var temp
+        var myDate=new Date()
+        let fullYear = (myDate.getFullYear()).toString();
+        let month = (myDate.getMonth()+1).toString();
+        let day = (myDate.getDate()).toString();
+        let hour = (myDate.getHours()).toString();
+        let minute = (myDate.getMinutes()).toString();
+        let second = (myDate.getSeconds()).toString();
+        temp=fullYear+"-"+month+"-"+day+" "+hour+":"+minute+":"+second
         _this.setData({
           time:temp
         })
@@ -85,7 +93,13 @@ Page({
           icon: 'success',
           duration: 1000,
           success(res){
-            let temp="comment["+_this.data.comment.length+"]"
+            let temp
+            if(_this.data.comment==undefined){
+              temp="comment[0]"
+            }
+            else{
+              temp="comment["+_this.data.comment.length+"]"
+            }
             _this.setData({
               [temp]:{"open_id":app.globalData.open_id,"user_name":_this.data.my_name,"comment":_this.data.my_comment,"time":_this.data.time}
             })

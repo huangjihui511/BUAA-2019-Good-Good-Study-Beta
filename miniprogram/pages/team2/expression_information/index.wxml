@@ -2,6 +2,24 @@
 <view class="hh-grid-square-1">
     <image class="hh-img"  src="{{expression}}" bindtap="previewImage"></image>
 </view>
+<view class="hh-card">
+  <view class="hh-capsule-tag">
+    <view class="hh-capsule-tag-name">
+      点赞
+    </view>
+    <view class="hh-capsule-tag-num">
+      {{like_number}}次
+    </view>
+  </view>
+  <view class="hh-capsule-tag">
+    <view class="hh-capsule-tag-name">
+      收藏
+    </view>
+    <view class="hh-capsule-tag-num">
+      {{favor_number}}次
+    </view>
+  </view>
+</view>
 <view class="hh-grid-3">
   <view class="hh-icon" wx:for="{{icon}}" wx:key wx:if="{{item.isShow}}" bindtap="{{item.bind}}">
     <text class="cuIcon-{{item.name}} lg text-gray"></text>
@@ -11,7 +29,7 @@
 
 <view class="hh-title">表情的评论</view>
 <view class="hh-comment-card" wx:for="{{comment}}" wx:key="index">
-  <view class="hh-avator-round" data-id="{{item}}" bindtap="jump2userpage" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+  <image class="hh-avator-round" data-id="{{item}}" bindtap="jump2userpage" src="{{headImage[headImage_index[index]].url}}"></image>
   <view class="hh-conment-content">
     <view class="hh-avator-conmment-name">{{comment[index].user_name}}</view>
     <view class="hh-avator-conmment-content">
