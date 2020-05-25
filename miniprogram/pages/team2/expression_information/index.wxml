@@ -39,7 +39,7 @@
        bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
        data-tag='{{item.tag}}'-->
     <image class="hh-img" wx:for="{{showPicList[index]}}" wx:for-item="item"
-       wx:key src="{{item.file_id}}"
+       wx:key src="{{item.file_id}}" wx:if ="{{item.file_id!=''}}"
        bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
        data-tag='{{item.tag}}'>
     </image>

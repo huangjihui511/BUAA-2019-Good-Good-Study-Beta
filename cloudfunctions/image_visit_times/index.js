@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
     const countResult = await db.collection('expression_visit_times').count()
     const total = countResult.total
       // 计算需分几次取
-    var batchTimes = Math.ceil(total / 20)
+    var batchTimes = Math.ceil(total / 100)
     if (batchTimes==0) {
       batchTimes = 1
     }
@@ -45,7 +45,7 @@ exports.main = async (event, context) => {
     const countResult = await db.collection('tag_search_times').count()
     const total = countResult.total
       // 计算需分几次取
-    var batchTimes = Math.ceil(total / 20)
+    var batchTimes = Math.ceil(total / 100)
     if (batchTimes == 0) {
       batchTimes = 1
     }
@@ -97,7 +97,7 @@ exports.main = async (event, context) => {
     if (t > 10) {
       t = 10
     }
-    var batchTimes = Math.ceil(t / 20)
+    var batchTimes = Math.ceil(t / 100)
     if (batchTimes == 0) {
       batchTimes = 1
     }
@@ -206,13 +206,20 @@ exports.main = async (event, context) => {
 
             try{
             //为什么where子句加set不可以？
-            await db.collection('expression_visit_times').doc(_id).set({
+            await db.collection('expression_visit_times').doc(_id).
+            /*set({
               data:{
                 id:fileid,
                 tag:filetag,
                 times:visits
               }
-            }).then(res=>{
+            })*/
+            update({
+              data:{
+                times:visits
+              }
+            })
+            .then(res=>{
               console.log("跟新成功")
             })}catch(e) {
             console.log(e)
