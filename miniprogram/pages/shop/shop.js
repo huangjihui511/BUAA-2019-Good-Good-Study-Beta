@@ -262,7 +262,7 @@ Page({
         }
     })
   }
-  else if (judge == 1) {
+  else if ((judge == 1) && (ifNoSimilar != 1)) {
     console.log("test_cloud")
     wx.cloud.callFunction({
       name:'image_visit_times',
@@ -474,24 +474,35 @@ Page({
     })
     var that = this
     console.log("初始化推荐表情")
-    db.collection('expression_visit_times').limit(12).get({
+    db.collection('expression_visit_times').count({
       success:function(res) {
-        var paths = res.data
-        console.log("初始推荐表情:",paths)
-        console.log(paths.length)
-        for (var i = 0;i < paths.length;i++) {
-          var path = paths[i]['id']
-          var tag = paths[i]['tag']
-          //console.log(paths[i])
-          //console.log("init path:",path)
-          that.data.showPicList[parseInt(i/3)][i%3]['file_id'] = path
-          that.data.showPicList[parseInt(i/3)][i%3]['tag'] = tag
-          that.setData({
-            showPicList:that.data.showPicList
-          }) 
+        var lengthAll = res.total
+        var skip = 0
+        console.log("推荐表情长度：",lengthAll)
+        if (lengthAll > 12) {
+          skip = lengthAll - 12
         }
+        db.collection('expression_visit_times').limit(12).skip(skip).get({
+          success:function(res) {
+            var paths = res.data
+            console.log("初始推荐表情:",paths)
+            console.log(paths.length)
+            for (var i = 0;i < paths.length;i++) {
+              var path = paths[i]['id']
+              var tag = paths[i]['tag']
+              //console.log(paths[i])
+              //console.log("init path:",path)
+              that.data.showPicList[parseInt(i/3)][i%3]['file_id'] = path
+              that.data.showPicList[parseInt(i/3)][i%3]['tag'] = tag
+              that.setData({
+                showPicList:that.data.showPicList
+              }) 
+            }
+          }
+        })
       }
     })
+    
 
     if (app.globalData.userInfo) {
       this.setData({
