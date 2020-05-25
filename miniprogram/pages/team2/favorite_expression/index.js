@@ -157,6 +157,12 @@ Page({
     })
   },
   onShow: async function () {
+    var that = this
+    if (app.globalData.skin == "normal") {
+        that.setSkinNormalTitle()
+    } else {
+        app.setSkinPinkTitle()
+    }
     var _this=this
     console.log("1111",app.globalData.open_id)
     var res =await wx.cloud.callFunction({
@@ -261,6 +267,14 @@ Page({
       [temp_can_delete_selected]:can_delete_selected_temp
     })
   },
+
+  setSkinNormalTitle: function () {
+    wx.setNavigationBarColor({
+        frontColor: '#000000',
+        backgroundColor: '#20B2AA',
+    })
+  }, 
+  
   freq_order(){
     var freq=this.data.freqs
     var src=this.data.images_srcs

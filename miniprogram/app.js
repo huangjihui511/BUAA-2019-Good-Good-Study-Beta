@@ -14,6 +14,9 @@ App({
     user_download:0,
     recordPoints: [],
 
+    skin: 'normal',
+    skinSwitch: '',
+
     //搜索内容，页面间共享变量
     toSearch:'',
     //导航栏信息
@@ -114,8 +117,43 @@ App({
         }
       }
     })
-
+    this.getSkin()
   },
+
+  getSkin: function () {
+    var that = this
+    wx.getStorage({
+        key: 'skin',
+        success: function (res) {
+            that.globalData.skin = res.data
+            if (that.globalData.skin == 'normal') {
+                that.globalData.skinSwitch = false
+                that.setSkinNormalTitle()
+            } else {
+                that.globalData.skinSwitch = true
+                that.setSkinPinkTitle()
+            }
+        }
+    })
+},
+
+setSkinPinkTitle: function () {
+  wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#FFE4C4',
+  })
+},
+
+setNavBarBg: function () {
+  var that = this
+  if (that.globalData.skin == "normal") {
+      that.setSkinNormalTitle()
+  } else {
+      that.setSkinPinkTitle()
+  }
+},
+  
+
 })
 //imagePath:'',
 //module.exports.imagePath = this.imagePath;

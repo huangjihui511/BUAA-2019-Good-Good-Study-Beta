@@ -5,6 +5,8 @@ const db = wx.cloud.database()
 
 Page({
   data: {
+    skinStyle: '',
+    skinSwitch: '',
     list:[
       /*{url:"../coin/index",name:"我的剩余金币",logo_address:"../../../images/team2/coin_logo.jpg"},
       {url:"../friend/index",name:"邀请好友",logo_address:"../../../images/team2/friend_logo.jpg"},
@@ -530,6 +532,13 @@ Page({
     })
    // this.calUserRank()
     console.log("用户经验：",this.data.user_exp)
+
+    app.setNavBarBg();//设置标题栏背景色
+    var that = this 　　　　
+    that.setData({
+      skinStyle: app.globalData.skin,
+      skinSwitch: app.globalData.skinSwitch
+    }) 
   },
 
   getUserInfo: function(e) {
@@ -563,8 +572,54 @@ Page({
       else {
         console.log("no aphorism")
       }
-      that.calUserRank()
+      this.calUserRank()
     })    
+
+    var that = this
+    if (app.globalData.skin == "normal") {
+        that.setSkinNormalTitle()
+    } else {
+        app.setSkinPinkTitle()
+    }
   },
+
+
+  switchChange: function (e) {
+    var that = this;
+    //开启
+    if (e.detail.value == true) {
+      app.globalData.skin = "black"
+      app.setSkinPinkTitle(); //设置标题栏
+      app.globalData.skinSwitch = true; 
+    } else {
+      app.globalData.skin = 'normal'
+      this.setSkinNormalTitle() 
+      app.globalData.skinSwitch = false;
+    }
+    that.setData({
+      skinStyle: app.globalData.skin
+    })
+    //保存到本地
+    wx.setStorage({
+      key: "skin",
+      data: app.globalData.skin
+    })
+    wx.setStorage({
+      key: "skinSwitch",
+      data: app.globalData.skinSwitch
+    })
+
+
+    
+},
+
+setSkinNormalTitle: function () {
+  wx.setNavigationBarColor({
+      frontColor: '#000000',
+      backgroundColor: '#F4A460',
+  })
+}, 
+
+
 })
 
