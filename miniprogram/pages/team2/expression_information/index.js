@@ -661,9 +661,9 @@ Page({
                             var reflex3 = reflex1%3
                           //  console.log("globalPicIndex:",globalPicIndex)
                           //  console.log("key:",key)
-                          that.data.showListCache[globalPicIndex] = key
+                          that.data.showListCache[globalPicIndex] = ids[key]
                           if (globalPicIndex < 18) {
-                            that.data.showPicList[reflex2][reflex3]['file_id'] = key
+                            that.data.showPicList[reflex2][reflex3]['file_id'] = ids[key]
                             that.data.showPicList[reflex2][reflex3]['tag'] = tag
                             that.setData({
                               showPicList:that.data.showPicList
