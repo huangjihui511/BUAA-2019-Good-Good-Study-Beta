@@ -34,7 +34,8 @@
     "pages/cropper/cropper_example",
     "pages/hotSearch/hotSearch",
     "pages/fliter_new/fliter_new",
-    "pages/aphorism/aphorism"
+    "pages/aphorism/aphorism",
+    "pages/moreUserImages/moreUserImages"
   ],
   "window": {
     "backgroundTextStyle": "light",

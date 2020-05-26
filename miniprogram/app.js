@@ -33,7 +33,9 @@ App({
     //热搜标签
     hotTagsGlobal:[],
     //是否推荐相似表情
-    similarExpression:1
+    similarExpression:1,
+    //用户自制表情列表
+    userList:[]
   },
   
   //app 全局属性监听
