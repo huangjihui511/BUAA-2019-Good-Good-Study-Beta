@@ -14,7 +14,7 @@
   </view>
 
   <view class="hh-grid-square-1">
-    <image class="hh-img"  src="{{imagePath}}" bindtap="preview"></image>
+    <image class="hh-img"  src="{{imagePath}}" bindtap="preview" data-path="{{imagePath}}"></image>
   </view>
 
   <view class="hh-grid-3">
