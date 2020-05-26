@@ -106,7 +106,29 @@ Page({
     TabCur: 0,
     scrollLeft:0,
     //自制表情记录列表
-    userUploadList:[]
+    userUploadList:[],
+    userSwiper:[],
+    //上传的用户列表
+    userList:[],
+    //头像
+    headImage: [{ url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal1.png',},
+      {url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal2.png' },
+      {url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal3.png'},
+      {url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal4.png'}],
+    headImage_index:[],
+  },
+
+  jump_to_more:function(e) {
+    var that = this
+    var index = e.currentTarget.dataset.index
+    console.log("userUploadList:",this.data.userUploadList)
+    app.globalData.userList = this.data.userUploadList[index]
+    //console.log(that.data.userUploadList)
+    wx.navigateTo({
+      url: '/pages/moreUserImages/moreUserImages?id='+
+      that.data.userList[index]['open_id']+'&name='+
+      that.data.userList[index]['user_name']
+    })
   },
 
   tabSelect(e) {
@@ -116,8 +138,56 @@ Page({
       TabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id-1)*60
     })
-    //首先 更新自制推荐表情
     wx.cloud.callFunction({
+      name:'image_visit_times',
+      data:{
+        request:6
+      },
+      success:function(res) {
+        console.log("request6成功:",res.result)
+        var temp1 = []
+        var tempSwiper = []
+        for (var i = 0;i < res.result.data2.length;i++) {
+          temp1.push(res.result.data2[i])
+          var user1Swiper = []
+          for (var run = 0;run < res.result.data2[i].length;run++) {
+            if (run < 5) {
+              user1Swiper.push(res.result.data2[i][run])
+            }
+          }
+          tempSwiper.push(user1Swiper)
+        }
+        that.data.userSwiper = tempSwiper
+        that.setData({
+          userSwiper:that.data.userSwiper
+        })
+        that.data.userUploadList = temp1
+        that.setData({
+          userUploadList:that.data.userUploadList
+        })
+        console.log("userUploadList:",that.data.userUploadList)
+        var temp2 = []
+        for (var j = 0;j < res.result.data1.length;j++) {
+          temp2.push(res.result.data1[j])
+        }
+        that.data.userList = temp2
+        that.setData({
+          userList:that.data.userList
+        })
+        console.log("userList:",that.data.userList)
+        that.data.headImage_index = []
+        //头像
+        for (var k = 0;k < j;k++) {
+          that.data.headImage_index.push(Math.floor(Math.random()*3) + 1)
+        }
+        that.setData({
+          headImage_index:that.data.headImage_index
+        })
+      }
+    })
+
+    //首先 更新自制推荐表情
+    /*wx.cloud.callFunction({
       name:'image_visit_times',
       data:{
         request:5
@@ -155,6 +225,19 @@ Page({
           }
         }
       }
+    })*/
+  },
+
+  jump2userpage:function(e) {
+    var app = getApp()
+    console.log(e)
+    // app.globalData.data = {'imagepath':imagepath}
+    var uploaduser = e.currentTarget.dataset.uploaduser
+    var uploadusername = e.currentTarget.dataset.uploadusername
+    console.log("uploaduser:",uploaduser)
+    console.log("uploadusername:",uploadusername)
+    wx.navigateTo({
+      url: '/pages/userpage/userpage?upload='+uploaduser+'&name='+uploadusername
     })
   },
 
@@ -626,6 +709,26 @@ handleTouchMove: function (e) {
 
   onShow:function(){
     var that = this
+    
+    console.log("初始化热搜词")
+    var that = this
+    wx.cloud.callFunction({
+      name:'image_visit_times',
+      data:{
+        request:3
+      },
+      success:function(res) {
+        console.log("热搜res:",res)
+        var resultArray = res.result.data
+        console.log("resultArray:",resultArray)
+        that.data.hotTags = resultArray
+        that.setData({
+          hotTags:that.data.hotTags
+        })
+        app.globalData.hotTagsGlobal = resultArray
+      }
+    })
+
     if (app.globalData.skin == "normal") {
         that.setSkinNormalTitle()
     } else {

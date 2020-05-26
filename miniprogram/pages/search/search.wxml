@@ -43,7 +43,7 @@
   <view class="line"></view>
   <view class="picShowList">
     <view class="picShowRow" wx:for="{{showPicList}}" wx:for-index="index">
-        <image wx:if="{{item.file_id!=''}}" class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="*this"
+        <image wx:if="{{item.file_id!=''}}" class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="unique"
            bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
            data-tag='{{item.tag}}' src="{{item.file_id}}">
         </image>

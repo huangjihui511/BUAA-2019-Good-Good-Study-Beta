@@ -10,7 +10,7 @@
 <view wx:if="{{TabCur==1}}" class="hh-title">
   自制表情推荐
 </view>
-<view wx:if="{{TabCur==1}}" wx:for='{{userUploadList}}' wx:for-index="index" wx:for-item="item">
+<view wx:if="{{TabCur==1}}" wx:for='{{userList}}' wx:for-index="index">
   <!--view class="hot_item">  
     <view class="hh-text">Top{{index+1}}.</view>
     <view class="hh-capsule-tag" data-tag="{{userUploadList[index].tag}}" bindtap="hotTagJump">
@@ -23,18 +23,41 @@
     </view>
   </view-->
   <!--image class="image_item" src="{{hotTagsImage[index]}}"></image-->
-  <view class="card">
+  <!--view class="card">
     <view class="hh-text" style="color:#0387FE">用户 {{userUploadList[index]['userName']}} 上传:</view>
     <view class="hh-grid-square-1">
       <image class="hh-img" src="{{userUploadList[index]['path']}}" mode="aspectFill"
       bindtap="shop_image_pagejump" data-judge="1" data-image="{{item}}" data-fileid="{{userUploadList[index]['path']}}"
       />
     </view>
+  </view-->
+  <view class="card">
+    <view style="display:flex;flex-direction:row">
+      <image class="userHead" data-uploaduser="{{userList[index]['open_id']}}" 
+      data-uploadusername="{{userList[index]['user_name']}}" bindtap="jump2userpage"
+      src="{{headImage[headImage_index[index]].url}}"></image>
+      <view class="userNickName">{{userList[index]['user_name']}}
+      </view>
+      <view class="refresh" bindtap="jump_to_more" data-index="{{index}}">更多-></view>
+    </view>
+      <swiper class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" 
+        bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
+          <swiper-item wx:for="{{userSwiper[index]}}" wx:for-item="item"
+            wx:key="unique" class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
+            <view class="hh-swiper-item" bindtap="shop_image_pagejump" data-fileid='{{item}}' data-judge="1">
+              <image src="{{item}}" mode="aspectFill" wx:if="{{'image' =='image'}}"></image>   
+            </view>
+          </swiper-item>
+      </swiper>
+      <!--view wx:for="{{userUploadList[index]}}" wx:for-item="item">
+        <image src="{{item}}" style="height:50rpx;widthL50rpx">
+        </image>
+      </view-->
   </view>
 </view>
 <swiper wx:if="{{TabCur==0}}" class="hh-card-swiper" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" 
 bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
-  <swiper-item wx:for="{{swiperList}}" wx:key class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
+  <swiper-item wx:for="{{swiperList}}" wx:key="unique" class="hh-card-swiper-item{{cardCur==index?'-cur':''}}">
     <view class="hh-swiper-item" bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.url}}' data-tag='{{item.tag}}' data-judge="2">
       <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
       <!-- <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video> -->
@@ -133,7 +156,7 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
       </view>
     </view-->
     <view class="picShowRow" wx:for="{{showPicList}}" wx:for-index="index">
-        <image class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="*this"
+        <image class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="unique"
            bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' data-tag='{{item.tag}}'
            src="{{item.file_id}}">
         </image>
@@ -159,7 +182,7 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
   <view class="card">
   <view class="picShowList">
     <view class="picShowRow" wx:for="{{showStaticPics1}}" wx:for-index="index">
-        <image class="buttonImage" wx:for="{{showStaticPics1[index]}}" wx:for-item="item" wx:key="*this"
+        <image class="buttonImage" wx:for="{{showStaticPics1[index]}}" wx:for-item="item" wx:key="unique"
            bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' data-tag='{{item.tag}}'
            src="{{item.file_id}}">
         </image>
