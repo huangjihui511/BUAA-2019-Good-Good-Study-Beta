@@ -697,4 +697,10 @@ Page({
       url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.id.open_id+'&name='+e.currentTarget.dataset.id.user_name
     })
   },
+  preview: function (e){
+    wx.previewImage({
+      current: e.currentTarget.dataset.path, // 当前显示图片的https链接
+      urls: [e.currentTarget.dataset.path], // 需要预览的图片https链接列表
+    })
+  },
 })
