@@ -397,7 +397,7 @@ Page({
         save:false
       })
       wx.navigateTo({
-        url: '../cropper/cropper_example',
+        url: '../cropper/cropper-example',
       })
     }
   },
