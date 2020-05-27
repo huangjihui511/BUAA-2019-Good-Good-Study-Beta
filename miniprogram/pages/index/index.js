@@ -9,7 +9,7 @@ Page({
     user_rank: 0,
     rankExp:[0,5,15,30,50,100,200,500,1000,2000,3000,6000,10000,18000,30000,60000,
       100000,300000],
-    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2my_userpage'},],
+    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2my_userpage'},  { name: 'close', isShow: true, text: '举报图片', action: 'tipoff'},],
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -52,6 +52,43 @@ Page({
       {
         url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal4.png'
       }],
+  },
+
+  tipoff(){
+    var that = this
+    console.log(this.data.imagePath)
+    wx.showModal({
+      title: "举报图片",
+      content: "确定您要举报的图片有问题吗？",
+      showCancel: true,
+      cancelText: "取消",
+      cancelColor: "#000",
+      confirmText: "确定",
+      confirmColor: "#0f0",
+      success: function (res) {
+        console.log(res)
+        if (res.confirm) {
+          db.collection('problem').add({
+            data:{
+              url: that.data.imagePath
+            },
+            success:function(res){
+              wx.showToast({
+                title: '举报成功',
+                icon: 'success',
+                duration: 2000,
+              })
+            }
+          })
+          // 重新设置缓存
+          //wx.setStorageSync('cache_key', cache);
+          // 更新数据绑定,从而切换图片
+          //that.setData({
+            //collection: currentCache
+          //})
+        }
+      }
+    })
   },
 
   like(){
@@ -327,9 +364,9 @@ Page({
                             var reflex3 = reflex1%3
                           //  console.log("globalPicIndex:",globalPicIndex)
                           //  console.log("key:",key)
-                          that.data.showListCache[globalPicIndex] = key
+                          that.data.showListCache[globalPicIndex] = ids[key]
                           if (globalPicIndex < 18) {
-                            that.data.showPicList[reflex2][reflex3]['file_id'] = key
+                            that.data.showPicList[reflex2][reflex3]['file_id'] = ids[key]
                             that.data.showPicList[reflex2][reflex3]['tag'] = tag
                             that.setData({
                               showPicList:that.data.showPicList
@@ -537,7 +574,7 @@ Page({
   //下载图片
   download(e) {
     console.log(app.globalData.user_rank)
-    if (app.globalData.user_rank >= app.globalData.user_download){
+    if (app.globalData.user_rank > app.globalData.user_download){
       app.globalData.user_download += 1
       console.log("you can download!")
       let fileUrl = this.data.imagePath
@@ -570,6 +607,11 @@ Page({
           filePath: imgUrl,
           success:function (data) {
             console.log(data);
+            wx.showToast({
+              title: '下载成功',
+              icon: 'success',
+              duration: 3000
+            })
           },
           fail: function (err) {
             if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
@@ -615,62 +657,96 @@ Page({
   },
   //收藏图片
   storeImage(e){
+    console.log("11111111111")
     var _this=this
-    const _ = db.command
-    var temp_image = {
-      file_id: e.currentTarget.dataset.fileid
-    }
-    var user_openid = app.globalData.open_id
-    console.log(app.globalData.open_id)
-    console.log(this.data.imagePath)
-    var util = require('../../utils/util.js'); 
-    var TIME = util.formatTime(new Date());
     wx.cloud.callFunction({
-      name: 'add_expression',
-      /*data:{
-        request: 'add_picture',
-        data1: TIME,
-        data2: app.globalData.open_id,
-        data4: this.data.imagePath,
-        data5: true
-      },*/
-      data: {
-        request: 'add_expression',
-        data1: app.globalData.open_id,
-        data2: _this.data.imagePath,
-        data3:[{"name":_this.data.tag_image,"num":0},{"name":"商店","num":0}]
-      },
-    }).then(res=> {
-      wx.showToast({                
-        title: '收藏成功',                
-        icon: 'success',                
-        duration: 1500,                
-        mask: false,             
-      })
-    })
-    /*db.collection('user').where({
-      open_id: user_openid
-    }).update({
+      name:"get_label",
       data:{
-        expression_set: _.push(temp_image)
-      }
-    }).then(res=>{
-      console.log(res.data)
-      wx.showToast({                
-        title: '收藏成功',                
-        icon: 'success',                
-        duration: 1500,                
-        mask: false,             
-      })
-     })*/
-     wx.cloud.callFunction({
-      name: "add_like_or_favor",
-      data:{
-        src:_this.data.imagePath,
-        flag:"favor"
+        id:app.globalData.open_id,
       },
       success(res){
-        console.log(res)
+        var i
+        if(res.result.data[0].expression_set!=undefined){
+          for(i=0;i<res.result.data[0].expression_set.length;i++){
+            if(_this.data.imagePath==res.result.data[0].expression_set[i].file_id){
+              break;
+            }
+          }
+          if(i!=res.result.data[0].expression_set.length){
+            wx.showToast({
+              title: '不能重复收藏',
+              icon: 'loading',
+              duration: 1000
+            })
+            return;
+          }
+          else{
+            wx.cloud.callFunction({
+              name: 'change_refresh_time',
+              data: {
+                id:app.globalData.open_id,
+                time:new Date()
+              }
+            })
+            const _ = db.command
+            var temp_image = {
+              file_id: e.currentTarget.dataset.fileid
+            }
+            var user_openid = app.globalData.open_id
+            console.log(app.globalData.open_id)
+            console.log(this.data.imagePath)
+            var util = require('../../utils/util.js'); 
+            var TIME = util.formatTime(new Date());
+            wx.cloud.callFunction({
+              name: 'add_expression',
+              /*data:{
+                request: 'add_picture',
+                data1: TIME,
+                data2: app.globalData.open_id,
+                data4: this.data.imagePath,
+                data5: true
+              },*/
+              data: {
+                request: 'add_expression',
+                data1: app.globalData.open_id,
+                data2: _this.data.imagePath,
+                data3:[{"name":_this.data.tag_image,"num":0},{"name":"商店","num":0}]
+              },
+            }).then(res=> {
+              wx.showToast({                
+                title: '收藏成功',                
+                icon: 'success',                
+                duration: 1500,                
+                mask: false,             
+              })
+            })
+            /*db.collection('user').where({
+              open_id: user_openid
+            }).update({
+              data:{
+                expression_set: _.push(temp_image)
+              }
+            }).then(res=>{
+              console.log(res.data)
+              wx.showToast({                
+                title: '收藏成功',                
+                icon: 'success',                
+                duration: 1500,                
+                mask: false,             
+              })
+             })*/
+             wx.cloud.callFunction({
+              name: "add_like_or_favor",
+              data:{
+                src:_this.data.imagePath,
+                flag:"favor"
+              },
+              success(res){
+                console.log(res)
+              }
+            })
+          }
+        }
       }
     })
   },
@@ -678,6 +754,8 @@ Page({
     var app = getApp()
     console.log(e)
     // app.globalData.data = {'imagepath':imagepath}
+    console.log("uploaduser:",this.data.uploaduser)
+    console.log("uploadusername:",this.data.uploaduser_name)
     wx.navigateTo({
       url: '/pages/userpage/userpage?upload='+this.data.uploaduser+'&name='+this.data.uploaduser_name
     })
@@ -688,6 +766,12 @@ Page({
     // app.globalData.data = {'imagepath':imagepath}
     wx.navigateTo({
       url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.id.open_id+'&name='+e.currentTarget.dataset.id.user_name
+    })
+  },
+  preview: function (e){
+    wx.previewImage({
+      current: e.currentTarget.dataset.path, // 当前显示图片的https链接
+      urls: [e.currentTarget.dataset.path], // 需要预览的图片https链接列表
     })
   },
 })

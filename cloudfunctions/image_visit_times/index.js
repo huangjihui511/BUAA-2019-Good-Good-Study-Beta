@@ -136,12 +136,13 @@ exports.main = async (event, context) => {
       var exps = expression.data[0]['expression_id']
       console.log("exps:",exps)
       //console.log("exps:",expression.data[0]['expression_id'].key)
-
-      for (var key in exps) {
-        ids.push(key)
+      
+      /*for (var key in exps) {
+        ids.push(exps[key])
         break  
-      }
+      }*/
       //ids.push(expression.data[0]['expression_id'][0])
+      ids.push(exps[0])
     }
     return {
       data:ids
@@ -160,6 +161,62 @@ exports.main = async (event, context) => {
     return {
       data:resultArray
     }
+  }
+
+  //返回一个用户上传的所有表情
+  else if (request == 6) {
+    
+    var countRes = await db.collection('upload_users').count()
+    var t = countRes.total
+    var b = Math.ceil(t/100)
+    if (b == 0) {
+      b = 1
+    }
+    var users = []
+    var userList = []
+    console.log("b",b)
+    for (var i = 0;i < b;i++) {
+      var userRes = await db.collection('upload_users').skip(i*100).get()
+      console.log("用户列表：",userRes.data)
+      users = users.concat(userRes.data)
+    }
+    console.log("users:",users)
+    var countRes1 = await db.collection('user_upload').count()
+    var t1 = countRes1.total
+    var b1 = Math.ceil(t1/100)
+    if (b1 == 0) {
+      b1 = 1
+    }
+    for (var j = 0;j < users.length;j++) {
+      var user1Expressions = []
+      console.log("查询用户",j+1)
+      for (var k = 0;k < b1;k++) {
+        var count1User = await db.collection('user_upload').skip(k*100).where({
+          open_id:users[j]['open_id']
+        }).get()
+        for (var l = 0;l < count1User.data.length;l++) {
+          //if (count1User.data[l][])
+          var tags = count1User.data[l]['tags']
+          var judge = 0
+          for (var m = 0;m < tags.length;m++) {
+            var ftag = tags[m]
+            if (ftag['name'] == '公开') {
+              judge = 1
+              break
+            }
+          }
+          if (judge == 1) {
+            user1Expressions.push(count1User.data[l]['file_id'])
+          }
+        }
+      }
+      userList.push(user1Expressions)
+    }
+    console.log("userList:",userList)
+    return{
+      data1:users,
+      data2:userList
+    } 
   }
 
   const countResult = await db.collection('expression_visit_times').count()

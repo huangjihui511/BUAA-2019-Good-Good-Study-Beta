@@ -39,15 +39,18 @@
       {{hotTagsList[index].tag}}
       </view>
       <view class="hh-capsule-tag-num">
-      点击次数：{{hotTagsList[index].times}}
+      搜索次数：{{hotTagsList[index].times}}
       </view>
     </view>
   </view>
   <!--image class="image_item" src="{{hotTagsImage[index]}}"></image-->
   <view class="hh-grid-square-1">
-    <image class="hh-img" src="{{hotTagsImage[index]}}" mode="aspectFill"
+    <!--image class="hh-img" src="{{hotTagsImage[index]}}" mode="aspectFill"
     bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{hotTagsImage[index]}}'
     data-tag='{{hotTagsList[index].tag}}'
+    /-->
+    <image class="hh-img" src="{{hotTagsImage[index]}}" mode="aspectFill"
+    data-tag="{{hotTagsList[index].tag}}" bindtap="hotTagJump"
     />
   </view>
 </view>

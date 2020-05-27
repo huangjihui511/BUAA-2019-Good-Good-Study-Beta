@@ -1,11 +1,11 @@
 <!--navbar page-name="你当前页面的名字"></navbar-->
 <view>
 <movable-area style="height: 100%; width: 100%;">
-  <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="350" y="500" animation="false"
+  <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="300" y="400" animation="false"
     direction="all" bindtap="reFreshR">
     <image src="../../images/toRight.png" style="height:80rpx;width:80rpx;"></image>
   </movable-view>
-  <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="280" y="500" animation="false"
+  <movable-view class="fixedMovable" style="height: 80rpx; width: 80rpx;" x="230" y="400" animation="false"
     direction="all" bindtap="reFreshL">
     <image src="../../images/toLeft.png" style="height:80rpx;width:80rpx;"></image>
   </movable-view>
@@ -43,7 +43,7 @@
   <view class="line"></view>
   <view class="picShowList">
     <view class="picShowRow" wx:for="{{showPicList}}" wx:for-index="index">
-        <image wx:if="{{item.file_id!=''}}" class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="*this"
+        <image wx:if="{{item.file_id!=''}}" class="buttonImage" wx:for="{{showPicList[index]}}" wx:for-item="item" wx:key="unique"
            bindtap="shop_image_pagejump" data-image="{{item}}" data-fileid='{{item.file_id}}' 
            data-tag='{{item.tag}}' src="{{item.file_id}}">
         </image>

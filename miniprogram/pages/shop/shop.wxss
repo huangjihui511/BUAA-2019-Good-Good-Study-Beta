@@ -7,7 +7,21 @@
 .page-section{
   margin-bottom: 20rpx;
 }
+.exp{
+  position: relative;
+  right: 0rpx;
+}
 
+.name{
+  flex: 1;
+}
+.hh-menu-list {
+  margin-top: 0rpx;
+}
+
+.hh-nav{
+  margin-bottom: 30rpx;
+}
 .button_confirm{
   background-color: #0387FE;
   display: flex;
@@ -253,4 +267,42 @@ overflow: hidden;
   background-color: var(--white);
 	/*text-align: center;*/
 	box-shadow: 0 30rpx 20rpx rgba(0, 0, 0, 0.2); 
+}
+
+/*.userHead {
+  align-self: flex-start;
+  position: absolute;
+  font-variant: small-caps;
+  margin: 10rpx;
+  padding: 0;
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #ccc;
+  color: var(--white);
+  white-space: nowrap;
+  position: relative;
+  width: 64rpx;
+  height: 64rpx;
+  background-size: cover;
+  background-position: center;
+  vertical-align: middle;
+  font-size: 1.5em;
+  border-radius: 5000rpx;
+}*/
+
+.userHead {
+  border-radius: 5000rpx;
+  width: 80rpx;
+  height: 80rpx;
+  margin-top: 15rpx;
+  margin-left: 15rpx;
+}
+
+.userNickName {
+  margin-top: 20rpx;
+  margin-left: 10rpx;
+  color: #888888;
+  font-size: 18px;
 }

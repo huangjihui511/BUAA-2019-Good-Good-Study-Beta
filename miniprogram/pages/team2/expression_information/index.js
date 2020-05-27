@@ -102,6 +102,13 @@ Page({
         duration: 1000
       })},1000)
       wx.cloud.callFunction({
+        name: 'change_refresh_time',
+        data: {
+          id:app.globalData.open_id,
+          time:new Date()
+        }
+      })
+      wx.cloud.callFunction({
         name: "add_exp",
         data:{
           id:app.globalData.open_id,
@@ -661,9 +668,9 @@ Page({
                             var reflex3 = reflex1%3
                           //  console.log("globalPicIndex:",globalPicIndex)
                           //  console.log("key:",key)
-                          that.data.showListCache[globalPicIndex] = key
+                          that.data.showListCache[globalPicIndex] = ids[key]
                           if (globalPicIndex < 18) {
-                            that.data.showPicList[reflex2][reflex3]['file_id'] = key
+                            that.data.showPicList[reflex2][reflex3]['file_id'] = ids[key]
                             that.data.showPicList[reflex2][reflex3]['tag'] = tag
                             that.setData({
                               showPicList:that.data.showPicList

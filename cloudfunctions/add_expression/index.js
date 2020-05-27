@@ -122,6 +122,23 @@ exports.main = async (event, context) => {
           time:time
         }
       })
+      var count = 0
+      var countRes = await db.collection('upload_users').where({
+        open_id:id
+      }).count()
+      count = countRes['total']
+      if (count == 0) {
+        console.log("没有找到该用户")
+        await db.collection('upload_users').add({
+          data:{
+            open_id:id,
+            user_name:name
+          }
+        })
+      }
+      else {
+        console.log("找到该用户",count)
+      }
     }
 
     try {

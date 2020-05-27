@@ -35,7 +35,8 @@ data: {
   add_label_list:[],
   add_label_text:[],
   have_add_labels:[],
-  flag:true
+  flag:true,
+  flag1:false
 },
 getinput(e){
   var _this=this
@@ -162,7 +163,16 @@ submitted: function submitted(e) {
         public1=true
       }
     }
-    console.log("88888",public1)
+    console.log("88888",public1,temp)
+    if((public1==false)&&(that.data.flag1==true)){
+      wx.cloud.callFunction({
+        name: "add_exp",
+        data:{
+          id:app.globalData.open_id,
+          incNum:-10
+        }
+      })
+    }
     if((public1==true)&&(that.data.flag==false)){
       wx.cloud.callFunction({
         name: "add_exp",
@@ -171,20 +181,18 @@ submitted: function submitted(e) {
           incNum:10
         }
       })
+      wx.cloud.callFunction({
+        name: 'change_refresh_time',
+        data: {
+          id:app.globalData.open_id,
+          time:new Date()
+        }
+      })
       setTimeout(function () {wx.showToast({
         title: '已加经验',
         icon: 'success',
         duration: 1000
       })},1000)
-    }
-    else{
-      wx.cloud.callFunction({
-        name: "add_exp",
-        data:{
-          id:app.globalData.open_id,
-          incNum:-10
-        }
-      })
     }
     wx.cloud.callFunction({
       name:'change_picture_public',
@@ -194,35 +202,37 @@ submitted: function submitted(e) {
       },
       success(res){
         console.log(1)
-      }
-    })
-    wx.cloud.callFunction({
-      name:"change_user_exp_tags",
-      data:{
-        data1:app.globalData.open_id,
-        data2:that.data.image_src,
-        data3:temp
+        console.log('temp',temp)
+        wx.cloud.callFunction({
+          name:"change_user_exp_tags",
+          data:{
+          data1:app.globalData.open_id,
+          data2:that.data.image_src,
+          data3:temp
         //data2:["fun", "wdnmd"]
-      },
-      success:function(res){
-        console.log("获取表情成功",res)
-      },fail:function(res){
-        console.log("获取表情失败",res)
+          },
+          success:function(res){
+            console.log("获取表情成功",res)
+            wx.showToast({
+              title: '成功提交',
+              icon: 'success',
+              duration: 1000,
+              success(data) {
+                setTimeout(function () {
+                  wx.navigateBack({
+                    delta:1
+                  })
+                }, 1000) //延迟时间
+              }
+            })
+          },fail:function(res){
+            console.log("获取表情失败",res)
+          }
+        })
       }
     })
+    
 
-    wx.showToast({
-      title: '成功提交',
-      icon: 'success',
-      duration: 1000,
-      success(data) {
-        setTimeout(function () {
-          wx.navigateBack({
-            delta:1
-          })
-        }, 1000) //延迟时间
-      }
-    })
 
   }
 },
@@ -305,6 +315,9 @@ submitted: function submitted(e) {
             if(temp.tags[i].name=="未公开"){
               _this.data.flag=false
               continue
+            }
+            if(temp.tags[i].name=="公开"){
+              _this.data.flag1=true
             }
             for(j=0;j<_this.data.label_list.length;j++){
               if(temp.tags[i].name==_this.data.label_list[j].title){
