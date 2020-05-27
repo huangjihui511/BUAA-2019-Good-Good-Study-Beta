@@ -14,27 +14,27 @@ const filters = {
       // threshold 0.0 <= n <= 1.0
       return ImageFilters.Binarize(data, 0.5)
   },
-  BoxBlur: function (data) {
+  /*BoxBlur: function (data) {
       // BoxBlur (srcImageData, hRadius, vRadius, quality)
 
       return ImageFilters.BoxBlur(data, 3, 3, 2)
-  },
+  },*/
   GaussianBlur: function (data) {
       // GaussianBlur (srcImageData, strength)
       // strength 1 <= n <= 4
       return ImageFilters.GaussianBlur(data, 4)
   },
-  StackBlur: function (data) {
+  /*StackBlur: function (data) {
       // StackBlur (srcImageData, radius)
 
       return ImageFilters.StackBlur(data, 6)
-  },
+  },*/
   Brightness: function (data) {
       // Brightness (srcImageData, brightness)
       // brightness - 100 <= n <= 100
       return ImageFilters.Brightness(data, 100)
   },
-  BrightnessContrastGimp: function (data) {
+  /*BrightnessContrastGimp: function (data) {
       // BrightnessContrastGimp (srcImageData, brightness, contrast)
       // brightness - 100 <= n <= 100
       // contrast - 100 <= n <= 100
@@ -62,7 +62,7 @@ const filters = {
   Desaturate: function (data) {
       // ImageFilters.Desaturate (srcImageData)
       return ImageFilters.Desaturate(data)
-  },
+  },*/
   Dither: function (data) {
       // ImageFilters.Dither (srcImageData, levels)
       // levels 2 <= n <= 255
@@ -76,30 +76,30 @@ const filters = {
       // ImageFilters.Emboss (srcImageData)
       return ImageFilters.Emboss(data)
   },
-  Enrich: function (data) {
+  /*Enrich: function (data) {
       // ImageFilters.Enrich (srcImageData)
       return ImageFilters.Enrich(data)
-  },
+  },*/
   Flip: function (data) {
       // ImageFilters.Flip (srcImageData, vertical)
       // vertical{Boolean}
       return ImageFilters.Flip(data, 0)
   },
-  Gamma: function (data) {
+  /*Gamma: function (data) {
       // ImageFilters.Gamma (srcImageData, gamma)
       // gamma: 0~5
       return ImageFilters.Gamma(data, 5)
-  },
+  },*/
   GrayScale: function (data) {
       // ImageFilters.GrayScale (srcImageData)
       return ImageFilters.GrayScale(data)
   },
-  HSLAdjustment: function (data) {
+  /*HSLAdjustment: function (data) {
       // ImageFilters.HSLAdjustment (srcImageData, hueDelta, satDelta, lightness)
       // hueDelta: 0~180
       // satDelta, lightness: 0~100
       return ImageFilters.HSLAdjustment(data, -23, 54, 19)
-  },
+  },*/
   Invert: function (data) {
       // ImageFilters.Invert (srcImageData)
       return ImageFilters.Invert(data)
@@ -115,7 +115,7 @@ const filters = {
       // levels: 1~256
       return ImageFilters.Oil(data, 5, 62)
   },
-  OpacityFilter: function (data) {
+  /*OpacityFilter: function (data) {
       // ImageFilters.OpacityFilter (srcImageData, opacity)
       // opacity: 0~255
       return ImageFilters.OpacityFilter(data, 123)
@@ -137,13 +137,13 @@ const filters = {
   Sepia: function (data) {
       // ImageFilters.Sepia(srcImageData)
       return ImageFilters.Sepia(data)
-  },
+  },*/
   Sharpen: function (data) {
       // ImageFilters.Sharpen (srcImageData, factor)
       // factor: 1~10
       return ImageFilters.Sharpen(data, 9)
   },
-  Solarize: function (data) {
+  /*Solarize: function (data) {
       // ImageFilters.Solarize (srcImageData)
       return ImageFilters.Solarize(data)
   },
@@ -151,7 +151,7 @@ const filters = {
       // ImageFilters.Transpose (srcImageData)
       // factor: 1~10
       return ImageFilters.Transpose(data)
-  },
+  },*/
   Twril: function (data) {
       // ImageFilters.Twril (srcImageData, centerX, centerY, radius, angle, edge, smooth)
       // centerX 0.0 <= n <= 1.0
@@ -175,9 +175,9 @@ Page({
     cHeight: 600,
     array: [],
     index: 0,
-    arrayname: ['原图','二值化','方框模糊','高斯模糊','折衷模糊','亮度','亮度对比度1','亮度对比度2','单色通道','颜色变换滤波器',
-                '冲淡','高频振动','边缘','浮雕','丰富','翻转','gamma','灰度','HSL调节','反相',
-                '马赛克','油画','不透明度','多色调分色印','重新调节','褐色','锐化','曝光','调换','水波旋转']
+    arrayname: ['原图','黑白','高斯模糊','亮度',
+                '高频振动','边缘','浮雕','翻转','灰度','反相',
+                '马赛克','油画','锐化','水波旋转']
   },
 
   /**
