@@ -9,7 +9,7 @@ Page({
     user_rank: 0,
     rankExp:[0,5,15,30,50,100,200,500,1000,2000,3000,6000,10000,18000,30000,60000,
       100000,300000],
-    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2my_userpage'},],
+    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2my_userpage'},  { name: 'close', isShow: true, text: '举报图片', action: 'tipoff'},],
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -52,6 +52,43 @@ Page({
       {
         url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal4.png'
       }],
+  },
+
+  tipoff(){
+    var that = this
+    console.log(this.data.imagePath)
+    wx.showModal({
+      title: "举报图片",
+      content: "确定您要举报的图片有问题吗？",
+      showCancel: true,
+      cancelText: "取消",
+      cancelColor: "#000",
+      confirmText: "确定",
+      confirmColor: "#0f0",
+      success: function (res) {
+        console.log(res)
+        if (res.confirm) {
+          db.collection('problem').add({
+            data:{
+              url: that.data.imagePath
+            },
+            success:function(res){
+              wx.showToast({
+                title: '举报成功',
+                icon: 'success',
+                duration: 2000,
+              })
+            }
+          })
+          // 重新设置缓存
+          //wx.setStorageSync('cache_key', cache);
+          // 更新数据绑定,从而切换图片
+          //that.setData({
+            //collection: currentCache
+          //})
+        }
+      }
+    })
   },
 
   like(){
