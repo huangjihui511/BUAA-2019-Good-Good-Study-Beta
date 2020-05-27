@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
     var path = event.data2
     var tag_de = event.data3
     try {
-      await db.collection('user').where({
+      return await db.collection('user').where({
         open_id:open_id0,
         'expression_set.file_id':path
       }).update({

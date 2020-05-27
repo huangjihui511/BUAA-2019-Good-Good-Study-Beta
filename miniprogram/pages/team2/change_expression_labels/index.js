@@ -202,36 +202,37 @@ submitted: function submitted(e) {
       },
       success(res){
         console.log(1)
-      }
-    })
-    console.log('temp',temp)
-    wx.cloud.callFunction({
-      name:"change_user_exp_tags",
-      data:{
-        data1:app.globalData.open_id,
-        data2:that.data.image_src,
-        data3:temp
+        console.log('temp',temp)
+        wx.cloud.callFunction({
+          name:"change_user_exp_tags",
+          data:{
+          data1:app.globalData.open_id,
+          data2:that.data.image_src,
+          data3:temp
         //data2:["fun", "wdnmd"]
-      },
-      success:function(res){
-        console.log("获取表情成功",res)
-      },fail:function(res){
-        console.log("获取表情失败",res)
+          },
+          success:function(res){
+            console.log("获取表情成功",res)
+            wx.showToast({
+              title: '成功提交',
+              icon: 'success',
+              duration: 1000,
+              success(data) {
+                setTimeout(function () {
+                  wx.navigateBack({
+                    delta:1
+                  })
+                }, 1000) //延迟时间
+              }
+            })
+          },fail:function(res){
+            console.log("获取表情失败",res)
+          }
+        })
       }
     })
+    
 
-    wx.showToast({
-      title: '成功提交',
-      icon: 'success',
-      duration: 1000,
-      success(data) {
-        setTimeout(function () {
-          wx.navigateBack({
-            delta:1
-          })
-        }, 1000) //延迟时间
-      }
-    })
 
   }
 },
