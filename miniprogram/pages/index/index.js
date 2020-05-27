@@ -623,67 +623,93 @@ Page({
     console.log("11111111111")
     var _this=this
     wx.cloud.callFunction({
-      name: 'change_refresh_time',
-      data: {
+      name:"get_label",
+      data:{
         id:app.globalData.open_id,
-        time:new Date()
-      }
-    })
-    const _ = db.command
-    var temp_image = {
-      file_id: e.currentTarget.dataset.fileid
-    }
-    var user_openid = app.globalData.open_id
-    console.log(app.globalData.open_id)
-    console.log(this.data.imagePath)
-    var util = require('../../utils/util.js'); 
-    var TIME = util.formatTime(new Date());
-    wx.cloud.callFunction({
-      name: 'add_expression',
-      /*data:{
-        request: 'add_picture',
-        data1: TIME,
-        data2: app.globalData.open_id,
-        data4: this.data.imagePath,
-        data5: true
-      },*/
-      data: {
-        request: 'add_expression',
-        data1: app.globalData.open_id,
-        data2: _this.data.imagePath,
-        data3:[{"name":_this.data.tag_image,"num":0},{"name":"商店","num":0}]
-      },
-    }).then(res=> {
-      wx.showToast({                
-        title: '收藏成功',                
-        icon: 'success',                
-        duration: 1500,                
-        mask: false,             
-      })
-    })
-    /*db.collection('user').where({
-      open_id: user_openid
-    }).update({
-      data:{
-        expression_set: _.push(temp_image)
-      }
-    }).then(res=>{
-      console.log(res.data)
-      wx.showToast({                
-        title: '收藏成功',                
-        icon: 'success',                
-        duration: 1500,                
-        mask: false,             
-      })
-     })*/
-     wx.cloud.callFunction({
-      name: "add_like_or_favor",
-      data:{
-        src:_this.data.imagePath,
-        flag:"favor"
       },
       success(res){
-        console.log(res)
+        var i
+        if(res.result.data[0].expression_set!=undefined){
+          for(i=0;i<res.result.data[0].expression_set.length;i++){
+            if(_this.data.imagePath==res.result.data[0].expression_set[i].file_id){
+              break;
+            }
+          }
+          if(i!=res.result.data[0].expression_set.length){
+            wx.showToast({
+              title: '不能重复收藏',
+              icon: 'loading',
+              duration: 1000
+            })
+            return;
+          }
+          else{
+            wx.cloud.callFunction({
+              name: 'change_refresh_time',
+              data: {
+                id:app.globalData.open_id,
+                time:new Date()
+              }
+            })
+            const _ = db.command
+            var temp_image = {
+              file_id: e.currentTarget.dataset.fileid
+            }
+            var user_openid = app.globalData.open_id
+            console.log(app.globalData.open_id)
+            console.log(this.data.imagePath)
+            var util = require('../../utils/util.js'); 
+            var TIME = util.formatTime(new Date());
+            wx.cloud.callFunction({
+              name: 'add_expression',
+              /*data:{
+                request: 'add_picture',
+                data1: TIME,
+                data2: app.globalData.open_id,
+                data4: this.data.imagePath,
+                data5: true
+              },*/
+              data: {
+                request: 'add_expression',
+                data1: app.globalData.open_id,
+                data2: _this.data.imagePath,
+                data3:[{"name":_this.data.tag_image,"num":0},{"name":"商店","num":0}]
+              },
+            }).then(res=> {
+              wx.showToast({                
+                title: '收藏成功',                
+                icon: 'success',                
+                duration: 1500,                
+                mask: false,             
+              })
+            })
+            /*db.collection('user').where({
+              open_id: user_openid
+            }).update({
+              data:{
+                expression_set: _.push(temp_image)
+              }
+            }).then(res=>{
+              console.log(res.data)
+              wx.showToast({                
+                title: '收藏成功',                
+                icon: 'success',                
+                duration: 1500,                
+                mask: false,             
+              })
+             })*/
+             wx.cloud.callFunction({
+              name: "add_like_or_favor",
+              data:{
+                src:_this.data.imagePath,
+                flag:"favor"
+              },
+              success(res){
+                console.log(res)
+              }
+            })
+          }
+        }
       }
     })
   },
