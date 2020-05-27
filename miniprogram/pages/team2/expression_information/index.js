@@ -102,6 +102,13 @@ Page({
         duration: 1000
       })},1000)
       wx.cloud.callFunction({
+        name: 'change_refresh_time',
+        data: {
+          id:app.globalData.open_id,
+          time:new Date()
+        }
+      })
+      wx.cloud.callFunction({
         name: "add_exp",
         data:{
           id:app.globalData.open_id,

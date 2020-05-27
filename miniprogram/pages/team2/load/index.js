@@ -233,6 +233,13 @@ submitted: function submitted(e) {
     })
   }
   else{
+    wx.cloud.callFunction({
+      name: 'change_refresh_time',
+      data: {
+        id:app.globalData.open_id,
+        time:new Date()
+      }
+    })
     var temp_add_label_text=[]
     var add_label_text_temp=[]
     var temp1=[]
@@ -314,6 +321,13 @@ submitted: function submitted(e) {
         data:{
           id:app.globalData.open_id,
           incNum:10
+        }
+      })
+      wx.cloud.callFunction({
+        name: 'change_refresh_time',
+        data: {
+          id:app.globalData.open_id,
+          time:new Date()
         }
       })
       setTimeout(function () {wx.showToast({

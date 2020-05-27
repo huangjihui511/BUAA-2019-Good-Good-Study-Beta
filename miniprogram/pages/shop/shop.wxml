@@ -1,10 +1,16 @@
 <!--index.wxml-->
-<scroll-view scroll-x class="hh-nav">
+<scroll-view scroll-x class="hh-nav" scroll-with-animation scroll-left="{{scrollLeft}}">
   <view class="hh-nav-item{{0==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="0">
      搜索表情
   </view>
   <view class="hh-nav-item{{1==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="1">
      自制表情推荐
+  </view>
+  <view class="hh-nav-item{{2==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="2">
+     搜索用户
+  </view>
+  <view class="hh-nav-item{{3==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="3">
+     推荐用户
   </view>
 </scroll-view>
 <view wx:if="{{TabCur==1}}" class="hh-title">
@@ -221,3 +227,30 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
     </view>
     
 </view-->
+  <view class="search" wx:if="{{TabCur==2}}">
+    <view class="searchInputConfirm">
+      <view class="hh-search-around">
+        <text class="cuIcon-search"></text>
+        <input type="text" placeholder="请输入搜索关键字" confirm-type="search"
+          bindinput="bindConfirmClick_team2" bindconfirm="confirm_team2" data-input="input"></input>
+      </view>
+      <view class="button_confirm" style="width:150rpx;height:50rpx" bindtap="confirm_team2" >
+        <text class="confirmText" style="font-size:medium">确认</text>
+      </view>
+    </view>
+    <view class='hh-menu-list' wx:for="{{search_list}}" wx:key="index">
+      <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
+        <image class="hh-menu-img" src="{{headImage[search_imageNum[index]].url}}" mode="cover"></image>
+        <view class='name'>{{item.user_name}}</view>
+      </view>
+    </view>
+    <view class="hh-text">抱歉，没有更多了</view>
+  </view>
+<view class='hh-menu-list' wx:if="{{TabCur==3}}" wx:for="{{recommend_list}}" wx:key="index">
+  <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
+      <image class="hh-menu-img" src="{{headImage[recommend_imageNum[index]].url}}" mode="cover"></image>
+      <view class='name'>{{item.user_name}}</view>
+      <view class='exp'>经验值：{{item.exp}}</view>
+  </view>
+</view>
+<view class="hh-text" wx:if="{{TabCur==3}}">抱歉，没有更多了</view>

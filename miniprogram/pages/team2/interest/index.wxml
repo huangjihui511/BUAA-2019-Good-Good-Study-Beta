@@ -8,12 +8,14 @@
   <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
       <image class="hh-menu-img" src="{{headImage[headImageNum[index]].url}}" mode="cover"></image>
       <view class='name'>{{item.name}}</view>
+      <view class='exp' wx:if="{{interest_refresh_flag[index]==true}}">已更新</view>
   </view>
 </view>
 <view class='hh-menu-list' wx:if="{{TabCur==1}}" wx:for="{{be_list}}" wx:key="index">
   <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
       <image class="hh-menu-img" src="{{headImage[be_headImageNum[index]].url}}" mode="cover"></image>
       <view class='name'>{{item.name}}</view>
+      <view class='exp' wx:if="{{be_interested_refresh_flag[index]==true}}">已更新</view>
   </view>
 </view>
 
@@ -40,6 +42,7 @@
   <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
       <image class="hh-menu-img" src="{{headImage[recommend_imageNum[index]].url}}" mode="cover"></image>
       <view class='name'>{{item.user_name}}</view>
+      <view class='exp'>经验值：{{item.exp}}</view>
   </view>
 </view>
 <view class="hh-text" wx:if="{{TabCur==3}}">抱歉，没有更多了</view>

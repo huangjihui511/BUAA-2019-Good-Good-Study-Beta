@@ -71,7 +71,7 @@
         "pagePath": "pages/team2/my/index",
         "iconPath": "images/user_blank.png",
         "selectedIconPath": "images/user_fill.png",
-        "text": "本地"
+        "text": "我"
       },
       {
         "pagePath": "pages/FormalUIPage/FormailUIPage",

@@ -34,7 +34,8 @@ data: {
   time:"",
   add_label_list:[],
   add_label_text:[],
-  have_add_labels:[]
+  have_add_labels:[],
+  flag:true
 },
 getinput(e){
   var _this=this
@@ -167,6 +168,14 @@ submitted: function submitted(e) {
       }
     }
     if(public1==true){
+      
+      wx.cloud.callFunction({
+        name: 'change_refresh_time',
+        data: {
+          id:app.globalData.open_id,
+          time:new Date()
+        }
+      })
       wx.cloud.callFunction({
         name: "add_exp",
         data:{
@@ -308,6 +317,7 @@ submitted: function submitted(e) {
             if((temp.tags!=undefined)){
               for(i=0;i<temp.tags.length;i++){
                 if(temp.tags[i].name=="未公开"){
+                  _this.data.flag=false
                   continue
                 }
                 for(j=0;j<_this.data.label_list.length;j++){
