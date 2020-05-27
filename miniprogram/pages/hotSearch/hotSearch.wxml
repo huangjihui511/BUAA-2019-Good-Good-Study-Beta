@@ -39,7 +39,7 @@
       {{hotTagsList[index].tag}}
       </view>
       <view class="hh-capsule-tag-num">
-      点击次数：{{hotTagsList[index].times}}
+      搜索次数：{{hotTagsList[index].times}}
       </view>
     </view>
   </view>
