@@ -8,6 +8,8 @@ Page({
    */
   data: {
     tab:["关注列表","被关注列表","搜索用户","为你推荐"],
+    interest_refresh_flag:[],
+    be_interested_refresh_flag:[],
     headImage: [
       {
         url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal1.png',
@@ -75,8 +77,9 @@ Page({
     console.log(value)
   },
   look(e){
+    console.log("222"+e.currentTarget.dataset.it.user_name)
     wx.navigateTo({
-      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.it.open_id+'&name='+e.currentTarget.dataset.it.name
+      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.it.open_id+'&name='+e.currentTarget.dataset.it.user_name
     })
   },
   /**
@@ -98,6 +101,7 @@ Page({
    */
   onShow: function () {
     var _this=this
+    
     db.collection('user').orderBy('exp', 'desc')
     .get({
       success(res){
@@ -129,6 +133,114 @@ Page({
         id:app.globalData.open_id
       },
       success(res){
+        console.log("11111",res)
+        if(res.result.data[0].look_time==undefined){
+          if(res.result.data[0].interest!=undefined){
+            var i
+            var interest_refresh_flag_temp=[]
+            for(i=0;i<res.result.data[0].interest.length;i++){
+              interest_refresh_flag_temp[i]=true
+            }
+            _this.setData({
+              interest_refresh_flag:interest_refresh_flag_temp
+            })
+          }
+          if(res.result.data[0].be_interested!=undefined){
+            var i
+            var be_interested_refresh_flag_temp=[]
+            for(i=0;i<res.result.data[0].interest.length;i++){
+              be_interested_refresh_flag_temp[i]=true
+            }
+            _this.setData({
+              be_interested_refresh_flag:be_interested_refresh_flag_temp
+            })
+          }
+        }
+        else{
+          var i
+          var temp=res.result.data[0].look_time
+          if(res.result.data[0].be_interested!=undefined){
+            for(i=0;i<res.result.data[0].be_interested.length;i++){
+              console.log(i,res.result.data[0].be_interested[i].open_id)
+              wx.cloud.callFunction({
+                name: "get_label_only_for_team2",
+                data:{
+                  id:res.result.data[0].be_interested[i].open_id,
+                  index:i
+                },
+                success(res){
+                  let temp1="be_interested_refresh_flag["+res.result[1]+"]"
+                  console.log("222",res)
+                  if(res.result[0].data[0].refresh_time==undefined){
+                    _this.setData({
+                      [temp1]:false
+                    })
+                  }
+                  else{
+                    console.log(new Date(temp))
+                    console.log(new Date(res.result[0].data[0].refresh_time))
+                    console.log("5555",new Date(res.result[0].data[0].refresh_time)-new Date(temp))
+                    if(new Date(res.result[0].data[0].refresh_time)-new Date(temp)>=0){
+                      _this.setData({
+                        [temp1]:true
+                      })
+                    }
+                    else{
+                      _this.setData({
+                        [temp1]:false
+                      })
+                    }
+                  }
+                  console.log("333",res.result[1],_this.data.be_interested_refresh_flag[res.result[1]])
+                }
+              })
+            }
+          }
+          if(res.result.data[0].interest!=undefined){
+            for(i=0;i<res.result.data[0].interest.length;i++){
+              console.log(i,res.result.data[0].interest[i].open_id)
+              wx.cloud.callFunction({
+                name: "get_label_only_for_team2",
+                data:{
+                  id:res.result.data[0].interest[i].open_id,
+                  index:i
+                },
+                success(res){
+                  let temp1="interest_refresh_flag["+res.result[1]+"]"
+                  console.log("222",res)
+                  if(res.result[0].data[0].refresh_time==undefined){
+                    _this.setData({
+                      [temp1]:false
+                    })
+                  }
+                  else{
+                    console.log(new Date(temp))
+                    console.log(new Date(res.result[0].data[0].refresh_time))
+                    console.log("5555",new Date(res.result[0].data[0].refresh_time)-new Date(temp))
+                    if(new Date(res.result[0].data[0].refresh_time)-new Date(temp)>=0){
+                      _this.setData({
+                        [temp1]:true
+                      })
+                    }
+                    else{
+                      _this.setData({
+                        [temp1]:false
+                      })
+                    }
+                  }
+                  console.log("333",res.result[1],_this.data.interest_refresh_flag[res.result[1]])
+                }
+              })
+            }
+          }
+        }
+        wx.cloud.callFunction({
+          name: 'change_look_time',
+          data: {
+            id:app.globalData.open_id,
+            time:new Date()
+          }
+        })
         _this.setData({
           list:res.result.data[0].interest
         })

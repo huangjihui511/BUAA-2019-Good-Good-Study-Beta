@@ -8,6 +8,10 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
+.exp{
+  position: relative;
+  right: 0rpx;
+}
 .hh-mult-nav{
   margin-bottom: 60rpx;
 }

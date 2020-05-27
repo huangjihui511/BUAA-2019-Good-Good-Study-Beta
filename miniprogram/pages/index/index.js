@@ -620,7 +620,15 @@ Page({
   },
   //收藏图片
   storeImage(e){
+    console.log("11111111111")
     var _this=this
+    wx.cloud.callFunction({
+      name: 'change_refresh_time',
+      data: {
+        id:app.globalData.open_id,
+        time:new Date()
+      }
+    })
     const _ = db.command
     var temp_image = {
       file_id: e.currentTarget.dataset.fileid

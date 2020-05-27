@@ -5,6 +5,11 @@ const db = wx.cloud.database()
 
 Page({
   data: {
+    search_list:[],
+    search_imageNum:[],
+    inputValue:"",
+    recommend_list:[],
+    recommend_imageNum:[],
     images: [
       {file_id : "/images/test1.jfif"
       },
@@ -699,7 +704,45 @@ handleTouchMove: function (e) {
     })
   }
   },
-
+  look(e){
+    wx.navigateTo({
+      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.it.open_id+'&name='+e.currentTarget.dataset.it.user_name
+    })
+  },
+  confirm_team2: function() {
+    var _this=this
+    this.data.search_list=[]
+    var res=db.collection('user').where({
+      user_name: db.RegExp({
+        regexp: _this.data.inputValue,
+        options: 'i',
+      })
+    }).get({
+      success:function(res) {
+        console.log(res)
+        _this.setData({
+          search_list:res.data
+        })
+        var i
+        for(i=0;i<res.data.length;i++){
+          let temp="search_imageNum["+i+"]"
+          _this.setData({
+            [temp]: Math.floor(Math.random()*3) + 1
+          })
+        }
+        console.log(_this.data.search_list)
+      }
+    })
+  },
+  bindConfirmClick_team2: function(e) {
+    var value = e.detail.value
+    this.setData(
+      {
+        inputValue:value
+      }
+    );
+    console.log(value)
+  },
   setSkinNormalTitle: function () {
     wx.setNavigationBarColor({
         frontColor: '#000000',
@@ -709,7 +752,32 @@ handleTouchMove: function (e) {
 
   onShow:function(){
     var that = this
-    
+    var _this=this
+    db.collection('user').orderBy('exp', 'desc')
+    .get({
+      success(res){
+        console.log(res)
+        var temp=[]
+        var i
+        var j=0
+        for(i=0;j<20;j++){
+          if(res.data[j].user_name!=undefined){
+            temp[i]=res.data[j]
+            i++
+          }
+        }
+        var k
+        for(k=0;k<i;k++){
+          let temp="recommend_imageNum["+k+"]"
+          _this.setData({
+            [temp]: Math.floor(Math.random()*3) + 1
+          })
+        }
+        _this.setData({
+          recommend_list:temp
+        })
+      }
+    })
     console.log("初始化热搜词")
     var that = this
     wx.cloud.callFunction({

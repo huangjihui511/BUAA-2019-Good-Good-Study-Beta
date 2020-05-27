@@ -103,7 +103,7 @@ line-height: 30rpx;
 
 .expFont {
   font-size: small;
-  color: rgb(164, 164, 236) ;
+  color: white;
   margin-left: 10rpx;
   margin-top: 8rpx;
 }

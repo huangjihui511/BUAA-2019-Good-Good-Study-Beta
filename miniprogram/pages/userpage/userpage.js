@@ -52,7 +52,6 @@ Page({
               interest:_this.data.upload,
               name:_this.data.upload_name,
               my_name:app.globalData.userInfo.nickName,
-              expression_set:res.result.data[0].expression_set
             },
             success(res){ 
               _this.setData({
@@ -92,6 +91,7 @@ Page({
     this.setData({
       upload_name:options.name
     })
+    console.log("111"+this.data.upload_name)
     wx.cloud.callFunction({
       name: "get_label",
       data:{
