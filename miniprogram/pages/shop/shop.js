@@ -56,37 +56,8 @@ Page({
       100000,300000],
     user_exp_Upbound:25,
     //轮播
-    /*swiperList: [{
-      id: 0,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-    }, {
-      id: 1,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg',
-    }, {
-      id: 2,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-    }, {
-      id: 3,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-    }, {
-      id: 4,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-    }, {
-      id: 5,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
-    }, {
-      id: 6,
-      type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-    }],*/
     
-    swiperList: [{
+    /*swiperList: [{
       id: 0,
       type: 'image',
       tag:'鬼刀',
@@ -104,8 +75,29 @@ Page({
     }, {
       id: 3,
       type: 'image',
-      tag:'鬼刀',
+      tag:'lol',
       url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/guidao4.jpg'
+    }],*/
+    swiperList: [{
+      id: 0,
+      type: 'image',
+      tag:'ins',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/ins1.jpg'
+    }, {
+      id: 1,
+      type: 'image',
+      tag:'ins',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/ins2.jpeg',
+    }, {
+      id: 2,
+      type: 'image',
+      tag:'ins',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/ins3.JPG'
+    }, {
+      id: 3,
+      type: 'image',
+      tag:'ins',
+      url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/ins4.jpg'
     }],
     cardCur: 0,
     TabCur: 0,
