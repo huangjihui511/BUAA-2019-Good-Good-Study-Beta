@@ -90,6 +90,9 @@ Page({
     var judge = options.judge
     console.log("judge:",judge)
     if (judge == 1) {
+      wx.setNavigationBarTitle({
+        title: 'ta的关注'
+      })
       this.data.open_id = options.open_id
     }
     else {
