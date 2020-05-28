@@ -99,3 +99,7 @@
   </view>
   </view>
 </view>
+
+<modal hidden="{{hiddenmodalput}}" title="您确定要举报这张图片吗" confirm-text="确认" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm" cancel-color="#000">  
+    <input type='text' value='{{problem}}' placeholder="请写下这张图片的问题" bindinput="getproblem"/>  
+</modal>  

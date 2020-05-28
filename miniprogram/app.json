@@ -35,7 +35,8 @@
     "pages/hotSearch/hotSearch",
     "pages/fliter_new/fliter_new",
     "pages/aphorism/aphorism",
-    "pages/moreUserImages/moreUserImages"
+    "pages/moreUserImages/moreUserImages",
+    "pages/inputProblem/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
