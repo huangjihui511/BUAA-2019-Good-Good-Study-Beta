@@ -3,13 +3,39 @@
   <image class="hh-user-avator" src="cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal{{headImageNum}}.png"></image>
   <view class="hh-user-name">{{uploaderName}}</view>
   <view class="hh-user-name">格言:{{upload_word}}</view>
+  <view class="hh-user-name" style="margin-top:20rpx" bindtap="interest_or_no">{{do_interest}}</view>
 </view>
+ 
+
+<view class="hh-user-card">
+  <view class="hh-user-card-sub" bindtap="interest_list">
+    <view style="color:red;font-size:60rpx">
+    {{interest}}
+    </view>
+    <view>
+    关注者
+    </view>
+  </view>
+  <view class="hh-user-card-sub" bindtap="interest_list">
+    <view style="color:orange;font-size:60rpx">
+    {{be_interested}}
+    </view>
+    <view>
+    被关注者
+    </view>
+  </view>
+  <view class="hh-user-card-sub">
+    <view style="color:green;font-size:60rpx">
+    {{user_rank}}
+    </view>
+    <view>
+    等级
+    </view>
+  </view>
+  </view>
 
 
-
-
-
-  <button bindtap="interest_or_no">{{do_interest}}</button> 
+  
 <!--
 <view class = "line"></view>
 <view class="swiper-tab"> 
@@ -18,22 +44,47 @@
 </view>
 -->
 
-<scroll-view scroll-x class="hh-nav">
+<!--scroll-view scroll-x class="hh-nav">
   <view class="hh-nav-item{{0==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="0">
     <text class="cuIcon-camerafill"></text> 上传者收藏
   </view>
   <view class="hh-nav-item{{1==TabCur?'-choosed':''}}" bindtap="tabSelect" data-id="1">
     <text class="cuIcon-upstagefill"></text> 上传者自制
   </view>
-</scroll-view>
+</scroll-view-->
 
-<view class="container">
+<!--view class="container">
     <view class='content'>
       <view class='content-item' wx:for="{{collection}}" wx:for-item="item">
-      <!-- 图片 -->
         <button class='image_button' data-fileid='{{item.file_id}}' bindtap="shop_image_pagejump" style="width:110%">
           <image class="image_search" src="{{item.file_id}}" ></image>
         </button>
       </view>
     </view>
+</view-->
+
+<view class="card">
+  <view style="display:flex;flex-direction:row">
+    <view class="hh-text">
+      ta的收藏
+    </view>
+    <view class="refresh" bindtap="jump_to_more" data-id="0">更多-></view>
+  </view> 
+  <view class="hh-grid-square-3">
+    <image class="hh-img" wx:for="{{collection1}}" wx:for-item="item" wx:key src="{{item.file_id}}"
+    mode="aspectFill" bindtap="shop_image_pagejump" data-fileid='{{item.file_id}}' data-judge="1"></image>
+  </view>
+</view>
+
+<view class="card">
+  <view style="display:flex;flex-direction:row">
+    <view class="hh-text">
+      ta的自制
+    </view>
+    <view class="refresh" bindtap="jump_to_more" data-id="1">更多-></view>
+  </view> 
+  <view class="hh-grid-square-3">
+    <image class="hh-img" wx:for="{{collection2}}" wx:for-item="item" wx:key src="{{item.file_id}}"
+    mode="aspectFill" bindtap="shop_image_pagejump" data-fileid='{{item.file_id}}' data-judge="1"></image>
+  </view>
 </view>
