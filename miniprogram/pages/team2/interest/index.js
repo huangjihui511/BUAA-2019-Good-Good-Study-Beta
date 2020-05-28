@@ -34,7 +34,8 @@ Page({
     TabCur:0,
     scrollLeft:0,
     search_list:[],
-    recommend_list:[]
+    recommend_list:[],
+    open_id:''
   },
   tabSelect(e) {
     this.setData({
@@ -86,7 +87,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var judge = options.judge
+    console.log("judge:",judge)
+    if (judge == 1) {
+      this.data.open_id = options.open_id
+    }
+    else {
+      this.data.open_id = app.globalData.open_id
+    }
+    console.log("open_id:",this.data.open_id)
   },
 
   /**
@@ -130,7 +139,7 @@ Page({
     wx.cloud.callFunction({
       name: "get_label",
       data:{
-        id:app.globalData.open_id
+        id:_this.data.open_id
       },
       success(res){
         console.log("11111",res)
@@ -237,7 +246,7 @@ Page({
         wx.cloud.callFunction({
           name: 'change_look_time',
           data: {
-            id:app.globalData.open_id,
+            id:_this.data.open_id,
             time:new Date()
           }
         })

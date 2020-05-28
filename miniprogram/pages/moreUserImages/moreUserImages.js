@@ -88,7 +88,7 @@ Page({
       userList:this.data.userList
     })
     wx.setNavigationBarTitle({
-      title: this.data.userName+"的自制表情"
+      title: this.data.userName+"的表情"
     })
     this.data.headImage_index = Math.floor(Math.random()*3) + 1
     this.setData({

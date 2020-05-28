@@ -35,7 +35,11 @@ App({
     //是否推荐相似表情
     similarExpression:1,
     //用户自制表情列表
-    userList:[]
+    userList:[],
+    //上传者收藏
+    collection1:[],
+    //上传者自制
+    collection2:[]
   },
   
   //app 全局属性监听
