@@ -51,6 +51,12 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
+        "pagePath": "pages/shop/shop",
+        "iconPath": "images/shop_blank.png",
+        "selectedIconPath": "images/shop_fill.png",
+        "text": "商店"
+      },
+      {
         "pagePath": "pages/team2/favorite_expression/index",
         "iconPath": "images/main_blank.png",
         "selectedIconPath": "images/main_fill.png",
@@ -62,23 +68,12 @@
         "selectedIconPath": "images/image_fill.png",
         "text": "编辑"
       },
-      {
-        "pagePath": "pages/shop/shop",
-        "iconPath": "images/shop_blank.png",
-        "selectedIconPath": "images/shop_fill.png",
-        "text": "商店"
-      },
+      
       {
         "pagePath": "pages/team2/my/index",
         "iconPath": "images/user_blank.png",
         "selectedIconPath": "images/user_fill.png",
         "text": "我"
-      },
-      {
-        "pagePath": "pages/FormalUIPage/FormailUIPage",
-        "iconPath": "images/user_blank.png",
-        "selectedIconPath": "images/user_fill.png",
-        "text": "UIF"
       }
     ]
   },
