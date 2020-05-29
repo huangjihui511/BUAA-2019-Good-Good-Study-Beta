@@ -89,6 +89,7 @@ Page({
    */
   onLoad: function (options) {
     var judge = options.judge
+    var _this=this
     console.log("judge:",judge)
     if (judge == 1) {
       wx.setNavigationBarTitle({
@@ -98,6 +99,13 @@ Page({
     }
     else {
       this.data.open_id = app.globalData.open_id
+      wx.cloud.callFunction({
+        name: 'change_look_time',
+        data: {
+          id:_this.data.open_id,
+          time:new Date()
+        }
+      })
     }
     console.log("open_id:",this.data.open_id)
   },
@@ -247,13 +255,6 @@ Page({
             }
           }
         }
-        wx.cloud.callFunction({
-          name: 'change_look_time',
-          data: {
-            id:_this.data.open_id,
-            time:new Date()
-          }
-        })
         _this.setData({
           list:res.result.data[0].interest
         })
