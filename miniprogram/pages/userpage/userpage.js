@@ -31,6 +31,16 @@ Page({
     upload:0,
     upload_name:"",
     upload_word:"他/她还没有格言哦~",
+    //上传者收藏
+    collection1:[],
+    //上传者自制
+    collection2:[],
+    interest:0,
+    be_interested:0,
+    userExp:0,
+    user_rank:0,
+    rankExp:[0,5,15,30,50,100,200,500,1000,2000,3000,6000,10000,18000,30000,60000,
+      100000,300000],
   },
   interest_or_no(){
     var _this=this
@@ -80,6 +90,74 @@ Page({
       })
     }
   },
+
+  interest_list(){
+    wx.navigateTo({
+      url: '../../pages/team2/interest/index?judge='+1+'&open_id='+this.data.upload
+    })
+  },
+
+  jump_to_more:function(e) {
+    var that = this
+    var index = e.currentTarget.dataset.id
+    if (index == 0) {
+      var tempList = []
+      for (var i = 0;i < this.data.have_shop_collection.length;i++) {
+        tempList.push(this.data.have_shop_collection[i]['file_id'])
+      }
+      app.globalData.userList = tempList
+    }
+    else {
+      var tempList = []
+      for (var i = 0;i < this.data.no_shop_collection.length;i++) {
+        tempList.push(this.data.no_shop_collection[i]['file_id'])
+      }
+      app.globalData.userList = tempList
+    }
+    
+    //console.log(that.data.userUploadList)
+    wx.navigateTo({
+      url: '/pages/moreUserImages/moreUserImages?id='+
+      that.data.upload+'&name='+
+      that.data.upload_name
+    })
+  },
+
+  jumpToExp:function(e) {
+    wx.navigateTo({
+      url: '../../pages/aboutExp/aboutExp'
+    })
+  },
+
+  calUserRank: function() {
+    //根据用户的经验计算等级
+    var exp = this.data.userExp
+    wx.cloud.callFunction({
+      name:'add_expression',
+      data:{
+        request:'user_exp',
+        data1:exp
+      }
+    }).then(res=>{
+      console.log("testfunctionExp:",res.result)
+    })
+    var expList = this.data.rankExp
+    var upbound
+    var i = 0
+    for (;i < 17;i++) {
+      if ((exp >= expList[i]) && (exp < expList[i+1])) {
+        upbound = expList[i+1]
+        break
+      }
+    }
+    if (i == 17) {
+      upbound = expList[17]
+    }
+    this.setData({
+      user_rank: i+1,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -92,6 +170,7 @@ Page({
       upload_name:options.name
     })
     console.log("111"+this.data.upload_name)
+  
     wx.cloud.callFunction({
       name: "get_label",
       data:{
@@ -113,6 +192,28 @@ Page({
             }
           }
         }
+        wx.cloud.callFunction({
+          name: "get_label",
+          data:{
+            id:_this.data.upload
+          },
+          success:function(res) {
+            _this.data.userExp = res.result.data[0].exp
+
+            _this.calUserRank()
+
+            if(res.result.data[0].interest!=undefined){
+              _this.setData({
+                interest:res.result.data[0].interest.length
+              })
+            }
+            if(res.result.data[0].be_interested!=undefined){
+              _this.setData({
+                be_interested:res.result.data[0].be_interested.length
+              })
+            }
+          }
+        })
       }
     })
     console.log(options)
@@ -170,6 +271,27 @@ Page({
           no_shop_collection:no_shop_public_expressions,
           uploaderName: res.data[0].user_name
         })
+        var tempC1 = [],tempC2 = []
+        for (var i = 0;i < this.data.have_shop_collection.length;i++) {
+          tempC1.push(this.data.have_shop_collection[i])
+          if (i == 8) {
+            break
+          }
+        }
+        for (var j = 0;j < this.data.no_shop_collection.length;j++) {
+          tempC2.push(this.data.no_shop_collection[j])
+          if (j == 8) {
+            break
+          }
+        }
+        this.data.collection1 = tempC1
+        this.setData({
+          collection1:this.data.collection1
+        })
+        this.data.collection2 = tempC2
+        this.setData({
+          collection2:this.data.collection2
+        })
         console.log(this.data.uploader)
         console.log(this.data.collection)
         console.log(this.data.have_shop_collection)
@@ -208,11 +330,13 @@ Page({
     })
     let index=e.currentTarget.dataset.id;
     let _this=this
+    //上传者收藏
     if(index==0){
       this.setData({
         collection:_this.data.have_shop_collection
       })
     }
+    //上传者自制
     else{
       this.setData({
         collection:_this.data.no_shop_collection
@@ -223,10 +347,38 @@ Page({
     })
   },
 
-  shop_image_pagejump:function(e) {
+  /*shop_image_pagejump:function(e) {
     var app = getApp()
     console.log(e)
     // app.globalData.data = {'imagepath':imagepath}
+    wx.navigateTo({
+      url: '/pages/index/index?url='+ e.currentTarget.dataset.fileid
+    })
+  },*/
+
+  shop_image_pagejump:function(e) {
+    var app = getApp()
+    console.log(e)
+    var fileid = e.currentTarget.dataset.fileid
+    var tag = e.currentTarget.dataset.tag
+    var ifNoSimilar = e.currentTarget.dataset.judge
+    app.globalData.shopImageTag = tag
+    console.log("app shopTag:",app.globalData.shopImageTag)
+    console.log("tag:",tag)
+    console.log("ifNosimilar(judge):",ifNoSimilar)
+    var visits = 0
+    var _id = ''
+    // app.globalData.data = {'imagepath':imagepath}
+    if (ifNoSimilar == 1) {
+      app.globalData.similarExpression = 0
+      console.log("不显示相似表情:",app.globalData.similarExpression)
+    }
+    else if (ifNoSimilar == 2){
+      app.globalData.similarExpression = 2
+    }
+    else {
+      app.globalData.similarExpression = 1
+    }
     wx.navigateTo({
       url: '/pages/index/index?url='+ e.currentTarget.dataset.fileid
     })

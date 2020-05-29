@@ -34,7 +34,8 @@ Page({
     TabCur:0,
     scrollLeft:0,
     search_list:[],
-    recommend_list:[]
+    recommend_list:[],
+    open_id:''
   },
   tabSelect(e) {
     this.setData({
@@ -86,7 +87,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var judge = options.judge
+    console.log("judge:",judge)
+    if (judge == 1) {
+      wx.setNavigationBarTitle({
+        title: 'ta的关注'
+      })
+      this.data.open_id = options.open_id
+    }
+    else {
+      this.data.open_id = app.globalData.open_id
+    }
+    console.log("open_id:",this.data.open_id)
   },
 
   /**
@@ -130,7 +142,7 @@ Page({
     wx.cloud.callFunction({
       name: "get_label",
       data:{
-        id:app.globalData.open_id
+        id:_this.data.open_id
       },
       success(res){
         console.log("11111",res)
@@ -148,7 +160,7 @@ Page({
           if(res.result.data[0].be_interested!=undefined){
             var i
             var be_interested_refresh_flag_temp=[]
-            for(i=0;i<res.result.data[0].interest.length;i++){
+            for(i=0;i<res.result.data[0].be_interest.length;i++){
               be_interested_refresh_flag_temp[i]=true
             }
             _this.setData({
@@ -237,7 +249,7 @@ Page({
         wx.cloud.callFunction({
           name: 'change_look_time',
           data: {
-            id:app.globalData.open_id,
+            id:_this.data.open_id,
             time:new Date()
           }
         })

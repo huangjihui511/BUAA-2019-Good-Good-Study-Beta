@@ -9,7 +9,7 @@ Page({
     user_rank: 0,
     rankExp:[0,5,15,30,50,100,200,500,1000,2000,3000,6000,10000,18000,30000,60000,
       100000,300000],
-    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2my_userpage'},  { name: 'close', isShow: true, text: '举报图片', action: 'tipoff'},],
+    icon: [{ name: 'favorfill', isShow: true , text: '收藏', action: 'storeImage'}, { name: 'check', isShow: true, text: '下载', action: 'download'}, { name: 'appreciate', isShow: true, text: '点赞0次', action: 'like'},  { name: 'emoji', isShow: true, text: '了解上传者收藏', action: 'jump2my_userpage'},  { name: 'close', isShow: true, text: '举报图片', action: 'modalinput'},],
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -37,6 +37,8 @@ Page({
     time:"",
     expression:"",
     info:"",
+    problem:"",
+    my_problem:"",
     download_times: 0,
     headImage_index:[],
     headImage: [
@@ -52,10 +54,47 @@ Page({
       {
         url: 'cloud://project-database-v58ji.7072-project-database-v58ji-1301962342/animal4.png'
       }],
+    hiddenmodalput:true,  
   },
 
-  tipoff(){
+  modalinput:function(){  
+    this.setData({  
+       hiddenmodalput: !this.data.hiddenmodalput  
+    })  
+  },  
+//取消按钮  
+  cancel: function(){  
+    this.setData({  
+        hiddenmodalput: true  
+    });  
+  },  
+//确认  
+  confirm: function(){  
     var that = this
+    this.setData({  
+        hiddenmodalput: true  
+    })  
+    console.log(this.data.my_problem)
+    db.collection('problem').add({
+      data:{
+        url: that.data.imagePath,
+        descirption: that.data.my_problem,
+      },
+      success:function(res){
+        wx.showToast({
+          title: '举报成功',
+          icon: 'success',
+          duration: 2000,
+        })
+      }
+    })
+  },  
+
+  tipoff(){
+    wx.navigateTo({
+      url: '../inputProblem/index',
+    })
+    /*var that = this
     console.log(this.data.imagePath)
     wx.showModal({
       title: "举报图片",
@@ -88,7 +127,7 @@ Page({
           //})
         }
       }
-    })
+    })*/
   },
 
   like(){
@@ -119,6 +158,10 @@ Page({
 
   getinput(e){
     this.data.my_comment=e.detail.value
+  },
+
+  getproblem(e){
+    this.data.my_problem=e.detail.value
   },
 
   //事件处理函数

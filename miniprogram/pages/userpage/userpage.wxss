@@ -1,6 +1,6 @@
 /* miniprogram/pages/userpage/userpage.wxss */
 @import "../../app.wxss";
-
+@import "../shop/shop.wxss";
 
 .invite {
   /* display: none; */
