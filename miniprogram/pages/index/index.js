@@ -737,7 +737,7 @@ Page({
             }
             var user_openid = app.globalData.open_id
             console.log(app.globalData.open_id)
-            console.log(this.data.imagePath)
+            //console.log(this.data.imagePath)
             var util = require('../../utils/util.js'); 
             var TIME = util.formatTime(new Date());
             wx.cloud.callFunction({
