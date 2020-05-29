@@ -557,6 +557,30 @@ Page({
   },
 
   onShow: function () {
+    var _this=this
+    wx.cloud.callFunction({
+      name: "get_label",
+      data:{
+        id:app.globalData.open_id
+      },
+      success(res){
+        if(res.result.data[0].interest!=undefined){
+          _this.setData({
+            interest:res.result.data[0].interest.length
+          })
+        }
+        if(res.result.data[0].be_interested!=undefined){
+          _this.setData({
+            be_interested:res.result.data[0].be_interested.length
+          })
+        }
+        if(res.result.data[0].expression_set!=undefined){
+          _this.setData({
+            favor_number:res.result.data[0].expression_set.length
+          })
+        }
+      }
+    })
     var that=this
     db.collection('user').where({
       open_id: app.globalData.open_id
