@@ -78,9 +78,10 @@ Page({
     console.log(value)
   },
   look(e){
-    console.log("222"+e.currentTarget.dataset.it.user_name)
+    console.log(e)
+    console.log("222"+e.currentTarget.dataset.it.name)
     wx.navigateTo({
-      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.it.open_id+'&name='+e.currentTarget.dataset.it.user_name
+      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.it.open_id+'&name='+e.currentTarget.dataset.it.name
     })
   },
   /**
