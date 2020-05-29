@@ -160,7 +160,7 @@ Page({
           if(res.result.data[0].be_interested!=undefined){
             var i
             var be_interested_refresh_flag_temp=[]
-            for(i=0;i<res.result.data[0].interest.length;i++){
+            for(i=0;i<res.result.data[0].be_interest.length;i++){
               be_interested_refresh_flag_temp[i]=true
             }
             _this.setData({
