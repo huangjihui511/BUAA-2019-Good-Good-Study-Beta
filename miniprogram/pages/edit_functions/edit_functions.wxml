@@ -18,7 +18,9 @@
   
 </view>
 <view class="canvasView" bindlongtap="addImg" wx:if="{{choosed}}" style="min-height: 230px">
-  <image class="hh-img" src='{{curImage}}' style='width: {{cWidth}}px; height: {{cHeight}}px'></image>
+  <view class="hh-grid-square-1">
+     <image class="hh-img" src='{{curImage}}' style='width: {{cWidth}}px; height: {{cHeight}}px'></image>
+  </view>
 </view>
 
 <!-- <view class="bottom">
