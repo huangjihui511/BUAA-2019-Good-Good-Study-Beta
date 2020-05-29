@@ -26,23 +26,47 @@ Page({
   },
 
   finish:function(){
-    console.log(this.data.my_aphorism)
-    wx.cloud.callFunction({
-      name: 'add_aphorism',
-      data:{
-        open_id: this.data.open_id,
-        aphorism: this.data.my_aphorism,
-      },
-      success: function(res){
-        console.log('what!!!!!!!!!!!!!!!!!!!!')
-      },
-      fail:function(error){
-        console.log(error)
+    var _this=this
+    wx.showLoading({
+      title: '检测文字中',
+      duration: 5000
+    })
+    wx.cloud.callFunction({      
+      name: 'textCheck',      
+      data: ({        
+        text:_this.data.my_aphorism    
+      }),
+      success: res => {
+        wx.hideLoading()
+        if (res.result.errCode != 0) {
+          wx.showToast({
+            title: '文字违规',
+          })
+          return
+        }
+        else{
+          console.log(_this.data.my_aphorism)
+          wx.cloud.callFunction({
+            name: 'add_aphorism',
+            data:{
+              open_id: _this.data.open_id,
+              aphorism: _this.data.my_aphorism,
+            },
+            success: function(res){
+              console.log('what!!!!!!!!!!!!!!!!!!!!')
+            },
+            fail:function(error){
+              console.log(error)
+            }
+          })
+          wx.navigateTo({
+            url: '../team2/my/index'
+          })
+        }
       }
     })
-    wx.navigateTo({
-      url: '../team2/my/index'
-    })
+
+    
     /*db.collection('user').where({
       open_id: this.data.open_id
     }).get({

@@ -506,22 +506,24 @@ Page({
             request:"sub_expression",
             data1:app.globalData.open_id,
             data2:this.data.images_view_srcs[i]
+          },
+          success(res){
+            wx.showToast({
+              title: '删除成功',
+              icon: 'loading',
+              duration: 3000,
+              success(data) {
+                setTimeout(function () {
+                  wx.reLaunch({url: './index'})
+                }, 3000) //延迟时间
+              }
+            })
           }
         })
         console.log("删除"+i)
         console.log(this.data.images_view_srcs[i])
       }
     }
-    wx.showToast({
-      title: '删除成功',
-      icon: 'loading',
-      duration: 1000,
-      success(data) {
-        setTimeout(function () {
-          wx.reLaunch({url: './index'})
-        }, 1000) //延迟时间
-      }
-    })
   },
   all_select(){
     var i;
