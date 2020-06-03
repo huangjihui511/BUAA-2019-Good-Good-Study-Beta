@@ -171,6 +171,22 @@ Page({
     })
     console.log("111"+this.data.upload_name)
   
+    var that=this
+    db.collection('user').where({
+      open_id: options.upload
+    }).get().then(res=>{   
+      console.log("111111",res)
+      if (res.data[0].hasOwnProperty("aphorism")){
+        this.setData({
+          upload_word: res.data[0].aphorism
+        })
+      }
+      else {
+        console.log("no aphorism")
+      }
+    })
+
+
     wx.cloud.callFunction({
       name: "get_label",
       data:{
