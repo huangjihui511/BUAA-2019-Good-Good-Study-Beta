@@ -243,7 +243,7 @@ bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081f
     </view>
     <view class="hh-text">抱歉，没有更多了</view>
   </view>
-<view class="hh-text">为你推荐</view>
+<view class="hh-text" wx:if="{{TabCur==2}}">为你推荐</view>
 <view class='hh-menu-list' wx:if="{{TabCur==2}}" wx:for="{{recommend_list}}" wx:key="index">
   <view class='hh-menu-item' data-it='{{item}}' bindtap="look">
       <image class="hh-menu-img" src="{{headImage[recommend_imageNum[index]].url}}" mode="cover"></image>

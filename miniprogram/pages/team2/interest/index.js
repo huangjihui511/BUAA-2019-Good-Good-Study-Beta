@@ -78,9 +78,10 @@ Page({
     console.log(value)
   },
   look(e){
-    console.log("222"+e.currentTarget.dataset.it.user_name)
+    console.log(e)
+    console.log("222"+e.currentTarget.dataset.it.name)
     wx.navigateTo({
-      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.it.open_id+'&name='+e.currentTarget.dataset.it.user_name
+      url: '/pages/userpage/userpage?upload='+e.currentTarget.dataset.it.open_id+'&name='+e.currentTarget.dataset.it.name
     })
   },
   /**
@@ -88,6 +89,7 @@ Page({
    */
   onLoad: function (options) {
     var judge = options.judge
+    var _this=this
     console.log("judge:",judge)
     if (judge == 1) {
       wx.setNavigationBarTitle({
@@ -97,6 +99,13 @@ Page({
     }
     else {
       this.data.open_id = app.globalData.open_id
+      wx.cloud.callFunction({
+        name: 'change_look_time',
+        data: {
+          id:_this.data.open_id,
+          time:new Date()
+        }
+      })
     }
     console.log("open_id:",this.data.open_id)
   },
@@ -246,13 +255,6 @@ Page({
             }
           }
         }
-        wx.cloud.callFunction({
-          name: 'change_look_time',
-          data: {
-            id:_this.data.open_id,
-            time:new Date()
-          }
-        })
         _this.setData({
           list:res.result.data[0].interest
         })

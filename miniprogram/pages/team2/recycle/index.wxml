@@ -10,7 +10,7 @@
       <image class="image {{delete_selected[index]?'image_selected':''}}" mode="aspectFill" data-index="{{index}}" data-src="{{item}}" data-srcs="{{images_view_srcs}}" src="{{item}}" bindtap="delete_or_previewImage" bindlongtap="more_information"></image>
     </view>
   </view>
-  
+  <view class="temp"></view>
   <view class="{{button_select?'delete':'empty'}}" bindtap="delete">
       <!-- <image class="delete_logo" src="../../../images/team2/timg.jpeg"></image> -->
 

@@ -172,74 +172,95 @@ Page({
   },
 
   commented(){
-    this.setData({
-      info:""
-    })
-    wx.showToast({
-      title: '评论中',
-      icon: 'loading',
-      duration: 100000
-    })
     var _this=this
-    console.log("评论",_this.data.my_comment)
-    wx.cloud.callFunction({
-      name:'get_exp',
-      data: {
-        id:app.globalData.open_id
-      },
-      success(res){
-        console.log("666666",res)
-        _this.setData({
-          my_name:res.result.data[0].user_name
-        })
-        var temp
-        var myDate=new Date()
-        let fullYear = (myDate.getFullYear()).toString();
-        let month = (myDate.getMonth()+1).toString();
-        let day = (myDate.getDate()).toString();
-        let hour = (myDate.getHours()).toString();
-        let minute = (myDate.getMinutes()).toString();
-        let second = (myDate.getSeconds()).toString();
-        temp=fullYear+"-"+month+"-"+day+" "+hour+":"+minute+":"+second
-        _this.setData({
-          time:temp
-        })
-        console.log(_this.data.time)
-        wx.cloud.callFunction({
-          name: 'add_comment',
-          data: {
-            src:_this.data.expression,
-            comment:{"open_id":app.globalData.open_id,"user_name":res.result.data[0].user_name,"comment":_this.data.my_comment,"time":_this.data.time}
-          },
-          success(res){
-            console.log(res)
-            
-            let temp="headImage_index["+_this.data.headImage_index.length+"]"
-            _this.setData({
-              [temp]: Math.floor(Math.random()*3) + 1
-            })
-        wx.showToast({
-          title: '评论成功',
-          icon: 'success',
-          duration: 1000,
-          success(res){
-            let temp
-            if(_this.data.comment==undefined){
-              temp="comment[0]"
+    wx.showLoading({
+      title: '检测文字中',
+      duration: 5000
+    })
+    wx.cloud.callFunction({      
+      name: 'textCheck',      
+      data: ({        
+        text:_this.data.my_comment    
+      }),
+      success: res => {
+        wx.hideLoading()
+        if (res.result.errCode != 0) {
+          wx.showToast({
+            title: '文字违规',
+          })
+          return
+        }
+        else{
+          _this.setData({
+            info:""
+          })
+          wx.showToast({
+            title: '评论中',
+            icon: 'loading',
+            duration: 100000
+          })
+          console.log("评论",_this.data.my_comment)
+          wx.cloud.callFunction({
+            name:'get_exp',
+            data: {
+              id:app.globalData.open_id
+            },
+            success(res){
+              console.log("666666",res)
+              _this.setData({
+                my_name:res.result.data[0].user_name
+              })
+              var temp
+              var myDate=new Date()
+              let fullYear = (myDate.getFullYear()).toString();
+              let month = (myDate.getMonth()+1).toString();
+              let day = (myDate.getDate()).toString();
+              let hour = (myDate.getHours()).toString();
+              let minute = (myDate.getMinutes()).toString();
+              let second = (myDate.getSeconds()).toString();
+              temp=fullYear+"-"+month+"-"+day+" "+hour+":"+minute+":"+second
+              _this.setData({
+                time:temp
+              })
+              console.log(_this.data.time)
+              wx.cloud.callFunction({
+                name: 'add_comment',
+                data: {
+                  src:_this.data.expression,
+                  comment:{"open_id":app.globalData.open_id,"user_name":res.result.data[0].user_name,"comment":_this.data.my_comment,"time":_this.data.time}
+                },
+                success(res){
+                  console.log(res)
+                  
+                  let temp="headImage_index["+_this.data.headImage_index.length+"]"
+                  _this.setData({
+                    [temp]: Math.floor(Math.random()*3) + 1
+                  })
+              wx.showToast({
+                title: '评论成功',
+                icon: 'success',
+                duration: 1000,
+                success(res){
+                  let temp
+                  if(_this.data.comment==undefined){
+                    temp="comment[0]"
+                  }
+                  else{
+                    temp="comment["+_this.data.comment.length+"]"
+                  }
+                  _this.setData({
+                    [temp]:{"open_id":app.globalData.open_id,"user_name":_this.data.my_name,"comment":_this.data.my_comment,"time":_this.data.time}
+                  })
+                }
+              })
+                },
+                fail(res){
+                  console.log("错误"+res)
+                }
+              })
             }
-            else{
-              temp="comment["+_this.data.comment.length+"]"
-            }
-            _this.setData({
-              [temp]:{"open_id":app.globalData.open_id,"user_name":_this.data.my_name,"comment":_this.data.my_comment,"time":_this.data.time}
-            })
-          }
-        })
-          },
-          fail(res){
-            console.log("错误"+res)
-          }
-        })
+          })
+        }
       }
     })
   },
@@ -737,7 +758,7 @@ Page({
             }
             var user_openid = app.globalData.open_id
             console.log(app.globalData.open_id)
-            console.log(this.data.imagePath)
+            console.log(_this.data.imagePath)
             var util = require('../../utils/util.js'); 
             var TIME = util.formatTime(new Date());
             wx.cloud.callFunction({

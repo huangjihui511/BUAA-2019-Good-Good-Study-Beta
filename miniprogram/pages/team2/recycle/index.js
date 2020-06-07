@@ -257,38 +257,64 @@ Page({
                }
              }
              wx.cloud.callFunction({
-               name:"recycle_add_expression",
-               data:{
-                 id:app.globalData.open_id,
-                 expression:_this.data.expression[e.currentTarget.dataset.index]
-               },
-               success(res){
-                wx.cloud.callFunction({
-                  name:"del_recycle",
-                  data:{
-                    id:app.globalData.open_id,
-                    expression:temp_expression
-                  },
-                  success(res){
+              name:"get_label",
+              data:{
+                id:app.globalData.open_id,
+              },
+              success(res){
+                var i
+                if(res.result.data[0].expression_set!=undefined){
+                  for(i=0;i<res.result.data[0].expression_set.length;i++){
+                    if(_this.data.expression[e.currentTarget.dataset.index].file_id==res.result.data[0].expression_set[i].file_id){
+                      break;
+                    }
+                  }
+                  if(i!=res.result.data[0].expression_set.length){
                     wx.showToast({
-                      title: '还原成功',
-                      icon: 'success',
-                      duration: 1000,
-                      success(data) {
-                        setTimeout(function () {
-                          wx.navigateTo({url: './index'})
-                        }, 1000) //延迟时间
+                      title: '不能重复还原',
+                      icon: 'loading',
+                      duration: 1000
+                    })
+                    return;
+                  }
+                  else{
+                    wx.cloud.callFunction({
+                      name:"recycle_add_expression",
+                      data:{
+                        id:app.globalData.open_id,
+                        expression:_this.data.expression[e.currentTarget.dataset.index]
+                      },
+                      success(res){
+                       wx.cloud.callFunction({
+                         name:"del_recycle",
+                         data:{
+                           id:app.globalData.open_id,
+                           expression:temp_expression
+                         },
+                         success(res){
+                           wx.showToast({
+                             title: '还原成功',
+                             icon: 'success',
+                             duration: 1000,
+                             success(data) {
+                               setTimeout(function () {
+                                 wx.navigateTo({url: './index'})
+                               }, 1000) //延迟时间
+                             }
+                           })
+                         }
+                       })
                       }
                     })
+                    
+                   wx.showToast({
+                     title: '还原中',
+                     icon: 'loading',
+                     duration: 10000000
+                   })
                   }
-                })
-               }
-             })
-             
-            wx.showToast({
-              title: '还原中',
-              icon: 'loading',
-              duration: 10000000
+                }
+              }
             })
           },
           fail: function (res) { },
@@ -309,16 +335,18 @@ Page({
       data:{
         id:app.globalData.open_id,
         expression:temp_expression
-      }
-    })
-    wx.showToast({
-      title: '删除成功',
-      icon: 'loading',
-      duration: 1000,
-      success(data) {
-        setTimeout(function () {
-          wx.navigateTo({url: './index'})
-        }, 1000) //延迟时间
+      },
+      success(res){
+        wx.showToast({
+          title: '删除成功',
+          icon: 'loading',
+          duration: 3000,
+          success(data) {
+            setTimeout(function () {
+              wx.navigateTo({url: './index'})
+            }, 3000) //延迟时间
+          }
+        })
       }
     })
   },

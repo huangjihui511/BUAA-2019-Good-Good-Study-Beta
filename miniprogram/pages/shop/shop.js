@@ -154,6 +154,25 @@ Page({
           }
           tempSwiper.push(user1Swiper)
         }
+        
+        //console.log("userUploadList:",that.data.userUploadList)
+        var temp2 = []
+        for (var j = 0;j < res.result.data1.length;j++) {
+          temp2.push(res.result.data1[j])
+        }
+        var upbound = temp1.length
+        for (var x = 0;x < upbound;x++) {
+          var temp = temp1[x]
+          if (temp.length == 0) {
+            //删除元素
+            upbound--
+            temp1.splice(x,1)
+            tempSwiper.splice(x,1)
+            temp2.splice(x,1)
+            x--
+          }
+        }
+
         that.data.userSwiper = tempSwiper
         that.setData({
           userSwiper:that.data.userSwiper
@@ -162,15 +181,11 @@ Page({
         that.setData({
           userUploadList:that.data.userUploadList
         })
-        console.log("userUploadList:",that.data.userUploadList)
-        var temp2 = []
-        for (var j = 0;j < res.result.data1.length;j++) {
-          temp2.push(res.result.data1[j])
-        }
         that.data.userList = temp2
         that.setData({
           userList:that.data.userList
         })
+        console.log("userUploadList:",that.data.userUploadList)
         console.log("userList:",that.data.userList)
         that.data.headImage_index = []
         //头像
