@@ -75,12 +75,16 @@ Helper.prototype.putImageData = function(imageData, cb) {
     const z = this
     // 将像素数据绘制到画布
     wx.canvasPutImageData({
-        canvasId: z.canvasInfo.canvasId,
+        //canvasId: z.canvasInfo.canvasId,
+        canvasId: 'fliterOut',
         data: imageData.data,
         x: 0,
         y: 0,
-        width: z.canvasInfo.width,
-        height: z.canvasInfo.height,
+        width: parseInt(z.canvasInfo.width),
+        height: parseInt(z.canvasInfo.height),
+        success(res) { 
+            console.log(res)
+        },
         complete: res => {
             if (cb) {
                 cb()
