@@ -8,7 +8,7 @@
 <view class="canvasView">
   <canvas
     canvas-id="fliterOut"
-    style="width: {{cWidth}}px; height: {{cHeight}}px;"
+    style="width: {{cWidth}}px; height: {{cHeight}}px;margin-top:10px"
   />
 </view>
 

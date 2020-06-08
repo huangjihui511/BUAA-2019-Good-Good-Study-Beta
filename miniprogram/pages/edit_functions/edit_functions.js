@@ -202,6 +202,7 @@ Page({
       })
       wx.navigateTo({
         url: '../fliter_new/fliter_new',
+        //url:  '../fliter/fliter',
       })
     }
     
